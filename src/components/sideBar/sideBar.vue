@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 12:05:01
+ * @LastEditTime: 2020-03-21 21:20:33
  -->
  <template>
   <div class="sideBar"
@@ -43,7 +43,9 @@ export default {
   },
   methods:{
     handleJumpToPath(item){
-      
+      this.$router.push({
+        name:item.name
+      })
     }
   }
 }

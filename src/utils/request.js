@@ -4,13 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-08-14 19:09:48
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-10-15 22:42:39
+ * @LastEditTime: 2020-03-21 20:07:05
  */
 import axios from 'axios'
 import { Message } from 'element-ui'
 // import { MessageBox, Message } from 'element-ui'
 // import store from '@/pages/store/index.js'
-import { getToken } from './auth'
+// import { getToken } from './auth'
 
 // create an axios instance
 axios.create({
@@ -28,7 +28,7 @@ axios.interceptors.request.use(
     // let each request carry token
     // ['X-Token'] is a custom headers key
     // please modify it according to the actual situation
-    config.headers['Authorization'] = getToken()
+    // config.headers['Authorization'] = getToken()
     // }
     config.headers['Content-Type'] = 'application/json'
     return config
@@ -57,9 +57,9 @@ axios.interceptors.response.use(
     // console.log('data')
     // console.log(res)
     // if the custom code is not 000000, it is judged as an error.
-    if (res.code !== '000000') {
+    if (res.resultCode !== 200) {
       Message({
-        message: res.msg || '出错啦！',
+        message: res.resultMes || '出错啦！',
         type: 'error',
         duration: 5 * 1000,
         showClose: true
@@ -78,7 +78,7 @@ axios.interceptors.response.use(
       //     // })
       //   })
       // }
-      return Promise.reject(res.msg || 'error')
+      return Promise.reject(res.resultMes || 'error')
     } else {
       return res
     }
@@ -115,7 +115,7 @@ export default function request (args) {
       return new Promise((resolve, reject) => {
         axios.post(url, resParams).then(
           res => {
-            let data = res.data ? res.data : {}
+            let data = res.resultEntity ? res.resultEntity : {}
             resolve(data)
           },
           err => {
@@ -130,7 +130,7 @@ export default function request (args) {
             params: resParams
           })
           .then(res => {
-            let data = res.data ? res.data : {}
+            let data = res.resultEntity ? res.resultEntity : {}
             resolve(data)
           })
           .catch(err => {
