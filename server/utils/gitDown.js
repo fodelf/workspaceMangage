@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-15 15:20:05
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-15 15:20:07
+ * @LastEditTime: 2020-03-22 22:47:21
  */
 const url = require('url')
 const fs = require('fs')
@@ -21,6 +21,7 @@ let spinner = null // loading animate
 let bar = null // loading bar
 let protocol = null
 let argvs = []
+let callBack = null
 const defaultConfig = {
   coverRepo: true, // 命令行默认为true, node modules为false
   branch: 'master'
@@ -189,6 +190,9 @@ function downloadFile(username, repos, branch, url) {
           logSymbols.success,
           chalk.green(`${repos} all files download!`)
         )
+        if(typeof(callBack) =='function'){
+          callBack()
+        }
         const BaseUrl = argvs.shift()
         if (!BaseUrl) {
           return
@@ -242,7 +246,8 @@ function nodeShell() {
  * @param {Object} config
  * @returns
  */
-function nodeModules(config) {
+function nodeModules(config,callBackFun) {
+  callBack = callBackFun
   config = config || {}
   Object.assign(
     defaultConfig,

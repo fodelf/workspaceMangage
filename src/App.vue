@@ -1,9 +1,18 @@
 <template>
   <div id="app">
-    <router-view />
+    <T  :cols ='9' :rows = '9'/>
+    <!-- <router-view /> -->
   </div>
 </template>
-
+<script>
+import T from './TerminalView'
+export default {
+  name:'xx',
+  components:{
+    T
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

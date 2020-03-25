@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "nodemon ./server/app.js"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -16,7 +17,11 @@
     "prettier-tslint": "^0.4.2",
     "typescript": "^3.8.3",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.5"
+    "vue-router": "^3.1.5",
+    "wx": "0.0.36",
+    "xterm": "^4.4.0",
+    "xterm-addon-attach": "^0.5.0",
+    "xterm-addon-fit": "^0.3.0"
   },
   "devDependencies": {
     "@akryum/winattr": "^3.0.0",
