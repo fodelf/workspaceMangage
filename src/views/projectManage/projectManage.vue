@@ -1,6 +1,21 @@
 <template>
-  <div class="home">
-    这是首页
+  <div class="projectManage">
+     <div class='leftMenu'>
+       <!--左侧列表组件-->
+       <menuList :menuObj='menuObj' @clickMenu='selectMenu'></menuList>
+     </div>
+     <div class='rightList'>
+       <p class='rightTit clearfix'>
+         <el-button type='primary' @click='addPro'>新增</el-button>
+         <el-input v-model='keyword' class='keyInpt' placeholder="请输入关键字"></el-input>
+       </p>
+       <!--表格组件-->
+       <div class='tableCon'>
+          <tableBox ref='table' :tablePag='tablePag' :dataList='dataList' :headerList='headerList' @changePageNo='getPageNo'></tableBox>
+       </div>
+     </div>
+     <!--弹窗组件-->
+     <proDialog ref='proDialog'></proDialog>
   </div>
 </template>
 
@@ -11,6 +26,6 @@ export default {
 }
 </script>
 
- <style rel="stylesheet/less"  lang="less" scoped>
+<style rel="stylesheet/less"  lang="less" scoped>
 @import "./projectManage.less";
 </style>

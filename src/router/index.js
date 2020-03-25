@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-18 22:20:58
+ * @LastEditTime: 2020-03-21 22:20:41
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -21,7 +21,7 @@ const vueRouter = new Router({
       children: [
         {
           path: '/home',
-          name: '主页',
+          name: 'home',
           component: Home,
           meta: {
             title: 'Home',
@@ -31,12 +31,13 @@ const vueRouter = new Router({
       ]
     },
     {
-      path: '/projectManage',
-      name: '项目管理',
+      path: '/project',
+      name: 'projectManage',
+      redirect:'/project/projectManage',
       component: MainLayout,
       children: [
         {
-          path: '',
+          path: 'projectManage',
           component: ProjectManage,
           name: '项目管理'
         }

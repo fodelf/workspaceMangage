@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-18 22:29:01
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 11:38:01
+ * @LastEditTime: 2020-03-21 19:50:07
  -->
 <template>
   <div class="card">
@@ -44,15 +44,15 @@ export default {
 <style lang="less" scoped>
 .card {
   width: 100%;
-  height: 150px;
-  padding:1.25rem;
+  height: 120px;
+  padding:15px;
   background-color: #353c48;
   color: #ced4da;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   .cardCon {
-    height: 100px;
+    height: 80px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,8 @@ export default {
       font-size:14px;
     }
     .rightCon {
-      font-size:1.875rem;
+      font-size:30px;
+      // line-height:80px;
       // text-align: right;
     }
   }
@@ -70,13 +71,14 @@ export default {
     height: 6px;
     position:relative;
     background-color: #303641;
-    border-radius:2px;
+    border-radius:5px;
     .progressContent {
       position:absolute;
       left:0;
       top:0;
       height:6px;
       display:block;
+      border-radius:5px;
     }
   }
 }
