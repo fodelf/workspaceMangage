@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 21:20:33
+ * @LastEditTime: 2020-03-26 07:21:33
  -->
  <template>
   <div class="sideBar"
@@ -36,7 +36,8 @@ export default {
       menuTree:[
         {name:'home',icon:'',label:'首页'},
         {name:'projectManage',icon:'',label:'项目管理'},
-        {name:'templateManage',icon:'',label:'模板管理'}
+        {name:'templateManage',icon:'',label:'模板管理'},
+        {name:'terminal',icon:'',label:'终端管理'},
       ],
       activeModule:'home',
     }

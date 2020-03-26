@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <T  :cols ='9' :rows = '9'/>
-    <!-- <router-view /> -->
+    <router-view />
   </div>
 </template>
 <script>
-import T from './TerminalView'
+// import T from './TerminalView'
 export default {
   name:'xx',
   components:{
-    T
+    // T
   }
 }
 </script>
