@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-26 07:21:33
+ * @LastEditTime: 2020-03-26 21:49:05
  -->
  <template>
   <div class="sideBar"
@@ -37,7 +37,13 @@ export default {
         {name:'home',icon:'',label:'首页'},
         {name:'projectManage',icon:'',label:'项目管理'},
         {name:'templateManage',icon:'',label:'模板管理'},
-        {name:'terminal',icon:'',label:'终端管理'},
+        {name:'templateManage',icon:'',label:'组件管理'},
+        {name:'templateManage',icon:'',label:'工具类管理'},
+        {name:'terminal',icon:'',label:'脚本管理'},
+        {name:'terminal',icon:'',label:'自动化测试'},
+        {name:'terminal',icon:'',label:'可视化埋点'},
+        {name:'templateManage',icon:'',label:'拖拽生成'},
+        {name:'templateManage',icon:'',label:'系统设置'}
       ],
       activeModule:'home',
     }
