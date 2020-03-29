@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-15 15:20:05
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-22 22:47:21
+ * @LastEditTime: 2020-03-29 10:35:09
  */
 const url = require('url')
 const fs = require('fs')
@@ -103,6 +103,7 @@ function requestUrl(username, repos, branch, download) {
   spinner = ora('download start!').start()
   spinner.color = 'yellow'
   spinner.text = 'loading...'
+  // const url = `${protocol}//api.github.com/repos/${username}/${repos}/git/trees/${branch}?recursive=1`
   const url = `${protocol}//api.github.com/repos/${username}/${repos}/git/trees/${branch}?recursive=1`
   axios
     .get(url)
@@ -112,9 +113,10 @@ function requestUrl(username, repos, branch, download) {
       handleTree(username, repos, branch, trees, download)
     })
     .catch(e => {
-      console.log(e)
+      // console.log(e)
       spinner.stop()
-      console.log(chalk.red(`network is error!`))
+      requestUrl(username, repos, branch, download)
+      // console.log(chalk.red(`network is error!`))
     })
 }
 
@@ -173,15 +175,25 @@ function findDir(list, file) {
  */
 function downloadFile(username, repos, branch, url) {
   // download file
-  const exportUrl = path.join(exportBaseUrl, repos, url)
+  console.log(repos)
+  // console.log(url)
+  console.log("path="+path.basename('https://github.com/fodelf/gitActions/tree/master/src/components'));
+  const exportUrl = path.join(exportBaseUrl, path.basename('https://github.com/fodelf/gitActions/tree/master/src/components'),path.basename(url))
   const dir = path.dirname(exportUrl)
+  console.log(exportUrl)
   // mkdir
   mkdirsSync(dir)
-  request(
-    `${protocol}//github.com/${username}/${repos}/raw/${branch}/${url}`,
+  console.log(`${protocol}//github.com/${username}/${repos}/raw/${branch}/${url}`)
+  request({
+      'url': `${protocol}//github.com/${username}/${repos}/raw/${branch}/${url}`,
+    //  'headers':{
+    //   "Host": '140.82.114.4'
+    // }
+    },
     (err, res, body) => {
       if (err) {
-        console.log(logSymbols.error, chalk.red(`${url} is error`))
+        downloadFile(username, repos, branch, url)
+        // console.log(logSymbols.error, chalk.red(`${url} is error`))
         return
       }
       bar.tick()
