@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 20:11:59
+ * @LastEditTime: 2020-03-29 23:32:55
  */
 const sd = require('silly-datetime');
 const { sqliteDB } = require('../sql/initTable')
@@ -38,7 +38,7 @@ async function queryProjectList(data,callBack){
   data.pageSize = data.pageSize? data.pageSize:10
   let n1 = (data.pageNum - 1) * parseInt(data.pageSize);
   let n2 = data.pageSize
-  var querySql =`SELECT * ,COUNT(1) OVER() AS total from project  where type ='${type}' and deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
+  var querySql =`SELECT * ,COUNT(1) OVER() AS total from project  where ${type ? "type ="+type+ "and":''} and deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
   console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
@@ -68,7 +68,7 @@ async function queryTemplateList(data,callBack){
   data.pageSize = data.pageSize? data.pageSize:10
   let n1 = (data.pageNum - 1) * parseInt(data.pageSize);
   let n2 = data.pageSize
-  var querySql =`SELECT * ,COUNT(1) OVER() AS total from template  where type ='${type}' and deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
+  var querySql =`SELECT * ,COUNT(1) OVER() AS total from template  where ${type ? "type ="+type+ "and":''}deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
   console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)

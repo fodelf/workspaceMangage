@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:44:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 15:58:17
+ * @LastEditTime: 2020-03-29 22:29:34
  */
 var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
@@ -49,10 +49,13 @@ DB.SqliteDB.prototype.insertData = function(sql, objects, callback) {
   })
 }
 
-DB.SqliteDB.prototype.queryData = function(sql, callback) {
+DB.SqliteDB.prototype.queryData = function(sql, callback,errBack) {
   DB.db.all(sql, function(err, rows) {
     if (null != err) {
       DB.printErrorInfo(err)
+      if(errBack){
+        errBack()
+      }
       return
     }
     /// deal query data.

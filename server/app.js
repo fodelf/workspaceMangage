@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 20:10:42
+ * @LastEditTime: 2020-03-29 22:46:19
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -59,7 +59,7 @@ portfinder.getPort(
   function (err, port) {
     if (err) { console.log(err) }
     var server = http.createServer(app).listen(8081, '0.0.0.0', () => {
-      console.log(`app start at http://${getIPAddress()}:${8888}`)
+      console.log(`app start at http://${getIPAddress()}:${8081}`)
     });
     const io = require('socket.io')(server);
     io.on('connection', client => {

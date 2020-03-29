@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 20:10:30
+ * @LastEditTime: 2020-03-29 22:26:51
  */
 const workDao = require('../dao/workDao.js')
 const initData = require('../sql/initData.js')
@@ -16,6 +16,11 @@ const result = {
   resultCode: 200,
   resultEntity: {},
   resultMes: 'success'
+}
+const resultBad = {
+  resultCode: 500,
+  resultEntity: {},
+  resultMes: '服务异常'
 }
 // 获取首页计数明显
 async function getIndexCount (req, res) {
