@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 23:32:55
+ * @LastEditTime: 2020-03-30 23:37:07
  */
 const sd = require('silly-datetime');
 const { sqliteDB } = require('../sql/initTable')
@@ -38,7 +38,7 @@ async function queryProjectList(data,callBack){
   data.pageSize = data.pageSize? data.pageSize:10
   let n1 = (data.pageNum - 1) * parseInt(data.pageSize);
   let n2 = data.pageSize
-  var querySql =`SELECT * ,COUNT(1) OVER() AS total from project  where ${type ? "type ="+type+ "and":''} and deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
+  var querySql =`SELECT * ,COUNT(1) OVER() AS total from project  where ${type ? ("type = '"+type+ "' and"):''} deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
   console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
@@ -46,7 +46,7 @@ async function queryProjectList(data,callBack){
 }
 // 获取项目汇总
 async function queryProjectSum(callBack){
-  var querySql =`SELECT type , COUNT(*) as count, label from  project   LEFT JOIN  ptype  ON project.type = ptype.value GROUP BY project.type`
+  var querySql =`SELECT type , COUNT(*) as count, label from  project   LEFT JOIN  ptype  ON project.type = ptype.value GROUP BY project.type DESC`
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
   })
@@ -68,7 +68,15 @@ async function queryTemplateList(data,callBack){
   data.pageSize = data.pageSize? data.pageSize:10
   let n1 = (data.pageNum - 1) * parseInt(data.pageSize);
   let n2 = data.pageSize
-  var querySql =`SELECT * ,COUNT(1) OVER() AS total from template  where ${type ? "type ="+type+ "and":''}deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
+  var querySql =`SELECT * ,COUNT(1) OVER() AS total from template  where ${type ? ("type = '"+type+ "' and "):''}deleteFlag = 0 and keyword  LIKE '%${data.keyword?data.keyword:''}%' LIMIT ${n1},${n2}`
+  console.log(querySql)
+  sqliteDB.queryData(querySql, function(data) {
+    callBack(data)
+  })
+}
+// 获取项目汇总
+async function queryTemplateSum(callBack){
+  var querySql =`SELECT type , COUNT(*) as count, label from  template   LEFT JOIN  ptype  ON template.type = ptype.value GROUP BY template.type`
   console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
@@ -81,5 +89,6 @@ module.exports = {
   queryProjectList,
   queryProjectSum,
   insertTemplate,
-  queryTemplateList
+  queryTemplateList,
+  queryTemplateSum
 }

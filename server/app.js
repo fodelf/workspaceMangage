@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 22:46:19
+ * @LastEditTime: 2020-03-30 23:03:11
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -45,12 +45,16 @@ app.post('/api/initNewProject', workServer.initNewProject)
 app.get('/api/getProjectList', workServer.getProjectList)
 // 获取项目汇总列表
 app.get('/api/getProjectSum', workServer.getProjectSum)
+// 获取项目汇总列表
+app.get('/api/queryProjectById', workServer.queryProjectById)
 // 上传文件
 app.post('/api/upload', workServer.upload)
 // 新增模板
 app.post('/api/template/newTemplate', workServer.newTemplate)
 // 模板列表查询
 app.get('/api/template/queryTemplateList', workServer.queryTemplateList)
+// 模板汇总查询
+app.get('/api/template/queryTemplateSum', workServer.queryTemplateSum)
 portfinder.getPort(
   {
     port: 8080, // minimum port
