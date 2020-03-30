@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:17:29
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-26 07:25:48
+ * @LastEditors: pym
+ * @LastEditTime: 2020-03-30 23:13:49
  -->
 <template>
   <div class='menuList'>
@@ -16,7 +16,8 @@
       <li v-for='(item,index) in menuObj.menuList'
           :key='index'
           class='menuItem itemNum clearfix'
-          @click='handleClickMenu(item)'>
+          :class="currentIndex == index?'active':''"
+          @click='handleClickMenu(item,index)'>
         <span>{{item.label}}</span>
         <i>{{item.count}}</i>
       </li>
@@ -45,14 +46,15 @@ export default {
   },
   data () {
     return {
-
+      currentIndex:0
     }
   },
   methods: {
     addMenu () {
 
     },
-    handleClickMenu (item) {
+    handleClickMenu (item,index) {
+      this.currentIndex = index
       this.$emit('clickMenu', item)
     }
   }
@@ -95,6 +97,9 @@ export default {
   }
   .itemNum:hover {
     color: #fb9678;
+  }
+  .active {
+     color: #fb9678;
   }
 }
 </style>

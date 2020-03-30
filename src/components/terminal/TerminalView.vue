@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import  Terminal from "xterm";
+import  {Terminal} from "xterm";
 // import { WebLinksAddon } from "xterm-addon-web-links";
 import "xterm/dist/xterm.css";
 // import "xterm/dist/addons/fullscreen/fullscreen.css"; //如果不成功，请检查路径

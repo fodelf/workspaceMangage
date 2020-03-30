@@ -1,21 +1,20 @@
 /*
- * @Description: 首页
- * @Author: 吴文周
+ * @Description: 描述
+ * @Author: pym
  * @Github: https://github.com/fodelf
- * @Date: 2020-03-16 21:55:11
+ * @Date: 2020-03-30 23:15:02
  * @LastEditors: pym
- * @LastEditTime: 2020-03-30 22:59:10
+ * @LastEditTime: 2020-03-30 23:24:32
  */
 import menuList from '@/components/menuList/menuList.vue'
-import tableBox from '@/components/tableBox/tableBox.vue'
 import proDialog from '@/components/proDialog/proDialog.vue'
-import { getProjectSum, getProjectList, addProject } from '@/api/projectManage.js'
+import { getTemList, getProjectType } from '@/api/projectManage.js'
 export default {
-  name: 'projectManage',
+  name: 'templateManage',
   data () {
     return {
       menuObj:{
-        title:'项目总计',
+        title:'本地模板总计',
         total:0,
         menuList:[]
       },
@@ -57,14 +56,9 @@ export default {
       this.tablePag.pageNo = val
       this.selectMenu(this.itemObj)
     },
-    getProList(item){
-      console.log(item)
-      this.tablePag.pageNo = 1
-      this.selectMenu(item)
-    },
     /**
      * @name: selectMenu
-     * @description: 根据项目类型查询项目
+     * @description: 根据类型查询模板
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
@@ -76,7 +70,7 @@ export default {
         pageSize:this.tablePag.pageSize,
         keyword:this.keyword
       }
-      getProjectList(params).then(res=>{
+      getTemList(params).then(res=>{
         this.dataList = (res.list || []).map((item,index)=>{
           item.index = index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
           return item
@@ -89,7 +83,7 @@ export default {
     },
     /**
      * @name: queryProList
-     * @description: 获取项目列表
+     * @description: 获取本地模板列表
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
