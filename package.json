@@ -9,7 +9,9 @@
     "start": "nodemon ./server/app.js"
   },
   "dependencies": {
+    "@dking/dgit": "0.0.10",
     "core-js": "^3.6.4",
+    "download-git-repo": "^3.0.2",
     "element-ui": "^2.13.0",
     "git-down-repo": "^2.4.3",
     "less": "^3.11.1",
@@ -19,6 +21,7 @@
     "socket.io": "^2.3.0",
     "sqlite3": "^4.1.1",
     "typescript": "^3.8.3",
+    "uuid": "^7.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "wx": "0.0.36",

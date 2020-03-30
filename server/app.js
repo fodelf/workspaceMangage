@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-26 21:23:41
+ * @LastEditTime: 2020-03-29 20:10:42
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -40,13 +40,17 @@ app.get('/api/getProjectType', workServer.getProjectType)
 // 新建项目
 app.post('/api/initNewProject', workServer.initNewProject)
 // 新建项目
-app.post('/api/newProject', workServer.newProject)
+// app.post('/api/newProject', workServer.newProject)
 // 获取项目列表
 app.get('/api/getProjectList', workServer.getProjectList)
 // 获取项目汇总列表
 app.get('/api/getProjectSum', workServer.getProjectSum)
-// 获取项目汇总列表
-app.get('/api/getProjectSum', workServer.getProjectSum)
+// 上传文件
+app.post('/api/upload', workServer.upload)
+// 新增模板
+app.post('/api/template/newTemplate', workServer.newTemplate)
+// 模板列表查询
+app.get('/api/template/queryTemplateList', workServer.queryTemplateList)
 portfinder.getPort(
   {
     port: 8080, // minimum port
@@ -54,7 +58,7 @@ portfinder.getPort(
   },
   function (err, port) {
     if (err) { console.log(err) }
-    var server = http.createServer(app).listen(8888, '0.0.0.0', () => {
+    var server = http.createServer(app).listen(8081, '0.0.0.0', () => {
       console.log(`app start at http://${getIPAddress()}:${8888}`)
     });
     const io = require('socket.io')(server);
