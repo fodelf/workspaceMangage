@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-26 20:24:37
+ * @LastEditors: pym
+ * @LastEditTime: 2020-03-30 23:02:26
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -40,7 +40,12 @@ const vueRouter = new Router({
         {
           path: 'projectManage',
           component: ProjectManage,
-          name: '项目管理'
+          name: '项目管理',
+        },
+        {
+          path:'terminalManage',
+          component:TerminalView,
+          name:'terminalManage'
         }
       ]
     },

@@ -1,5 +1,13 @@
+<!--
+ * @Description: 描述
+ * @Author: pym
+ * @Github: https://github.com/fodelf
+ * @Date: 2020-03-30 23:14:42
+ * @LastEditors: pym
+ * @LastEditTime: 2020-03-30 23:17:47
+ -->
 <template>
-  <div class="projectManage">
+  <div class="templateManage">
      <div class='leftMenu'>
        <!--左侧列表组件-->
        <menuList :menuObj='menuObj' @clickMenu='selectMenu'></menuList>
@@ -15,17 +23,17 @@
        </div>
      </div>
      <!--弹窗组件-->
-     <proDialog ref='proDialog' :itemObj='itemObj' @getList='getProList'></proDialog>
+     <!-- <proDialog ref='proDialog' :itemObj='itemObj' @getList='getProList'></proDialog> -->
   </div>
 </template>
 
 <script>
-import projectManage from './projectManage.js'
+import templateManage from './templateManage.js'
 export default {
-  ...projectManage
+  ...templateManage
 }
 </script>
 
 <style rel="stylesheet/less"  lang="less" scoped>
-@import "./projectManage.less";
+@import "./templateManage.less";
 </style>

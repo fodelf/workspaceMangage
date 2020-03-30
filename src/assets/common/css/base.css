@@ -216,33 +216,36 @@
  	cursor: pointer;
  	background: #D1D6DB;
  }
-
- .blackTheme ::-webkit-scrollbar-thumb {
+ ::-webkit-scrollbar-thumb {
  	background: #0C0C0D;
  }
 
- .blackTheme ::-webkit-scrollbar-corner {
+::-webkit-scrollbar-corner {
  	background: #353B47;
  }
 
- input::-webkit-input-placeholder {
+ input::-webkit-input-placeholder{
  	/* WebKit browsers*/
- 	color: #999;
+ 	color: #6c757d !important;
  }
+ textarea::-webkit-input-placeholder{
+	/* WebKit browsers*/
+	color: #6c757d !important;
+}
 
  input:-moz-placeholder {
  	/* Mozilla Firefox 4 to 18*/
- 	color: #999;
+ 	color: #adb5bd;
  }
 
  input::-moz-placeholder {
  	/* Mozilla Firefox 19+*/
- 	color: #999;
+ 	color: #adb5bd;
  }
 
  input:-ms-input-placeholder {
  	/* Internet Explorer 10+*/
- 	color: #999;
+ 	color: #adb5bd;
  }
 
  .blackTheme input::-webkit-input-placeholder {
