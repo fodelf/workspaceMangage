@@ -21,6 +21,20 @@ Terminal.applyAddon(fullscreen); // Apply the `fullscreen` addon
 
 export default {
   name: "Shell",
+  props:{
+    type:{
+      type:String,
+      default:()=>{
+        return ""
+      }
+    },
+    actionData:{
+      type:Object,
+      default:()=>{
+        return {}
+      }
+    }
+  },
   data() {
     return {
       order: "",
@@ -198,15 +212,32 @@ export default {
       });
     }
     runFakeTerminal(_this);
-    _this.socket = window['io']('http://localhost:8888')
+    _this.socket = window['io']('http://localhost:8081')
     
     _this.socket.on('mes',(data)=>{
       // console.log("11111111111")
       term.writeln(data);
     })
+    this.initAction()
   },
 
   methods: {
+    // 初始化action
+    initAction(){
+      switch (this.$props.type) {
+        case 'project':
+          this.handleProject();
+          break;
+      
+        default:
+          break;
+      }
+    },
+    handleProject(){
+      debugger
+      this.socket.emit('project',this.$route.query);
+      console.log(this.$route.query)
+    },
     // 检查url参数,必要参数不存在,返回到首页
     checkURLparam() {
       let urlObj = this.base.urlValue();
@@ -248,12 +279,12 @@ export default {
      * 返回:无
      * **/
     wsShell() {
-      const _this = this;
-      let tag_string = this.urlParam.fullTag;
-      let namespace = this.urlParam.namespace;
-      let pod_name = this.urlParam.podName;
-      let query = `?tag_string=${tag_string}&namespace=${namespace}&pod_name=${pod_name}`;
-      let url = `v1/container/terminal/ws${query}`;
+      // const _this = this;
+      // let tag_string = this.urlParam.fullTag;
+      // let namespace = this.urlParam.namespace;
+      // let pod_name = this.urlParam.podName;
+      // let query = `?tag_string=${tag_string}&namespace=${namespace}&pod_name=${pod_name}`;
+      // let url = `v1/container/terminal/ws${query}`;
       //   let loading; //初始化加载状态变量
       // this.shellWs = this.base.WS({
       //   url,

@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "nodemon ./server/app.js"
+    "start": "nodemon ./app/app.js",
+    "dev": "node ./app/app.js"
   },
   "dependencies": {
     "@dking/dgit": "0.0.10",

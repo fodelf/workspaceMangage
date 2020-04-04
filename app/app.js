@@ -4,13 +4,15 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-30 23:03:11
+ * @LastEditTime: 2020-04-02 15:07:29
  */
 const express = require('express')
 const bodyParser = require('body-parser')
 const { initTable } = require('./sql/initTable')
 const { getIPAddress } = require('./utils/ipAddress')
-const workServer = require('./server/workServer.js')
+const workServer = require('./service/work.js')
+const common = require('./service/common.js')
+const socket = require('./service/socket.js')
 const portfinder = require('portfinder')
 const http = require('http')
 // const execa = require("execa");
@@ -22,8 +24,8 @@ const {
 // 初始化数据库
 initTable()
 const app = express()
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // 解决跨域
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -55,6 +57,8 @@ app.post('/api/template/newTemplate', workServer.newTemplate)
 app.get('/api/template/queryTemplateList', workServer.queryTemplateList)
 // 模板汇总查询
 app.get('/api/template/queryTemplateSum', workServer.queryTemplateSum)
+// 判断路径是否存在
+app.post('/api/isFileExist', common.isFileExist)
 portfinder.getPort(
   {
     port: 8080, // minimum port
@@ -144,7 +148,10 @@ portfinder.getPort(
         //     client.emit('mes',i++);
         //   },5000)
       });
-
+      client.on('project', (data) => {
+        console.log("xxxxxxxxx")
+        socket.projectHandle(data,client)
+      });
     });
   }
 )

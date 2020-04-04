@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-30 23:35:03
+ * @LastEditTime: 2020-03-31 22:12:51
  */
 const workDao = require('../dao/workDao.js')
-const initData = require('../sql/initData.js')
+const { querySum } =require('./common.js')
 const exec = require('child_process').exec
-const {nodeModules} = require('../utils/gitDown.js');
+const { nodeModules } = require('../utils/gitDown.js');
 var UUID = require('uuid')
-const url=require('url');
+const url = require('url');
 const result = {
   resultCode: 200,
   resultEntity: {},
@@ -74,46 +74,18 @@ async function initNewProject (req, res) {
 async function getProjectList (req, res) {
   const callBack = function (data) {
     let resultEntity = {
-      total:data[0]?data[0]['total']:0,
-      list:data
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
     }
     res.send({ ...result, resultEntity })
   }
   // console.log(req.body)
-  workDao.queryProjectList(url.parse(req.url,true).query, callBack)
+  workDao.queryProjectList(url.parse(req.url, true).query, callBack)
   // workDao.queryProjectList(req.body, callBack)
 }
 // 获取项目汇总列表
 async function getProjectSum (req, res) {
-  const callBackType = function (typeData) {
-    const callBack = function (data) {
-      console.log(data)
-      console.log(typeData)
-      typeData.forEach(element => {
-        if (!data.every((item) => {
-          return item.type == element.value
-        })) {
-          let child = {
-            "type": element.value,
-            "count": 0,
-            "label": element.label
-          }
-          data.push(child)
-        }
-      });
-      let totalSum = 0
-      data.forEach((item)=>{
-        totalSum+= item.count
-      })
-      let resultEntity = {
-          total: totalSum,
-          list: data
-      }
-      res.send({ ...result, resultEntity })
-    }
-    workDao.queryProjectSum(callBack)
-  }
-  workDao.queryProjectType(callBackType)
+  querySum('project', res)
 }
 // 获取项目列表
 async function upload (req, res) {
@@ -130,57 +102,29 @@ async function newTemplate (req, res) {
   const callBack = function () {
     res.send(result)
   }
-  workDao.insertTemplate(body,callBack);
+  workDao.insertTemplate(body, callBack);
 }
 // 获取项目列表
 async function queryTemplateList (req, res) {
   const callBack = function (data) {
     let resultEntity = {
-      total:data[0]?data[0]['total']:0,
-      list:data
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
     }
     res.send({ ...result, resultEntity })
   }
-  workDao.queryTemplateList(url.parse(req.url,true).query, callBack)
+  workDao.queryTemplateList(url.parse(req.url, true).query, callBack)
 }
 // 获取模板汇总
 async function queryTemplateSum (req, res) {
-  const callBackType = function (typeData) {
-    const callBack = function (data) {
-      console.log(data)
-      console.log(typeData)
-      typeData.forEach(element => {
-        if (!data.every((item) => {
-          return item.type == element.value
-        })) {
-          let child = {
-            "type": element.value,
-            "count": 0,
-            "label": element.label
-          }
-          data.push(child)
-        }
-      });
-      let totalSum = 0
-      data.forEach((item)=>{
-        totalSum+= item.count
-      })
-      let resultEntity = {
-          total: totalSum,
-          list: data
-      }
-      res.send({ ...result, resultEntity })
-    }
-    workDao.queryTemplateSum(callBack)
-  }
-  workDao.queryProjectType(callBackType)
+  querySum('template', res)
 }
 // 获取项目汇总
 async function queryProjectById (req, res) {
   const callBack = function (data) {
     let resultEntity = {
-      total:data[0]?data[0]['total']:0,
-      list:data
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
     }
     res.send({ ...result, resultEntity })
   }

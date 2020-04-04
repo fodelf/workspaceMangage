@@ -3,15 +3,16 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
- * @LastEditors: pym
- * @LastEditTime: 2020-03-30 23:02:26
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-01 16:34:02
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainLayout from '@/views/layout/Layout.vue'
 const Home = () => import('@/views/home/Home.vue')
 const ProjectManage = () => import('@/views/projectManage/projectManage.vue')
-const TerminalView = () => import('components/terminal/TerminalView.vue')
+const ProjectInit = () => import('@/views/projectManage/projectInit/ProjectInit.vue')
+// const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
   routes: [
@@ -43,9 +44,9 @@ const vueRouter = new Router({
           name: '项目管理',
         },
         {
-          path:'terminalManage',
-          component:TerminalView,
-          name:'terminalManage'
+          path:'projectInit',
+          component:ProjectInit,
+          name:'projectInit'
         }
       ]
     },
@@ -57,8 +58,8 @@ const vueRouter = new Router({
       children: [
         {
           path: 'terminalManage',
-          component: TerminalView,
-          name: 'terminalManage'
+          component: ProjectInit,
+          name: 'projectInit'
         }
       ]
     }

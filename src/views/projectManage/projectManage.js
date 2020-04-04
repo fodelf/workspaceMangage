@@ -3,13 +3,13 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: pym
- * @LastEditTime: 2020-03-30 22:59:10
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-01 16:06:47
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tableBox from '@/components/tableBox/tableBox.vue'
 import proDialog from '@/components/proDialog/proDialog.vue'
-import { getProjectSum, getProjectList, addProject } from '@/api/projectManage.js'
+import { getProjectSum, getProjectList} from '@/api/projectManage.js'
 export default {
   name: 'projectManage',
   data () {

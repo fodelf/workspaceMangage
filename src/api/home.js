@@ -4,14 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 19:52:07
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 20:05:00
+ * @LastEditTime: 2020-04-01 09:14:39
  */
 import request from '@/utils/request'
 
-export function getIndexCount (params) {
+export function getIndexCount () {
   return request({
     url: '/api/getIndexCount',
-    method: 'GET',
-    params: params
+    method: 'GET'
   })
 }

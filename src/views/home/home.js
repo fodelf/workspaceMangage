@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 21:12:29
+ * @LastEditTime: 2020-04-01 10:47:47
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -38,11 +38,10 @@ export default {
      * @return {type}: 默认类型
      */
     queryIndexCount(){
-      getIndexCount({}).then(res=>{
+      getIndexCount().then(res=>{
         console.log(res)
-        let list = res.resultEntity || {}
         this.cardList.map(item=>{
-          item.num = list[item.key] || 0
+           return item.num = res[item.key] || 0
         })
       })
     }

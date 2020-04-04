@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
- * @LastEditors: pym
- * @LastEditTime: 2020-03-30 23:04:05
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-01 16:55:24
  -->
  <template>
    <el-dialog :visible='proVisible' width='40%' title='新增项目' :before-close="close" v-if='proVisible'>
@@ -123,14 +123,16 @@ export default {
     confirm(){
       this.$refs.proForm.validate((valid)=>{
         if(valid){
-          addProject(this.proForm).then(res=>{
+          addProject(this.proForm).then(()=>{
             this.$message({
               type:'success',
               message:'新增成功！'
             })
             this.proVisible = false
+            debugger
             this.$router.push({
-              path:'/project/terminalManage'
+              path:'/project/projectInit',
+              query:this.proForm
             })
             // this.$emit('getList',this._props.itemObj)
           })

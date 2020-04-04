@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-30 23:37:07
+ * @LastEditTime: 2020-03-31 21:51:28
  */
 const sd = require('silly-datetime');
 const { sqliteDB } = require('../sql/initTable')
@@ -45,9 +45,13 @@ async function queryProjectList(data,callBack){
   })
 }
 // 获取项目汇总
-async function queryProjectSum(callBack){
-  var querySql =`SELECT type , COUNT(*) as count, label from  project   LEFT JOIN  ptype  ON project.type = ptype.value GROUP BY project.type DESC`
+async function querySum(tableName,callBack){
+  //var querySql =` SELECT * from (SELECT  value , COUNT(value) as count, label from   ptype  LEFT JOIN  project  ON project.type = ptype.value GROUP BY ptype.value) t1 ORDER BY t1.count  DESC`
+  //var querySql = `SELECT count(p.type),distinct(p.type),distinct(t.label) from ptype as t,project as p where t.value = p.type`
+  var querySql =`select t.value ,t.label ,count(p.type) as count from ptype as t left join ${tableName} as p on t.value=p.type group by t.value,t.label ORDER BY count  DESC;`
+  console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
+    console.log(data)
     callBack(data)
   })
 }
@@ -87,7 +91,7 @@ module.exports = {
   queryProjectType,
   newProject,
   queryProjectList,
-  queryProjectSum,
+  querySum,
   insertTemplate,
   queryTemplateList,
   queryTemplateSum

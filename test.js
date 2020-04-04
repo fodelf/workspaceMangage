@@ -4,10 +4,10 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-28 12:40:28
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-30 23:39:15
+ * @LastEditTime: 2020-04-01 22:41:37
  */
 let download = require('download-git-repo')
-const {nodeModules} = require('./server/utils/gitDown.js');
+const {nodeModules} = require('./app/utils/gitDown.js');
 // let {relativeDir} = require('./server/utils/computed.js')
 let path = require('path')
 // const tmpdir = path.join(__dirname)
@@ -15,59 +15,66 @@ const presetName = 'https://github.com/fodelf/gitActions.git'
 console.log(__dirname)
 console.log(path.relative(__dirname,'/Users/fodelf/git/testb/s'))
 // console.log(relativeDir('/Users/fodelf/git/testb/s',__dirname))
-download(`direct:${presetName}`, path.relative(__dirname,'/Users/fodelf/git/testb/s'), { clone: true }, function (err) {
-  console.log(err ? 'Error' : 'Success')
-})
-
-var spawn = require('child_process').spawn;
-
-function test (repo, targetPath, opts, cb) {
-
-    if (typeof opts === 'function') {
-        cb = opts;
-        opts = null;
-    }
-
-    opts = opts || {};
-
-    var git = opts.git || 'git';
-    var args = ['clone'];
-
-    if (opts.shallow) {
-        args.push('--depth');
-        args.push('1');
-    }
-
-    args.push('--');
-    args.push(repo);
-    args.push(targetPath);
-
-    var process = spawn(git, args);
-    process.on('close', function(status) {
-        if (status == 0) {
-            if (opts.checkout) {
-                _checkout();
-            } else {
-                cb && cb();    
-            }
-        } else {
-            cb && cb(new Error("'git clone' failed with status " + status));
+function xx(){
+    download(`direct:${presetName}`, path.relative(__dirname,'/Users/fodelf/git/testb/s'), { clone: true }, function (err) {
+        if(err){
+            xx() 
+        }else{
+            console.log()
         }
-    });
-
-    function _checkout() {
-        var args = ['checkout', opts.checkout];
-        var process = spawn(git, args, { cwd: targetPath });
-        process.on('close', function(status) {
-            if (status == 0) {
-                cb && cb();
-            } else {
-                cb && cb(new Error("'git checkout' failed with status " + status));
-            }
-        });
-    }
-
+      })
 }
+xx()
+
+// var spawn = require('child_process').spawn;
+
+// function test (repo, targetPath, opts, cb) {
+
+//     if (typeof opts === 'function') {
+//         cb = opts;
+//         opts = null;
+//     }
+
+//     opts = opts || {};
+
+//     var git = opts.git || 'git';
+//     var args = ['clone'];
+
+//     if (opts.shallow) {
+//         args.push('--depth');
+//         args.push('1');
+//     }
+
+//     args.push('--');
+//     args.push(repo);
+//     args.push(targetPath);
+
+//     var process = spawn(git, args);
+//     process.on('close', function(status) {
+//         if (status == 0) {
+//             if (opts.checkout) {
+//                 _checkout();
+//             } else {
+//                 cb && cb();    
+//             }
+//         } else {
+//             cb && cb(new Error("'git clone' failed with status " + status));
+//         }
+//     });
+
+//     function _checkout() {
+//         var args = ['checkout', opts.checkout];
+//         var process = spawn(git, args, { cwd: targetPath });
+//         process.on('close', function(status) {
+//             if (status == 0) {
+//                 cb && cb();
+//             } else {
+//                 cb && cb(new Error("'git checkout' failed with status " + status));
+//             }
+//         });
+//     }
+
+// }
 // echo "src/components/*" >> .git/info/sparse-checkout
 
 

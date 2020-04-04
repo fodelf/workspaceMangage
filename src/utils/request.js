@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-08-14 19:09:48
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 20:07:05
+ * @LastEditTime: 2020-04-01 09:18:39
  */
 import axios from 'axios'
 import { Message } from 'element-ui'
@@ -104,7 +104,7 @@ axios.interceptors.response.use(
 
 export default function request (args) {
   let method = args.method ? args.method : 'POST'
-  let params = args.params ? args.params : { msg: '' }
+  let params = args.params ? args.params : {}
   let url = args.url ? args.url : ''
   // let resParams = {
   //   'msg': JSON.stringify(params.msg)
@@ -113,7 +113,7 @@ export default function request (args) {
   switch (method) {
     case 'POST':
       return new Promise((resolve, reject) => {
-        axios.post(url, resParams).then(
+        axios.post(url, params).then(
           res => {
             let data = res.resultEntity ? res.resultEntity : {}
             resolve(data)
@@ -127,7 +127,7 @@ export default function request (args) {
       return new Promise((resolve, reject) => {
         axios
           .get(url, {
-            params: resParams
+            params: params?params:''
           })
           .then(res => {
             let data = res.resultEntity ? res.resultEntity : {}
