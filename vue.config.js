@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-01 10:45:54
+ * @LastEditTime: 2020-04-04 11:15:50
  */
 const path = require("path");
 function resolve(dir) {
@@ -15,7 +15,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.1.105:8081'
+        target: 'http://localhost:8081'
       }
     }
   },
