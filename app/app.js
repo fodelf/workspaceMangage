@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 10:03:35
+ * @LastEditTime: 2020-04-05 17:02:26
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -13,11 +13,12 @@ const config = require('./config/config')
 const workServer = require('./service/work.js')
 const common = require('./service/common.js')
 const socket = require('./service/socket.js')
+const routerAction = require('./router/router.js')
 const portfinder = require('portfinder')
 const http = require('http')
 const mutipart = require('connect-multiparty')
 const mutipartMiddeware = mutipart()
-
+const path = require('path')
 initTable()
 const app = express()
 app.use(bodyParser.json({ limit: '50mb' }))
@@ -31,9 +32,20 @@ app.all('*', function(req, res, next) {
   res.header('Content-Type', 'application/json;charset=utf-8')
   next()
 })
-app.use(express.static(process.cwd() + '/static'))
+app.use(express.static(path.join(process.cwd(), 'static')))
+routerAction(app)
 // 首页列表计数详细
-app.get('/api/getIndexCount', workServer.getIndexCount)
+/**
+ * @api {get} /api/getIndexCount
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {Number} id Users unique ID.
+ *
+ * @apiSuccess {String} firstname Firstname of the User.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
+// app.get('/api/getIndexCount', workServer.getIndexCount)
 // 获取项目类型
 app.get('/api/getProjectType', workServer.getProjectType)
 // 新建项目
@@ -71,7 +83,7 @@ portfinder.getPort(
     if (err) {
       console.log(err)
     }
-    config.port = 8081
+    config.port = port
     var server = http.createServer(app).listen(8081, '0.0.0.0', () => {
       console.log(`app start at http://${config.ip}:${8081}`)
     })

@@ -4,23 +4,20 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 10:05:29
+ * @LastEditTime: 2020-04-05 17:07:32
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
 const { sqliteDB } = require('../sql/initTable')
-async function queryIndexCount(callBack) {
-  var querySql = ` select t1.projectCount,t2.templateCount,t3.componentCount ,t4.utilCount from (select count(*) projectCount from project) t1, (select count(*) templateCount from template) t2 ,(select count(*) componentCount from component) t3,(select count(*) utilCount from util) t4`
-  sqliteDB.queryData(querySql, function(data) {
-    callBack(data[0])
-  })
+// 获取首页汇总
+async function queryIndexCount() {
+  var querySql = `select t1.projectCount,t2.templateCount,t3.componentCount ,t4.utilCount from (select count(*) projectCount from project) t1, (select count(*) templateCount from template) t2 ,(select count(*) componentCount from component) t3,(select count(*) scriptCount from script) t4`
+  return await sqliteDB.queryData1(querySql)
 }
 // 项目类型字典项
-async function queryProjectType(callBack) {
+async function queryProjectType() {
   var querySql = `SELECT * from ptype`
-  sqliteDB.queryData(querySql, function(data) {
-    callBack(data)
-  })
+  return await sqliteDB.queryData1(querySql)
 }
 // 新增项目
 async function newProject(data, callBack) {
@@ -55,7 +52,6 @@ async function queryProjectList(data, callBack) {
   } deleteFlag = 0 and keyword  LIKE '%${
     data.keyword ? data.keyword : ''
   }%' LIMIT ${n1},${n2}`
-  console.log(querySql)
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
   })
@@ -115,6 +111,7 @@ async function queryTemplateSum(callBack) {
   sqliteDB.queryData(querySql, function(data) {
     callBack(data)
   })
+  // await sqliteDB.queryData(querySql
 }
 // 获取项目模板列表
 async function queryCommonList(data, tableName, callBack) {

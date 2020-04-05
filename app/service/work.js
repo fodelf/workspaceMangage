@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 09:20:47
+ * @LastEditTime: 2020-04-05 17:06:35
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
@@ -17,27 +17,14 @@ const result = {
   resultEntity: {},
   resultMes: 'success'
 }
-const resultBad = {
-  resultCode: 500,
-  resultEntity: {},
-  resultMes: '服务异常'
-}
 // 获取首页计数明显
-async function getIndexCount(req, res) {
-  const callBack = function(data) {
-    let resultEntity = data
-    res.send({ ...result, resultEntity })
-  }
-  workDao.queryIndexCount(callBack)
+async function getIndexCount() {
+  return await workDao.queryIndexCount()
 }
 
 // 获取项目分类字典项
-async function getProjectType(req, res) {
-  const callBack = function(data) {
-    let resultEntity = data
-    res.send({ ...result, resultEntity })
-  }
-  workDao.queryProjectType(callBack)
+async function getProjectType() {
+  return await workDao.queryProjectType()
 }
 // 新增项目
 async function newProject(req, res) {

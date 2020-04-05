@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "nodemon ./app/app.js",
-    "dev": "node ./app/app.js"
+    "dev": "node ./app/app.js",
+    "api": "apidoc -i app/controller/ -o doc/api",
+    "apiUI": "nodemon ./doc/app.js"
   },
   "dependencies": {
     "@dking/dgit": "0.0.10",

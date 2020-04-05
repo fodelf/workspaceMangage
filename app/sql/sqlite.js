@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:44:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-29 22:29:34
+ * @LastEditTime: 2020-04-05 17:07:53
  */
 var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
@@ -19,7 +19,7 @@ DB.SqliteDB = function(file) {
 }
 
 DB.printErrorInfo = function(err) {
-  console.log('Error Message:' + err.message + ' ErrorNumber:' + errno)
+  console.log('Error Message:' + err.message + ' ErrorNumber:' + err.no)
 }
 
 DB.SqliteDB.prototype.createTable = function(sql) {
@@ -49,11 +49,11 @@ DB.SqliteDB.prototype.insertData = function(sql, objects, callback) {
   })
 }
 
-DB.SqliteDB.prototype.queryData = function(sql, callback,errBack) {
+DB.SqliteDB.prototype.queryData = function(sql, callback, errBack) {
   DB.db.all(sql, function(err, rows) {
     if (null != err) {
       DB.printErrorInfo(err)
-      if(errBack){
+      if (errBack) {
         errBack()
       }
       return
@@ -64,7 +64,19 @@ DB.SqliteDB.prototype.queryData = function(sql, callback,errBack) {
     }
   })
 }
-
+DB.SqliteDB.prototype.queryData1 = async function(sql) {
+  console.log(sql)
+  return new Promise(function(resolve, reject) {
+    DB.db.all(sql, function(err, rows) {
+      if (err) {
+        DB.printErrorInfo(err)
+        reject(new Error(err.message))
+      } else {
+        resolve(rows)
+      }
+    })
+  })
+}
 DB.SqliteDB.prototype.executeSql = function(sql) {
   DB.db.run(sql, function(err) {
     if (null != err) {
