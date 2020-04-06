@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 16:47:54
+ * @LastEditTime: 2020-04-06 18:26:16
  -->
 <template>
   <el-dialog
@@ -155,7 +155,7 @@ export default {
     },
     queryProTypeList() {
       getProjectType({}).then((res) => {
-        console.log(res)
+        // console.log(res)
         this.typeList = res || []
       })
     },
@@ -177,7 +177,7 @@ export default {
               message: '新增成功！',
             })
             this.proVisible = false
-            debugger
+            // debugger
             this.$router.push({
               path: '/project/projectInit',
               query: this.proForm,

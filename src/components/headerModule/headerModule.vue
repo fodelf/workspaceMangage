@@ -4,13 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:29:01
  * @LastEditors: pym
- * @LastEditTime: 2020-04-04 23:50:15
+ * @LastEditTime: 2020-04-06 18:22:28
  -->
 <template>
   <div class="header">
     <span class="menuIcon iconfont icon-zhankai" @click="changeMenu()"></span>
     <div class="headerTit clearfix">
-      <i class="headerIcon"></i>pym
+      <i class="headerIcon"></i>吴文周
       <span class="iconfont icon-shezhi"></span>
       <!-- <el-switch
   v-model="value"
@@ -27,14 +27,14 @@ export default {
   data() {
     return {
       isCollapse: false,
-      value: ''
+      value: '',
     }
   },
   methods: {
     changeMenu() {
       this.$emit('changeCollapse')
-    }
-  }
+    },
+  },
 }
 </script>
 

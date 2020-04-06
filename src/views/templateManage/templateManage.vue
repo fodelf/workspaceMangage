@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:14:42
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 17:56:16
+ * @LastEditTime: 2020-04-06 18:08:38
  -->
 <template>
   <div class="templateManage">
@@ -53,7 +53,7 @@
     <tempDialog
       ref="tempDialog"
       :itemObj="itemObj"
-      @getTempList="queryTempCard"
+      @getTempList="getTempList"
     ></tempDialog>
   </div>
 </template>

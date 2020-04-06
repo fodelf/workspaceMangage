@@ -6,19 +6,19 @@
   </div>
 </template>
 <script>
-import { Terminal } from 'xterm';
+import { Terminal } from 'xterm'
 // import { WebLinksAddon } from "xterm-addon-web-links";
-import 'xterm/dist/xterm.css';
+import 'xterm/dist/xterm.css'
 // import "xterm/dist/addons/fullscreen/fullscreen.css"; //如果不成功，请检查路径
 
-import * as fit from 'xterm/lib/addons/fit/fit';
+import * as fit from 'xterm/lib/addons/fit/fit'
 
-import * as fullscreen from 'xterm/lib/addons/fullscreen/fullscreen';
-import * as attach from 'xterm/lib/addons/attach/attach';
+import * as fullscreen from 'xterm/lib/addons/fullscreen/fullscreen'
+import * as attach from 'xterm/lib/addons/attach/attach'
 
-Terminal.applyAddon(fit);
-Terminal.applyAddon(attach);
-Terminal.applyAddon(fullscreen); // Apply the `fullscreen` addon
+Terminal.applyAddon(fit)
+Terminal.applyAddon(attach)
+Terminal.applyAddon(fullscreen) // Apply the `fullscreen` addon
 
 export default {
   name: 'Shell',
@@ -26,15 +26,15 @@ export default {
     type: {
       type: String,
       default: () => {
-        return '';
-      }
+        return ''
+      },
     },
     actionData: {
       type: Object,
       default: () => {
-        return {};
-      }
-    }
+        return {}
+      },
+    },
   },
   data() {
     return {
@@ -42,13 +42,13 @@ export default {
       urlParam: {
         fullTag: '',
         namespace: '',
-        podName: ''
+        podName: '',
       },
       shellWs: '', // ws实例
       term: '', // 保存terminal实例
       showOrder: '', // 保存服务端返回的命令
-      inputList: [] // 保存用户输入的命令，用以上下健切换
-    };
+      inputList: [], // 保存用户输入的命令，用以上下健切换
+    }
   },
 
   created() {
@@ -57,7 +57,7 @@ export default {
   },
 
   mounted() {
-    let _this = this;
+    let _this = this
     // const terminal = new Terminal();
     let term = new Terminal({
       rendererType: 'canvas', //渲染类型
@@ -70,39 +70,39 @@ export default {
       theme: {
         foreground: 'yellow', //字体
         background: '#060101', //背景色
-        cursor: 'help' //设置光标
-      }
-    });
+        cursor: 'help', //设置光标
+      },
+    })
     // 换行并输入起始符“$”
     term.prompt = () => {
-      term.write('\r\n$ ');
-    };
+      term.write('\r\n$ ')
+    }
 
-    term.open(this.$refs['terminal']);
-    term.toggleFullScreen(); //全屏
-    term.fit();
+    term.open(this.$refs['terminal'])
+    term.toggleFullScreen() //全屏
+    term.fit()
 
-    term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
-    term.prompt();
+    term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+    term.prompt()
 
     function runFakeTerminal(_this) {
       if (term._initialized) {
-        return;
+        return
       }
 
-      term._initialized = true;
+      term._initialized = true
 
       term.prompt = () => {
-        term.write('\r\n ');
-      };
+        term.write('\r\n ')
+      }
 
-      term.writeln('Welcome to xterm.js');
+      term.writeln('Welcome to xterm.js')
       term.writeln(
         'This is a local terminal emulation, without a real terminal in the back-end.'
-      );
-      term.writeln('Type some keys and commands to play around.');
-      term.writeln('');
-      term.prompt();
+      )
+      term.writeln('Type some keys and commands to play around.')
+      term.writeln('')
+      term.prompt()
 
       // 监控键盘输入事件
       // / **
@@ -111,40 +111,40 @@ export default {
       //     *触发了它。
       //     * @返回一个IDisposable停止监听。
       //  * /
-      let last = 0;
+      let last = 0
 
-      term.on('key', function(key, ev) {
+      term.on('key', function (key, ev) {
         // 可打印状态，即不是alt键ctrl等功能健时
         const printable =
-          !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey;
+          !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
 
         // 因服务端返回命令包含乱码，但使用write方法输出时并不显示，故将真实显示内容截取出来
-        let index = _this.showOrder.indexOf('sh');
-        let show = _this.showOrder.substr(index, _this.showOrder.length - 1);
+        let index = _this.showOrder.indexOf('sh')
+        let show = _this.showOrder.substr(index, _this.showOrder.length - 1)
 
         //  当输入回车时
         if (ev.keyCode === 13) {
           if (_this.order == 'cls' || _this.order == 'clear') {
-            _this.order = '';
-            return false;
+            _this.order = ''
+            return false
           }
           //先将数据发送
-          term.prompt();
+          term.prompt()
           // 判断如果不是英文给出提醒
-          let reg = /[a-zA-Z]/;
+          let reg = /[a-zA-Z]/
           let order = {
             Data: _this.order,
-            Op: 'stdin'
-          };
+            Op: 'stdin',
+          }
 
           if (!reg.test(_this.order)) {
-            term.writeln('请输入有效指令~');
+            term.writeln('请输入有效指令~')
           } else {
             // 发送数据
-            _this.inputList.push(_this.order);
-            last = _this.inputList.length - 1;
-            _this.onSend(order);
-            _this.order = '';
+            _this.inputList.push(_this.order)
+            last = _this.inputList.length - 1
+            _this.onSend(order)
+            _this.order = ''
             // 清空输入内容变量
           }
         } else if (ev.keyCode === 8) {
@@ -153,73 +153,73 @@ export default {
           // Do not delete the prompt
           // 当前行字符长度如果等于后端返回字符就不进行删除
           if (term._core.buffer.x > _this.showOrder.length) {
-            term.write('\b \b'); // 输出退格
+            term.write('\b \b') // 输出退格
           }
 
           // 将输入内容变量删除
 
           if (_this.trim(_this.order) == _this.trim(_this.showOrder)) {
-            return false;
+            return false
           } else {
-            _this.order = _this.order.substr(0, _this.order.length - 1);
+            _this.order = _this.order.substr(0, _this.order.length - 1)
           }
         } else if (ev.keyCode == 38 || ev.keyCode == 40) {
-          let len = _this.inputList.length;
-          let code = ev.keyCode;
+          let len = _this.inputList.length
+          let code = ev.keyCode
 
           if (code === 38 && last <= len && last >= 0) {
             // 直接取出字符串数组最后一个元素
-            let inputVal = _this.inputList[last];
-            term.write(inputVal);
+            let inputVal = _this.inputList[last]
+            term.write(inputVal)
             if (last > 0) {
-              last--;
+              last--
             }
           }
           if (code === 40 && last < len) {
             // last现在为当前元素
             if (last == len - 1) {
-              return;
+              return
             }
             if (last < len - 1) {
-              last++;
+              last++
             }
 
-            let inputVal = _this.inputList[last];
-            term.write(inputVal);
+            let inputVal = _this.inputList[last]
+            term.write(inputVal)
           }
         } else if (ev.keyCode === 9) {
           // 如果按tab键前输入了之前后端返回字符串的第一个字符，就显示此命令
           if (_this.order !== '' && show.indexOf(_this.order) == 0) {
-            term.write(_this.showOrder);
+            term.write(_this.showOrder)
           }
         } else if (printable) {
           // 当为可打印内容时
           if (/[a-zA-Z]/.test(key)) {
-            key = key.toLowerCase();
+            key = key.toLowerCase()
           }
           // 存入输入内容变量
-          _this.order = _this.order + key;
+          _this.order = _this.order + key
           // 将变量写入终端内
-          term.write(key);
+          term.write(key)
         }
-      });
+      })
 
-      _this.term = term;
+      _this.term = term
 
       // 粘贴事件
-      term.on('paste', function(data) {
-        _this.order = data;
-        term.write(data);
-      });
+      term.on('paste', function (data) {
+        _this.order = data
+        term.write(data)
+      })
     }
-    runFakeTerminal(_this);
-    _this.socket = window['io']('http://localhost:8081');
+    runFakeTerminal(_this)
+    _this.socket = window['io']('http://localhost:8081')
 
-    _this.socket.on('mes', data => {
+    _this.socket.on('mes', (data) => {
       // console.log("11111111111")
-      term.writeln(data);
-    });
-    this.initAction();
+      term.writeln(data)
+    })
+    this.initAction()
   },
 
   methods: {
@@ -227,30 +227,30 @@ export default {
     initAction() {
       switch (this.$props.type) {
         case 'project':
-          this.handleProject();
-          break;
+          this.handleProject()
+          break
 
         default:
-          break;
+          break
       }
     },
     handleProject() {
-      debugger;
-      this.socket.emit('project', this.$route.query);
-      console.log(this.$route.query);
+      // debugger;
+      this.socket.emit('project', this.$route.query)
+      console.log(this.$route.query)
     },
     // 检查url参数,必要参数不存在,返回到首页
     checkURLparam() {
-      let urlObj = this.base.urlValue();
+      let urlObj = this.base.urlValue()
 
-      let fullTag = urlObj.full_tag ? urlObj.full_tag : ''; //所在父节点
-      fullTag = fullTag.replace(/(^ +| +$)/g, '');
+      let fullTag = urlObj.full_tag ? urlObj.full_tag : '' //所在父节点
+      fullTag = fullTag.replace(/(^ +| +$)/g, '')
 
-      let namespace = urlObj.namespace ? urlObj.namespace : ''; //所在父节点
-      namespace = namespace.replace(/(^ +| +$)/g, '');
+      let namespace = urlObj.namespace ? urlObj.namespace : '' //所在父节点
+      namespace = namespace.replace(/(^ +| +$)/g, '')
 
-      let podName = urlObj.pod_name ? urlObj.pod_name : ''; //所在父节点
-      podName = podName.replace(/(^ +| +$)/g, '');
+      let podName = urlObj.pod_name ? urlObj.pod_name : '' //所在父节点
+      podName = podName.replace(/(^ +| +$)/g, '')
 
       if (!fullTag || !namespace) {
         //所在的父级节点为空或者deploy_id不存在的情况下,弹框提示然后返回首页
@@ -261,13 +261,13 @@ export default {
           confirmButtonText: '确定',
           type: 'error',
           callback: () => {
-            this.$router.replace('/web');
-          }
-        });
+            this.$router.replace('/web')
+          },
+        })
       } else {
-        this.urlParam.fullTag = fullTag; //所在父节点
-        this.urlParam.namespace = namespace; //当前部署任务详情id
-        this.urlParam.podName = podName; //当前部署任务详情id
+        this.urlParam.fullTag = fullTag //所在父节点
+        this.urlParam.namespace = namespace //当前部署任务详情id
+        this.urlParam.podName = podName //当前部署任务详情id
       }
     },
     /**
@@ -318,7 +318,7 @@ export default {
     },
 
     onSend(data) {
-      this.socket.emit('in', data);
+      this.socket.emit('in', data)
       // data = this.base.isObject(data) ? JSON.stringify(data) : data;
       // data = this.base.isArray(data) ? data.toString() : data;
       // data = data.replace(/\\\\/, "\\");
@@ -327,8 +327,8 @@ export default {
 
     //删除左右两端的空格
     trim(str) {
-      return str.replace(/(^\s*)|(\s*$)/g, '');
-    }
-  }
-};
+      return str.replace(/(^\s*)|(\s*$)/g, '')
+    },
+  },
+}
 </script>
