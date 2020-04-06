@@ -1,28 +1,15 @@
 {
-  "name": "workstage",
-  "version": "0.0.3",
-  "main": "./app/app.js",
-  "bin": {
-    "ew ui": "./app/app.js"
-  },
+  "name": "workespacemanger",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "nodemon ./app/app.js",
-    "dev": "node ./app/app.js",
-    "api": "apidoc -i app/controller/ -o doc/api",
-    "apiUI": "node ./doc/app.js"
+    "dev": "node app.js"
   },
   "dependencies": {
     "@dking/dgit": "0.0.10",
     "core-js": "^3.6.4",
     "download-git-repo": "^3.0.2",
-    "element-ui": "^2.13.0",
-    "exprss": "0.0.1-security",
     "git-down-repo": "^2.4.3",
-    "less": "^3.11.1",
-    "less-loader": "^5.0.0",
     "log4js": "^6.1.2",
     "multer": "^1.4.2",
     "prettier-tslint": "^0.4.2",
@@ -31,12 +18,7 @@
     "sqlite3": "^4.1.1",
     "typescript": "^3.8.3",
     "uuid": "^7.0.2",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.5",
-    "wx": "0.0.36",
-    "xterm": "^3.13.2",
-    "xterm-addon-attach": "^0.5.0",
-    "xterm-addon-fit": "^0.3.0"
+    "wx": "0.0.36"
   },
   "devDependencies": {
     "@akryum/winattr": "^3.0.0",

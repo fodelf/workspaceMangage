@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 09:39:41
+ * @LastEditTime: 2020-04-06 14:14:09
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -31,35 +31,38 @@ var createScriptTableSql =
 //项目字典表
 var createPdecTableSql =
   'create table if not exists ptype(id INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT, value TEXT);'
+//项目字典表
+var createToDoListSql =
+  'create table if not exists todo(doId INTEGER PRIMARY KEY AUTOINCREMENT,taskDec TEXT,deleteFlag INTEGER,creatTime BLOB);'
 
 function initPtype() {
   var data = initData.projectType
-  var insertTileSql = 'insert into ptype (label,value) values(?, ?)'
-  sqliteDB.insertData(insertTileSql, data)
+  var insertSql = 'insert into ptype (label,value) values(?, ?)'
+  sqliteDB.insertData(insertSql, data)
 }
+async function initTable() {
+  await sqliteDB.createTable(createUserTableSql)
 
-function initTable() {
-  sqliteDB.createTable(createUserTableSql)
+  await sqliteDB.createTable(createTemplateTableSql)
 
-  sqliteDB.createTable(createTemplateTableSql)
+  await sqliteDB.createTable(createComponentTableSql)
 
-  sqliteDB.createTable(createComponentTableSql)
+  await sqliteDB.createTable(createProjectTableSql)
 
-  sqliteDB.createTable(createProjectTableSql)
+  await sqliteDB.createTable(createUtilTableSql)
 
-  sqliteDB.createTable(createUtilTableSql)
+  await sqliteDB.createTable(createPdecTableSql)
 
-  sqliteDB.createTable(createPdecTableSql)
+  await sqliteDB.createTable(createScriptTableSql)
 
-  sqliteDB.createTable(createScriptTableSql)
+  await sqliteDB.createTable(createToDoListSql)
   var querySql = `SELECT * from ptype`
-  sqliteDB.queryData(querySql, function(data) {
-    if (data.length == 0) {
-      initDec()
-    }
-  })
+  let data = await sqliteDB.queryData(querySql)
+  if (data.length == 0) {
+    initDec()
+  }
 }
-function initDec() {
+async function initDec() {
   initPtype()
 }
 

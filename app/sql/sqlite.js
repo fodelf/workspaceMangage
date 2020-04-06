@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:44:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 17:07:53
+ * @LastEditTime: 2020-04-06 14:01:55
  */
 var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
@@ -23,48 +23,42 @@ DB.printErrorInfo = function(err) {
 }
 
 DB.SqliteDB.prototype.createTable = function(sql) {
-  DB.db.serialize(function() {
-    DB.db.run(sql, function(err) {
-      if (null != err) {
+  return new Promise(function(resolve, reject) {
+    DB.db.serialize(function() {
+      DB.db.run(sql, function(err) {
+        if (null != err) {
+          DB.printErrorInfo(err)
+          reject(new Error(err.message))
+          return
+        } else {
+          resolve()
+        }
+      })
+    })
+  })
+}
+
+DB.SqliteDB.prototype.insertData = async function(sql, objects) {
+  console.log(sql)
+  console.log(JSON.stringify(objects))
+  return new Promise(function(resolve, reject) {
+    DB.db.serialize(function(err) {
+      var stmt = DB.db.prepare(sql)
+      for (var i = 0; i < objects.length; ++i) {
+        stmt.run(objects[i])
+      }
+      stmt.finalize()
+      if (err) {
         DB.printErrorInfo(err)
-        return
+        reject(new Error(err.message))
+      } else {
+        resolve()
       }
     })
   })
 }
 
-/// tilesData format; [[level, column, row, content], [level, column, row, content]]
-DB.SqliteDB.prototype.insertData = function(sql, objects, callback) {
-  DB.db.serialize(function() {
-    var stmt = DB.db.prepare(sql)
-    for (var i = 0; i < objects.length; ++i) {
-      stmt.run(objects[i])
-    }
-
-    stmt.finalize()
-    /// deal query data.
-    if (callback) {
-      callback()
-    }
-  })
-}
-
-DB.SqliteDB.prototype.queryData = function(sql, callback, errBack) {
-  DB.db.all(sql, function(err, rows) {
-    if (null != err) {
-      DB.printErrorInfo(err)
-      if (errBack) {
-        errBack()
-      }
-      return
-    }
-    /// deal query data.
-    if (callback) {
-      callback(rows)
-    }
-  })
-}
-DB.SqliteDB.prototype.queryData1 = async function(sql) {
+DB.SqliteDB.prototype.queryData = async function(sql) {
   console.log(sql)
   return new Promise(function(resolve, reject) {
     DB.db.all(sql, function(err, rows) {
@@ -72,6 +66,7 @@ DB.SqliteDB.prototype.queryData1 = async function(sql) {
         DB.printErrorInfo(err)
         reject(new Error(err.message))
       } else {
+        console.log(JSON.stringify(rows))
         resolve(rows)
       }
     })

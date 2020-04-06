@@ -4,10 +4,9 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-31 21:56:54
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 10:04:44
+ * @LastEditTime: 2020-04-06 14:24:18
  */
 const fs = require('fs')
-const url = require('url')
 const path = require('path')
 const workDao = require('../dao/workDao.js')
 const UUID = require('uuid')
@@ -16,19 +15,9 @@ const result = {
   resultEntity: {},
   resultMes: 'success'
 }
-async function querySum(tableName, res) {
-  const callBack = function(data) {
-    let totalSum = 0
-    data.forEach(item => {
-      totalSum += item.count
-    })
-    let resultEntity = {
-      total: totalSum,
-      list: data
-    }
-    res.send({ ...result, resultEntity })
-  }
-  workDao.querySum(tableName, callBack)
+// 查询汇总
+async function querySum(tableName) {
+  return await workDao.querySum(tableName)
 }
 // 判断文件路径是否存在
 async function isFileExist(req, res) {
@@ -60,40 +49,36 @@ async function upload(req, res) {
   })
 }
 
-// 判断文件路径是否存在
-async function queryCommonList(req, res, tableName) {
-  const callBack = function(data) {
-    let resultEntity = {
-      total: data[0] ? data[0]['total'] : 0,
-      list: data
-    }
-    res.send({ ...result, resultEntity })
-  }
-  workDao.queryCommonList(url.parse(req.url, true).query, tableName, callBack)
+// 获取公共列表
+async function queryCommonList(data, tableName) {
+  return await workDao.queryCommonList(data, tableName)
 }
 // 获取用户
-async function getUser(req, res) {
-  const callBack = function(data) {
-    if (data.length == 0) {
-      const insertCallBack = function() {
-        const callBack = function(data) {
-          let resultEntity = data
-          res.send({ ...result, resultEntity })
-        }
-        workDao.queryUser(callBack)
-      }
-      workDao.insertUser(insertCallBack)
-    } else {
-      let resultEntity = data
-      res.send({ ...result, resultEntity })
-    }
+async function queryUser() {
+  let data = await workDao.queryUser()
+  console.log(data)
+  if (data.length == 0) {
+    await workDao.insertUser()
+    return queryUserAgain()
+  } else {
+    return data
   }
-  workDao.queryUser(callBack)
+}
+async function queryUserAgain() {
+  return new Promise(function(resolve) {
+    setTimeout(async () => {
+      resolve(await workDao.queryUser())
+    })
+  })
+}
+async function queryAll(tableName) {
+  return await workDao.queryAll(tableName)
 }
 module.exports = {
   querySum,
   isFileExist,
   upload,
   queryCommonList,
-  getUser
+  queryUser,
+  queryAll
 }

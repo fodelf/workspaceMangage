@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 17:06:35
+ * @LastEditTime: 2020-04-06 14:42:31
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
-const exec = require('child_process').exec
-const { nodeModules } = require('../utils/gitDown.js')
-var UUID = require('uuid')
-const url = require('url')
+// const exec = require('child_process').exec
+// const { nodeModules } = require('../utils/gitDown.js')
+// var UUID = require('uuid')
+// const url = require('url')
 const result = {
   resultCode: 200,
   resultEntity: {},
@@ -27,20 +27,16 @@ async function getProjectType() {
   return await workDao.queryProjectType()
 }
 // 新增项目
-async function newProject(req, res) {
-  let body = req.body
-  const callBack = function() {
-    res.send(result)
-  }
-  workDao.newProject(body, callBack)
+async function initNewProject(data) {
+  return await workDao.initNewProject(data)
 }
 // 初始新增项目
-async function initNewProject(req, res) {
-  const callBackFun = function() {
-    res.send(result)
-  }
-  workDao.newProject(req.body, callBackFun)
-}
+// async function initNewProject(req, res) {
+//   const callBackFun = function() {
+//     res.send(result)
+//   }
+//   workDao.newProject(req.body, callBackFun)
+// }
 // 获取项目列表
 async function getProjectList(req, res) {
   common.queryCommonList(req, res, 'project')
@@ -50,12 +46,8 @@ async function getProjectSum(req, res) {
   common.querySum('project', res)
 }
 // 新增模板
-async function newTemplate(req, res) {
-  let body = req.body
-  const callBack = function() {
-    res.send(result)
-  }
-  workDao.insertTemplate(body, callBack)
+async function newTemplate(data) {
+  return await workDao.insertTemplate(data)
 }
 // 获取项目列表
 async function queryTemplateList(req, res) {
@@ -86,16 +78,16 @@ async function queryProjectById(req, res) {
 }
 
 // 新增组件
-async function insertComponent(req, res) {
-  const callBackFun = function() {
-    res.send(result)
-  }
-  workDao.insertComponent(req.body, callBackFun)
+async function insertComponent(data) {
+  return await workDao.insertComponent(data)
+}
+// 新增待办列表
+async function insertTodoList(data) {
+  return await workDao.insertTodoList(data)
 }
 module.exports = {
   getIndexCount,
   getProjectType,
-  newProject,
   getProjectList,
   getProjectSum,
   initNewProject,
@@ -105,5 +97,6 @@ module.exports = {
   queryProjectById,
   queryComponentSum,
   queryComponentList,
-  insertComponent
+  insertComponent,
+  insertTodoList
 }

@@ -23,3 +23,5 @@ package-lock.json
 work.db
 /static
 /doc
+/app/dist
+cheese.log
