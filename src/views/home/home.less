@@ -1,86 +1,89 @@
 .home {
   width: 100%;
-  height: 100%;
+  // height: calc100% - 56px);
+  padding: 20px 25px 0;
+  box-sizing: border-box;
 
   .cardGroup {
     display: flex;
     width: 100%;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     // flex-direction: row;
     .cardItem {
-      flex:1;
-      border-right: 1px solid #4F5467;
-      
+      flex: 1;
+      border-right: 1px solid #4f5467;
     }
   }
   .row {
-    display:flex;
-    flex-wrap:wrap;
-    width:100%;
-    height:450px;
-    margin-bottom:20px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 20px;
     .chartBox {
-      flex:0 0 66%;
-      max-width:66%;
-      padding-right:10px;
+      flex: 0 0 66.66667%;
+      max-width: 66.66667%;
+      padding-right: 10px;
       box-sizing: border-box;
-      height:100%;
+      height: 100%;
       .realChart {
-        width:100%;
-        height:100%;
-        background:#353c48;
+        width: 100%;
+        height: 100%;
+        background: #353c48;
       }
     }
     .rightRow {
-      flex:0 0 34%;
-      height:100%;
-      padding-left:10px;
+      flex: 0 0 33.33333%;
+      height: 100%;
+      padding-left: 10px;
       box-sizing: border-box;
       .realRight {
-        width:100%;
-        height:100%;
-        display:flex;
+        width: 100%;
+        height: 100%;
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
         .advertisement {
           flex: 0 0 50%;
-          width:100%;
-          background:#353c48;
+          width: 100%;
+          background: #353c48;
         }
         .weather {
-          flex:0 0 50%;
-          width:100%;
-          padding-bottom:20px;
+          flex: 0 0 50%;
+          width: 100%;
+          padding-bottom: 20px;
           box-sizing: border-box;
           .realWeather {
-            width:100%;
-            height:100%;
-            background:#353c48;
+            width: 100%;
+            height: 100%;
+            background: #353c48;
           }
-
         }
-      } 
+      }
     }
+
     .cardBox {
-      flex:1;
-      height:100%;
-      padding-left:10px;
-      padding-right:10px;
+      flex: 0 0 33.33333%;
+      height: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
       box-sizing: border-box;
       .realCard {
-        width:100%;
-        height:100%;
-        padding:20px;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
         box-sizing: border-box;
-        background:#353c48;
+        background: #353c48;
       }
     }
     .todoList {
-      padding-left:0;
+      padding-left: 0;
     }
     .team {
-      padding-right:0;
+      padding-right: 0;
     }
-
+  }
+  .chartRow {
+    height: 450px;
   }
 }

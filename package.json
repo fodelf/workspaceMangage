@@ -13,6 +13,7 @@
     "@dking/dgit": "0.0.10",
     "core-js": "^3.6.4",
     "download-git-repo": "^3.0.2",
+    "echarts": "^4.7.0",
     "element-ui": "^2.13.0",
     "git-down-repo": "^2.4.3",
     "less": "^3.11.1",
@@ -39,6 +40,8 @@
     "connect-multiparty": "^2.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.1.0"
   }
 }

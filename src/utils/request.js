@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-08-14 19:09:48
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-01 09:18:39
+ * @LastEditors: pym
+ * @LastEditTime: 2020-04-04 16:58:51
  */
 import axios from 'axios'
 import { Message } from 'element-ui'
@@ -102,7 +102,7 @@ axios.interceptors.response.use(
  * @returns {Promise}
  */
 
-export default function request (args) {
+export default function request(args) {
   let method = args.method ? args.method : 'POST'
   let params = args.params ? args.params : {}
   let url = args.url ? args.url : ''
@@ -127,7 +127,7 @@ export default function request (args) {
       return new Promise((resolve, reject) => {
         axios
           .get(url, {
-            params: params?params:''
+            params: params ? params : ''
           })
           .then(res => {
             let data = res.resultEntity ? res.resultEntity : {}

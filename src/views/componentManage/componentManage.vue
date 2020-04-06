@@ -2,19 +2,19 @@
  * @Description: 描述
  * @Author: pym
  * @Github: https://github.com/fodelf
- * @Date: 2020-03-30 23:14:42
+ * @Date: 2020-04-06 12:46:09
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 17:56:16
+ * @LastEditTime: 2020-04-06 12:47:42
  -->
 <template>
-  <div class="templateManage">
+  <div class="componentManage">
     <div class="leftMenu">
       <!--左侧列表组件-->
-      <menuList :menuObj="menuObj" @clickMenu="queryTempCard"></menuList>
+      <menuList :menuObj="menuObj" @clickMenu="queryCompCard"></menuList>
     </div>
     <div class="rightList">
       <p class="rightTit clearfix">
-        <el-button type="primary" @click="addPro" icon="el-icon-plus"
+        <el-button type="primary" @click="addComp" icon="el-icon-plus"
           >新增</el-button
         >
         <el-input
@@ -24,9 +24,9 @@
         ></el-input>
       </p>
       <div class="cardCon">
-        <el-tabs v-model="tempKind">
+        <el-tabs v-model="compKind">
           <el-tab-pane
-            v-for="item in tabTemp"
+            v-for="item in tabComp"
             :label="item.label"
             :name="item.value"
             :key="item.value"
@@ -39,7 +39,7 @@
               > -->
             <!--卡片组件-->
             <templateCard
-              :tempCardList="tempCardList"
+              :tempCardList="compCardList"
               :tablePag="tablePag"
               @changePageNo="getPageNo"
             ></templateCard>
@@ -50,21 +50,21 @@
       </div>
     </div>
     <!--弹窗组件-->
-    <tempDialog
+    <!-- <tempDialog
       ref="tempDialog"
       :itemObj="itemObj"
       @getTempList="queryTempCard"
-    ></tempDialog>
+    ></tempDialog> -->
   </div>
 </template>
 
 <script>
-import templateManage from './templateManage.js'
+import componentManage from './componentManage.js'
 export default {
-  ...templateManage,
+  ...componentManage,
 }
 </script>
 
 <style rel="stylesheet/less" lang="less" scoped>
-@import './templateManage.less';
+@import './componentManage.less';
 </style>
