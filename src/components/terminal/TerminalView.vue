@@ -1,51 +1,52 @@
 <template>
   <div>
     <div id="terminal" ref="terminal"></div>
+
+    <div>sss ss</div>
   </div>
 </template>
-
 <script>
-import  {Terminal} from "xterm";
+import { Terminal } from 'xterm';
 // import { WebLinksAddon } from "xterm-addon-web-links";
-import "xterm/dist/xterm.css";
+import 'xterm/dist/xterm.css';
 // import "xterm/dist/addons/fullscreen/fullscreen.css"; //如果不成功，请检查路径
 
-import * as fit from "xterm/lib/addons/fit/fit";
+import * as fit from 'xterm/lib/addons/fit/fit';
 
-import * as fullscreen from "xterm/lib/addons/fullscreen/fullscreen";
-import * as attach from "xterm/lib/addons/attach/attach";
+import * as fullscreen from 'xterm/lib/addons/fullscreen/fullscreen';
+import * as attach from 'xterm/lib/addons/attach/attach';
 
 Terminal.applyAddon(fit);
 Terminal.applyAddon(attach);
 Terminal.applyAddon(fullscreen); // Apply the `fullscreen` addon
 
 export default {
-  name: "Shell",
-  props:{
-    type:{
-      type:String,
-      default:()=>{
-        return ""
+  name: 'Shell',
+  props: {
+    type: {
+      type: String,
+      default: () => {
+        return '';
       }
     },
-    actionData:{
-      type:Object,
-      default:()=>{
-        return {}
+    actionData: {
+      type: Object,
+      default: () => {
+        return {};
       }
     }
   },
   data() {
     return {
-      order: "",
+      order: '',
       urlParam: {
-        fullTag: "",
-        namespace: "",
-        podName: ""
+        fullTag: '',
+        namespace: '',
+        podName: ''
       },
-      shellWs: "", // ws实例
-      term: "", // 保存terminal实例
-      showOrder: "", // 保存服务端返回的命令
+      shellWs: '', // ws实例
+      term: '', // 保存terminal实例
+      showOrder: '', // 保存服务端返回的命令
       inputList: [] // 保存用户输入的命令，用以上下健切换
     };
   },
@@ -59,29 +60,29 @@ export default {
     let _this = this;
     // const terminal = new Terminal();
     let term = new Terminal({
-      rendererType: "canvas", //渲染类型
+      rendererType: 'canvas', //渲染类型
       rows: 40, //行数
       convertEol: true, //启用时，光标将设置为下一行的开头
       scrollback: 10, //终端中的回滚量
       disableStdin: false, //是否应禁用输入。
-      cursorStyle: "underline", //光标样式
+      cursorStyle: 'underline', //光标样式
       cursorBlink: true, //光标闪烁
       theme: {
-        foreground: "yellow", //字体
-        background: "#060101", //背景色
-        cursor: "help" //设置光标
+        foreground: 'yellow', //字体
+        background: '#060101', //背景色
+        cursor: 'help' //设置光标
       }
     });
     // 换行并输入起始符“$”
     term.prompt = () => {
-      term.write("\r\n$ ");
+      term.write('\r\n$ ');
     };
 
-    term.open(this.$refs["terminal"]);
+    term.open(this.$refs['terminal']);
     term.toggleFullScreen(); //全屏
     term.fit();
 
-    term.writeln("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+    term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
     term.prompt();
 
     function runFakeTerminal(_this) {
@@ -92,15 +93,15 @@ export default {
       term._initialized = true;
 
       term.prompt = () => {
-        term.write("\r\n ");
+        term.write('\r\n ');
       };
 
-      term.writeln("Welcome to xterm.js");
+      term.writeln('Welcome to xterm.js');
       term.writeln(
-        "This is a local terminal emulation, without a real terminal in the back-end."
+        'This is a local terminal emulation, without a real terminal in the back-end.'
       );
-      term.writeln("Type some keys and commands to play around.");
-      term.writeln("");
+      term.writeln('Type some keys and commands to play around.');
+      term.writeln('');
       term.prompt();
 
       // 监控键盘输入事件
@@ -111,20 +112,20 @@ export default {
       //     * @返回一个IDisposable停止监听。
       //  * /
       let last = 0;
-      
-      term.on("key", function(key, ev) {
+
+      term.on('key', function(key, ev) {
         // 可打印状态，即不是alt键ctrl等功能健时
         const printable =
           !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey;
 
         // 因服务端返回命令包含乱码，但使用write方法输出时并不显示，故将真实显示内容截取出来
-        let index = _this.showOrder.indexOf("sh");
+        let index = _this.showOrder.indexOf('sh');
         let show = _this.showOrder.substr(index, _this.showOrder.length - 1);
 
         //  当输入回车时
         if (ev.keyCode === 13) {
-          if (_this.order == "cls" || _this.order == "clear") {
-            _this.order = "";
+          if (_this.order == 'cls' || _this.order == 'clear') {
+            _this.order = '';
             return false;
           }
           //先将数据发送
@@ -133,17 +134,17 @@ export default {
           let reg = /[a-zA-Z]/;
           let order = {
             Data: _this.order,
-            Op: "stdin"
+            Op: 'stdin'
           };
 
           if (!reg.test(_this.order)) {
-            term.writeln("请输入有效指令~");
+            term.writeln('请输入有效指令~');
           } else {
             // 发送数据
             _this.inputList.push(_this.order);
             last = _this.inputList.length - 1;
             _this.onSend(order);
-            _this.order =''
+            _this.order = '';
             // 清空输入内容变量
           }
         } else if (ev.keyCode === 8) {
@@ -152,7 +153,7 @@ export default {
           // Do not delete the prompt
           // 当前行字符长度如果等于后端返回字符就不进行删除
           if (term._core.buffer.x > _this.showOrder.length) {
-            term.write("\b \b"); // 输出退格
+            term.write('\b \b'); // 输出退格
           }
 
           // 将输入内容变量删除
@@ -188,7 +189,7 @@ export default {
           }
         } else if (ev.keyCode === 9) {
           // 如果按tab键前输入了之前后端返回字符串的第一个字符，就显示此命令
-          if (_this.order !== "" && show.indexOf(_this.order) == 0) {
+          if (_this.order !== '' && show.indexOf(_this.order) == 0) {
             term.write(_this.showOrder);
           }
         } else if (printable) {
@@ -206,61 +207,61 @@ export default {
       _this.term = term;
 
       // 粘贴事件
-      term.on("paste", function(data) {
+      term.on('paste', function(data) {
         _this.order = data;
         term.write(data);
       });
     }
     runFakeTerminal(_this);
-    _this.socket = window['io']('http://localhost:8081')
-    
-    _this.socket.on('mes',(data)=>{
+    _this.socket = window['io']('http://localhost:8081');
+
+    _this.socket.on('mes', data => {
       // console.log("11111111111")
       term.writeln(data);
-    })
-    this.initAction()
+    });
+    this.initAction();
   },
 
   methods: {
     // 初始化action
-    initAction(){
+    initAction() {
       switch (this.$props.type) {
         case 'project':
           this.handleProject();
           break;
-      
+
         default:
           break;
       }
     },
-    handleProject(){
-      debugger
-      this.socket.emit('project',this.$route.query);
-      console.log(this.$route.query)
+    handleProject() {
+      debugger;
+      this.socket.emit('project', this.$route.query);
+      console.log(this.$route.query);
     },
     // 检查url参数,必要参数不存在,返回到首页
     checkURLparam() {
       let urlObj = this.base.urlValue();
 
-      let fullTag = urlObj.full_tag ? urlObj.full_tag : ""; //所在父节点
-      fullTag = fullTag.replace(/(^ +| +$)/g, "");
+      let fullTag = urlObj.full_tag ? urlObj.full_tag : ''; //所在父节点
+      fullTag = fullTag.replace(/(^ +| +$)/g, '');
 
-      let namespace = urlObj.namespace ? urlObj.namespace : ""; //所在父节点
-      namespace = namespace.replace(/(^ +| +$)/g, "");
+      let namespace = urlObj.namespace ? urlObj.namespace : ''; //所在父节点
+      namespace = namespace.replace(/(^ +| +$)/g, '');
 
-      let podName = urlObj.pod_name ? urlObj.pod_name : ""; //所在父节点
-      podName = podName.replace(/(^ +| +$)/g, "");
+      let podName = urlObj.pod_name ? urlObj.pod_name : ''; //所在父节点
+      podName = podName.replace(/(^ +| +$)/g, '');
 
       if (!fullTag || !namespace) {
         //所在的父级节点为空或者deploy_id不存在的情况下,弹框提示然后返回首页
-        this.$alert("缺少必要参数,马上返回首页~", "提示", {
+        this.$alert('缺少必要参数,马上返回首页~', '提示', {
           closeOnClickModal: false,
           closeOnPressEscape: false,
           showClose: false,
-          confirmButtonText: "确定",
-          type: "error",
+          confirmButtonText: '确定',
+          type: 'error',
           callback: () => {
-            this.$router.replace("/web");
+            this.$router.replace('/web');
           }
         });
       } else {
@@ -317,7 +318,7 @@ export default {
     },
 
     onSend(data) {
-       this.socket.emit('in',data);
+      this.socket.emit('in', data);
       // data = this.base.isObject(data) ? JSON.stringify(data) : data;
       // data = this.base.isArray(data) ? data.toString() : data;
       // data = data.replace(/\\\\/, "\\");
@@ -326,7 +327,7 @@ export default {
 
     //删除左右两端的空格
     trim(str) {
-      return str.replace(/(^\s*)|(\s*$)/g, "");
+      return str.replace(/(^\s*)|(\s*$)/g, '');
     }
   }
 };

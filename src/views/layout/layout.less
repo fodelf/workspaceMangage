@@ -12,95 +12,18 @@
   // }
 
   .mainContent {
-    flex:auto;
-    padding:0 25px;
-    width: calc(100% - 230px);
+    flex: auto;
+    // padding:0 25px;
+    width: calc(100% - 180px);
     background: #3c4452;
     height: 100%;
-    overflow:auto;
-  }
 
-  .header {
-    width: calc(100% - 60px);
-    padding: 0 30px;
-    height: 48px !important;
-    line-height: 48px;
-    background: #25282e;
-
-    .mes {
-      margin-left: 10px;
-      height: 100%;
-      display: inline-block;
-
-      .child {
-        height: 20px;
-        width: 100%;
-        text-align: center;
-        color: #409EFF;
-        margin: 5px;
-        cursor: pointer;
-
-        a {
-          color: #409EFF;
-        }
-      }
+    .main {
+      // height: 100%;
+      height: calc(100% - 125px);
+      width: 100%;
+      overflow: auto;
     }
-
-    .mes:hover {
-      .meslist {
-        display: block
-      }
-    }
-
-    .meslist {
-      height: 200px;
-      width: 85px;
-      display: none;
-      padding: 8px 16px !important;
-      position: absolute;
-      top: 43px;
-      right: 41px;
-      z-index: 999;
-      background-color: #FFF;
-      -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-      border-radius: 3px;
-      font-size: 14px;
-    }
-
-    .logoTit {
-      float: left;
-      color: #fff;
-      font-size: 24px;
-      margin-right: 50px;
-    }
-
-    p {
-      float: right;
-      color: #fff;
-      font-size: 16px;
-      height: 100%;
-
-      em {
-        color: #1095fe;
-      }
-
-      .icon-tuichudenglu {
-        // color:#fff;
-        font-size: 24px;
-        cursor: pointer;
-        margin-left: 20px;
-      }
-
-      .toLogin {
-        margin-right: 15px;
-      }
-    }
-  }
-
-  .main {
-    height: calc(100% - 48px);
-    width: 100%;
   }
 
   /deep/.el-menu-demo.el-menu--horizontal {
@@ -127,7 +50,6 @@
     .el-menu-item:hover {
       background: none;
       color: #fff;
-
     }
   }
 }

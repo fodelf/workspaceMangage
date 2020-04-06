@@ -1,60 +1,38 @@
 <!--
  * @Description: 描述
- * @Author: 吴文周
+ * @Author: pym
  * @Github: https://github.com/fodelf
- * @Date: 2020-03-22 17:59:36
+ * @Date: 2020-04-05 16:32:04
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 16:47:54
+ * @LastEditTime: 2020-04-05 17:38:09
  -->
 <template>
   <el-dialog
-    :visible="proVisible"
+    :visible="tempVisible"
     width="40%"
-    title="新增项目"
+    title="新增模板"
     :before-close="close"
-    v-if="proVisible"
+    v-if="tempVisible"
   >
     <el-form
-      :model="proForm"
-      :rules="proRules"
-      ref="proForm"
+      :model="tempForm"
+      :rules="tempRules"
+      ref="tempForm"
       label-width="100px"
       label-position="left"
     >
-      <el-form-item label="新增方式">
-        <el-radio-group v-model="proForm.addMethod">
-          <el-radio label="createNew">创建新项目</el-radio>
-          <el-radio label="localImport">本地导入</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="选择模板" v-if="proForm.addMethod == 'createNew'">
-        <el-row type="flex">
-          <el-col :span="12">
-            <el-input
-              v-model="proForm.templateUrl"
-              readonly
-              placeholder="模板路径"
-            ></el-input>
-          </el-col>
-          <el-col :span="3" :offset="1">
-            <el-button type="primary" @click="selectTem" size="small"
-              >选择模板</el-button
-            >
-          </el-col>
-        </el-row>
-      </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="项目名称" prop="projectName">
+          <el-form-item label="模板名称" prop="templateName">
             <el-input
-              v-model="proForm.projectName"
-              placeholder="请输入项目名称"
+              v-model="tempForm.templateName"
+              placeholder="请输入模板名称"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="项目类型" prop="type">
-            <el-select v-model="proForm.type">
+          <el-form-item label="模板类型" prop="type">
+            <el-select v-model="tempForm.type">
               <el-option
                 v-for="item in typeList"
                 :key="item.value"
@@ -65,33 +43,51 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="项目路径" prop="pathUrl">
+      <el-form-item
+        label="项目路径"
+        prop="pathUrl"
+        v-if="tempForm.addMethod === 'localImport'"
+      >
         <el-input
           type="text"
-          v-model="proForm.pathUrl"
+          v-model="tempForm.pathUrl"
           placeholder="请输入项目路径"
         ></el-input>
       </el-form-item>
       <el-form-item label="Git路径" prop="gitUrl">
         <el-input
           type="text"
-          v-model="proForm.gitUrl"
+          v-model="tempForm.gitUrl"
           placeholder="请输入Git路径"
         ></el-input>
+      </el-form-item>
+      <el-form-item label="图片说明">
+        <el-upload
+          class="upload-demo"
+          action="/api/upload"
+          accept="image/jpeg,image/gif,image/png,image/jpg"
+          :limit="1"
+          :multiple="false"
+          :on-success="getFile"
+        >
+          <el-button size="small" type="primary" class="el-icon-plus"
+            >点击上传</el-button
+          >
+        </el-upload>
       </el-form-item>
       <el-form-item label="关键字" prop="keyword">
         <el-input
           type="text"
-          v-model="proForm.keyword"
+          v-model="tempForm.keyword"
           placeholder="请输入关键字"
         ></el-input>
       </el-form-item>
-      <el-form-item label="项目描述">
+      <el-form-item label="模板描述">
         <el-input
           type="textarea"
-          v-model="proForm.dec"
+          v-model="tempForm.dec"
           :rows="2"
-          placeholder="项目描述"
+          placeholder="请输入模板描述"
         ></el-input>
       </el-form-item>
       <el-row type="flex" justify="end">
@@ -101,66 +97,56 @@
         </el-form-item>
       </el-row>
     </el-form>
-    <!--二级模态框-->
-    <selectTem ref="selectTem" v-model="proForm.templateUrl"></selectTem>
   </el-dialog>
 </template>
 
 <script>
-import { getProjectType, addProject } from '@/api/projectManage.js'
-import selectTem from '@/components/selectTem/selectTem.vue'
+import { addNewTemp } from '@/api/templateApi.js'
+import { getProjectType } from '@/api/projectManage.js'
 export default {
-  name: 'proDialog',
-  components: {
-    selectTem,
-  },
+  name: 'tempDialog',
   props: ['itemObj'],
   data() {
     return {
-      proVisible: false,
-      proForm: {
-        addMethod: 'createNew',
-        projectName: '',
+      tempVisible: false,
+      tempForm: {
+        templateName: '',
         type: '',
-        pathUrl: '',
         gitUrl: '',
         keyword: '',
         dec: '',
-        templateUrl: '',
+        decImg: '',
       },
-      proRules: {
-        projectName: [
-          { required: true, message: '请输入项目名称', trigger: 'blur' },
+      tempRules: {
+        templateName: [
+          { required: true, message: '请输入模板名称', trigger: 'blur' },
         ],
         type: [
-          { required: true, message: '请输入项目类型', trigger: 'change' },
-        ],
-        pathUrl: [
-          { required: true, message: '请输入项目路径', trigger: 'blur' },
+          { required: true, message: '请输入模板类型', trigger: 'change' },
         ],
         gitUrl: [{ required: true, message: '请输入Git路径', trigger: 'blur' }],
         keyword: [{ required: true, message: '请输入关键字', trigger: 'blur' }],
       },
       typeList: [],
+      file: null,
     }
   },
   methods: {
     show() {
-      this.proVisible = true
-      this.queryProTypeList()
+      this.tempVisible = true
+      this.queryTempTypeList()
     },
     close() {
-      this.proVisible = false
-      this.$refs.proForm.resetFields()
+      this.tempVisible = false
+      this.$refs.tempForm.resetFields()
     },
-    queryProTypeList() {
+    getFile(response, file, fileList) {
+      this.tempForm.decImg = response.resultEntity
+    },
+    queryTempTypeList() {
       getProjectType({}).then((res) => {
-        console.log(res)
         this.typeList = res || []
       })
-    },
-    selectTem() {
-      this.$refs.selectTem.show()
     },
     /**
      * @name: confirm
@@ -169,20 +155,10 @@ export default {
      * @return {type}: 默认类型
      */
     confirm() {
-      this.$refs.proForm.validate((valid) => {
+      this.$refs.tempForm.validate((valid) => {
         if (valid) {
-          addProject(this.proForm).then(() => {
-            this.$message({
-              type: 'success',
-              message: '新增成功！',
-            })
-            this.proVisible = false
-            debugger
-            this.$router.push({
-              path: '/project/projectInit',
-              query: this.proForm,
-            })
-            // this.$emit('getList',this._props.itemObj)
+          addNewTemp(this.tempForm).then((res) => {
+            this.$emit('getTempList')
           })
         } else {
           return

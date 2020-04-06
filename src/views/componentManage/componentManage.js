@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 11:40:35
+ * @LastEditTime: 2020-04-06 12:51:48
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tempDialog from '@/components/tempDialog/tempDialog.vue'
 import templateCard from '@/components/templateCard/templateCard.vue'
 import { getTempSum, getTempCard } from '@/api/templateApi.js'
 export default {
-  name: 'templateManage',
+  name: 'componentManage',
   data() {
     return {
       menuObj: {
@@ -21,13 +21,12 @@ export default {
       },
       keyword: '',
       itemObj: {},
-      proFormObj: {},
-      tempKind: 'localTemp',
-      tabTemp: [
-        { label: '本地模板', value: 'localTemp' },
-        { label: '全局模板', value: 'wholeTemp' },
+      compKind: 'localComp',
+      tabComp: [
+        { label: '本地组件', value: 'localComp' },
+        { label: '全局组件', value: 'wholeComp' },
       ],
-      tempCardList: [
+      compCardList: [
         // { cardTitle: '1', cardText: '1', url: '' },
         // { cardTitle: '1', cardText: '1', url: '' },
         // { cardTitle: '1', cardText: '1', url: '' },
@@ -47,7 +46,7 @@ export default {
     templateCard,
   },
   methods: {
-    addPro() {
+    addComp() {
       this.$refs.tempDialog.show()
     },
     /**
@@ -56,7 +55,7 @@ export default {
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
-    queryTempList() {
+    queryCompList() {
       getTempSum({}).then((res) => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
@@ -65,7 +64,7 @@ export default {
         }
       })
     },
-    queryTempCard(item) {
+    queryCompCard(item) {
       let params = {
         type: item.type,
         pageNum: this.tablePag.pageNo,
@@ -73,7 +72,7 @@ export default {
         keyword: this.keyword,
       }
       getTempCard(params).then((res) => {
-        this.tempCardList = (res.list || []).map((item, index) => {
+        this.compCardList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
           return item
@@ -89,11 +88,11 @@ export default {
      */
     getPageNo(val) {
       this.tablePag.pageNo = val
-      this.queryTempCard(this.itemObj)
+      this.queryCompCard(this.itemObj)
     },
   },
   mounted() {},
   created() {
-    this.queryTempList()
+    this.queryCompList()
   },
 }

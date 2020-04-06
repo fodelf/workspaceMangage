@@ -4,26 +4,29 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:17:29
  * @LastEditors: pym
- * @LastEditTime: 2020-03-30 23:13:49
+ * @LastEditTime: 2020-04-05 15:45:32
  -->
 <template>
-  <div class='menuList'>
-    <p class='menuTit itemNum clearfix'>
-      <span>{{menuObj.title}}</span>
-      <i>{{menuObj.total}}</i>
+  <div class="menuList">
+    <p class="menuTit itemNum clearfix">
+      <span>{{ menuObj.title }}</span>
+      <i>{{ menuObj.total }}</i>
     </p>
-    <ul class='menuCon'>
-      <li v-for='(item,index) in menuObj.menuList'
-          :key='index'
-          class='menuItem itemNum clearfix'
-          :class="currentIndex == index?'active':''"
-          @click='handleClickMenu(item,index)'>
-        <span>{{item.label}}</span>
-        <i>{{item.count}}</i>
+    <ul class="menuCon">
+      <li
+        v-for="(item, index) in menuObj.menuList"
+        :key="index"
+        class="menuItem itemNum clearfix"
+        :class="currentIndex == index ? 'active' : ''"
+        @click="handleClickMenu(item, index)"
+      >
+        <span>{{ item.label }}</span>
+        <i>{{ item.count }}</i>
       </li>
       <li>
-        <el-button type='primary'
-                   @click='addMenu'>新增</el-button>
+        <el-button type="primary" @click="addMenu" icon="el-icon-plus"
+          >新增</el-button
+        >
       </li>
     </ul>
   </div>
@@ -39,25 +42,24 @@ export default {
         return {
           title: '',
           total: 0,
-          menuList: []
+          menuList: [],
         }
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
-      currentIndex:0
+      currentIndex: 0,
     }
   },
   methods: {
-    addMenu () {
-
-    },
-    handleClickMenu (item,index) {
+    addMenu() {},
+    handleClickMenu(item, index) {
       this.currentIndex = index
+      console.log(item)
       this.$emit('clickMenu', item)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -94,12 +96,15 @@ export default {
         float: right;
       }
     }
+    /deep/.el-button {
+      width: 100%;
+    }
   }
   .itemNum:hover {
     color: #fb9678;
   }
   .active {
-     color: #fb9678;
+    color: #fb9678;
   }
 }
 </style>

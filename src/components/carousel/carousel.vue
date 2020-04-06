@@ -3,40 +3,82 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 20:50:26
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-03-21 21:07:54
+ * @LastEditors: pym
+ * @LastEditTime: 2020-04-06 17:45:10
  -->
 <template>
-  <el-carousel height="100%" :interval="3000" indicator-position="none" arrow="nerver">
+  <el-carousel
+    height="100%"
+    :interval="3000"
+    indicator-position="none"
+    arrow="nerver"
+  >
     <el-carousel-item v-for="item in carouselList" :key="item">
-      {{ item }} 
+      <p class="desc">开源不易，求赞助</p>
+      <div class="actor">
+        <i class="user-bg"></i>
+        <div class="user">
+          <p class="user-name">wwz</p>
+          <p>Actor</p>
+        </div>
+      </div>
     </el-carousel-item>
   </el-carousel>
 </template>
 
 <script>
-  export default {
-    name:'carousel',
-    props:{
-      carouselList:{
-        type:Array,
-        default:[]
-      }
+export default {
+  name: 'carousel',
+  props: {
+    carouselList: {
+      type: Array,
+      default: [],
     },
-    data() {
-      return {
-        
-      }
-    }
-  }
+  },
+  data() {
+    return {}
+  },
+}
 </script>
 
 <style lang="less" scoped>
 .el-carousel {
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
+  padding: 25px;
+  box-sizing: border-box;
+  background: #fb9678;
+
   /deep/.el-carousel__container {
-    color:#fff;
+    color: #fff;
+    height: 100%;
+    .el-carousel__item {
+      height: 100%;
+      .desc {
+        height: calc(100% - 50px);
+      }
+    }
+    .actor {
+      display: flex;
+      height: 50px;
+      .user-bg {
+        display: inline-block;
+        background: url(../../assets/img/headerBg.svg) no-repeat center;
+        background-size: 100% 100%;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        // float:left;
+      }
+      .user {
+        .user-name {
+          font-size: 24px;
+
+          // float:left;
+        }
+      }
+    }
   }
 }
 // .el-carousel--horizontal {

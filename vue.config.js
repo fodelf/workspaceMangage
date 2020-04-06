@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 16:11:15
+ * @LastEditTime: 2020-04-06 17:55:19
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -19,7 +19,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8081'
+        target: 'http://192.168.0.100:8081'
       }
     }
   },
