@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:25:05
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 11:45:38
+ * @LastEditTime: 2020-04-06 18:18:43
  -->
 <template>
   <div class="cardTemp">
     <el-row :gutter="20">
-      <el-col :span="6" v-for="(item, index) in tempCardList" :key="index">
+      <el-col :span="8" v-for="(item, index) in tempCardList" :key="index">
         <div class="templateCard">
-          <img class="cardImg" :src="item.decImg" />
+          <img class="cardImg" src="../../assets/img/temp.png" />
           <div class="cardBody">
             <h4 class="cardTit">{{ item.templateName }}</h4>
             <p class="cardText">{{ item.dec }}</p>
@@ -68,9 +68,12 @@ export default {
 <style lang="less" scoped>
 .templateCard {
   width: 100%;
-  height: 150px;
+  // height: 150px;
   background: #3c4452;
   margin-bottom: 20px;
+  .cardBody {
+    padding: 20px;
+  }
   .cardImg {
     width: 100%;
   }

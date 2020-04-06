@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 11:40:35
+ * @LastEditTime: 2020-04-06 18:08:29
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tempDialog from '@/components/tempDialog/tempDialog.vue'
@@ -64,6 +64,11 @@ export default {
           this.queryTempCard(this.menuObj.menuList[0])
         }
       })
+    },
+    getTempList(item) {
+      console.log(item)
+      this.tablePag.pageNo = 1
+      this.selectMenu(item)
     },
     queryTempCard(item) {
       let params = {

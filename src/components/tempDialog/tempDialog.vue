@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 17:38:09
+ * @LastEditTime: 2020-04-06 18:06:23
  -->
 <template>
   <el-dialog
@@ -159,6 +159,7 @@ export default {
         if (valid) {
           addNewTemp(this.tempForm).then((res) => {
             this.$emit('getTempList')
+            this.dialogVisible = false
           })
         } else {
           return
