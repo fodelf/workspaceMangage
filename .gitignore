@@ -21,3 +21,5 @@ yarn-error.log*
 *.sw?
 package-lock.json
 work.db
+/static
+/doc

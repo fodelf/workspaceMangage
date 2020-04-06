@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: pym
- * @LastEditTime: 2020-04-04 16:59:46
+ * @LastEditTime: 2020-04-06 17:50:30
  */
 const path = require('path')
 function resolve(dir) {
@@ -15,16 +15,16 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.0.100:8081'
-      }
-    }
+        target: 'http://192.168.0.100:8081',
+      },
+    },
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components'))
       .set('base', resolve('baseConfig'))
       .set('public', resolve('public'))
-  }
+  },
 }

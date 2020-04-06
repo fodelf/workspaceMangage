@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 17:48:45
+ * @LastEditTime: 2020-04-06 17:51:32
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
