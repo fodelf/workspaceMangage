@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:50:42
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-07 19:16:56
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -32,11 +32,11 @@ const vueRouter = new Router({
           name: 'home',
           component: Home,
           meta: {
-            title: 'Home',
-            noCache: true,
-          },
-        },
-      ],
+            title: '首页',
+            noCache: true
+          }
+        }
+      ]
     },
     {
       path: '/project',
@@ -44,7 +44,7 @@ const vueRouter = new Router({
       redirect: '/project/projectManage',
       component: MainLayout,
       meta: {
-        title: '项目管理',
+        title: '项目管理'
       },
       children: [
         {
@@ -53,8 +53,8 @@ const vueRouter = new Router({
           name: 'projectManage',
           meta: {
             title: '项目列表',
-            noCache: true,
-          },
+            noCache: true
+          }
         },
         {
           path: 'projectInit',
@@ -62,10 +62,10 @@ const vueRouter = new Router({
           name: 'projectInit',
           meta: {
             title: '项目初始化',
-            noCache: true,
-          },
-        },
-      ],
+            noCache: true
+          }
+        }
+      ]
     },
     {
       path: '/template',
@@ -73,7 +73,7 @@ const vueRouter = new Router({
       redirect: '/template/templateManage',
       component: MainLayout,
       meta: {
-        title: '模板管理',
+        title: '模板管理'
       },
       children: [
         {
@@ -82,10 +82,10 @@ const vueRouter = new Router({
           name: 'templateManage',
           meta: {
             title: '模板列表',
-            noCache: true,
-          },
-        },
-      ],
+            noCache: true
+          }
+        }
+      ]
     },
     {
       path: '/comp',
@@ -93,7 +93,7 @@ const vueRouter = new Router({
       redirect: '/comp/componentManage',
       component: MainLayout,
       meta: {
-        title: '组件管理',
+        title: '组件管理'
       },
       children: [
         {
@@ -102,11 +102,11 @@ const vueRouter = new Router({
           name: 'componentManage',
           meta: {
             title: '组件列表',
-            noCache: true,
-          },
-        },
-      ],
-    },
+            noCache: true
+          }
+        }
+      ]
+    }
     // {
     //   path: '/terminal',
     //   name: 'terminal',
@@ -120,11 +120,11 @@ const vueRouter = new Router({
     //     },
     //   ],
     // },
-  ],
+  ]
 })
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch((error) => error)
+  return routerPush.call(this, location).catch(error => error)
 }
 // vueRouter.beforeEach(function (to, from, next) {
 //   // const nextRoute = ['控制台', '仪表盘']

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 18:03:45
+ * @LastEditTime: 2020-04-07 19:23:41
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -48,7 +48,7 @@ process.on('uncaughtException', function(err) {
   console.log('Stack:', err.stack)
 })
 app.use(express.static(path.join(__dirname, 'static')))
-app.use('/easyWork', express.static(path.join(__dirname, 'dist')))
+app.use('/easyWork', express.static(path.join(__dirname, 'public')))
 routerAction(app)
 // 根据id获取项目明细
 app.get('/api/queryProjectById', workServer.queryProjectById)

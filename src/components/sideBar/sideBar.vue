@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:52:23
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-07 19:15:28
  -->
 <template>
   <div class="sideBar" :class="isCollapse ? 'min-side' : ''">
@@ -38,12 +38,12 @@ export default {
         {
           name: 'template',
           icon: 'icon-mobanguanli1',
-          label: '模板管理',
+          label: '模板管理'
         },
         {
           name: 'componentManage',
           icon: 'icon-mobanguanli',
-          label: '组件管理',
+          label: '组件管理'
         },
         { name: 'terminal', icon: 'icon-jiaoben', label: '脚本管理' },
         { name: 'toolManage', icon: 'icon-gongju', label: '工具管理' },
@@ -51,22 +51,22 @@ export default {
         {
           name: 'terminal',
           icon: 'icon-xinicon_huabanfuben',
-          label: '自动化测试',
+          label: '自动化测试'
         },
         { name: 'terminal', icon: 'icon-keshihua', label: '可视化埋点' },
-        { name: 'systemManage', icon: 'icon-shezhi', label: '系统设置' },
+        { name: 'systemManage', icon: 'icon-shezhi', label: '系统设置' }
       ],
-      activeModule: 'home',
+      activeModule: 'home'
     }
   },
   methods: {
     handleJumpToPath(item) {
       console.log(item)
       this.$router.push({
-        name: item.name,
+        name: item.name
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
