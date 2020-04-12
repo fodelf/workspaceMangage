@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-07 19:15:16
+ * @LastEditTime: 2020-04-12 20:39:45
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -44,11 +44,11 @@ export default {
         },
         {
           icon: 'icon-gongju',
-          label: '工具总数',
+          label: '脚本总数',
           num: 234,
           percent: '80%',
           proColor: '#00c292',
-          key: 'utilCount'
+          key: 'scriptCount'
         }
       ],
       carouselList: [1, 2, 3, 4],

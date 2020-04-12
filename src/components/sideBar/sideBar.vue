@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
- * @LastEditors: pym
- * @LastEditTime: 2020-04-12 14:05:56
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 21:02:22
  -->
 <template>
   <div class="sideBar" :class="isCollapse ? 'min-side' : ''">
@@ -12,11 +12,16 @@
       <i class="titBg"></i
       ><span :class="isCollapse ? 'move_right' : ''">Easy<em>Work</em></span>
     </p>
-    <el-menu :default-active="activeModule" class="nav" :collapse="isCollapse">
+    <el-menu
+      :default-active="$route.path"
+      router
+      class="nav"
+      :collapse="isCollapse"
+    >
       <el-menu-item
         v-for="(menuItem, index) in menuTree"
         :key="index"
-        :index="menuItem.name"
+        :index="menuItem.path"
         @click="handleJumpToPath(menuItem)"
       >
         <i class="iconfont" :class="menuItem.icon"></i>
@@ -33,40 +38,72 @@ export default {
     return {
       isCollapse: false,
       menuTree: [
-        { name: 'home', icon: 'icon-shouye', label: '首页' },
-        { name: 'projectManage', icon: 'icon-xiangmu', label: '项目管理' },
+        { name: 'home', path: '/home', icon: 'icon-shouye', label: '首页' },
         {
-          name: 'template',
+          name: 'projectManage',
+          path: '/project/projectManage',
+          icon: 'icon-xiangmu',
+          label: '项目管理'
+        },
+        {
+          name: 'templateManage',
+          path: '/template/templateManage',
           icon: 'icon-mobanguanli1',
-          label: '模板管理',
+          label: '模板管理'
         },
         {
           name: 'componentManage',
+          path: '/comp/componentManage',
           icon: 'icon-mobanguanli',
-          label: '组件管理',
+          label: '组件管理'
         },
-        { name: 'scriptManage', icon: 'icon-jiaoben', label: '脚本管理' },
-        { name: 'toolManage', icon: 'icon-gongju', label: '工具管理' },
-        { name: 'dragManage', icon: 'icon-oper-auto', label: '拖拽生成' },
         {
-          name: 'terminal',
-          icon: 'icon-xinicon_huabanfuben',
-          label: '自动化测试',
+          name: 'scriptManage',
+          path: '/script/scriptManage',
+          icon: 'icon-jiaoben',
+          label: '脚本管理'
         },
-        { name: 'terminal', icon: 'icon-keshihua', label: '可视化埋点' },
-        { name: 'systemManage', icon: 'icon-shezhi', label: '系统设置' },
-      ],
-      activeModule: 'home',
+        {
+          name: 'toolsManage',
+          path: '/tools/toolsManage',
+          icon: 'icon-gongju',
+          label: '工具管理'
+        },
+        {
+          name: 'dragManage',
+          path: '/drag/dragManage',
+          icon: 'icon-oper-auto',
+          label: '拖拽生成'
+        },
+        {
+          name: 'automatedTesting',
+          path: '/test/automatedTesting',
+          icon: 'icon-xinicon_huabanfuben',
+          label: '自动化测试'
+        },
+        {
+          name: 'devOps',
+          path: '/devOps/Monitor',
+          icon: 'icon-keshihua',
+          label: '运维监控'
+        },
+        {
+          name: 'systemManage',
+          path: '/system/systemManage',
+          icon: 'icon-shezhi',
+          label: '系统设置'
+        }
+      ]
     }
   },
   methods: {
     handleJumpToPath(item) {
       console.log(item)
       this.$router.push({
-        name: item.name,
+        name: item.name
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

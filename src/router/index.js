@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
- * @LastEditors: pym
- * @LastEditTime: 2020-04-12 14:05:46
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 21:03:03
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -13,12 +13,10 @@ const Home = () => import('@/views/home/Home.vue')
 const ProjectManage = () => import('@/views/projectManage/projectManage.vue')
 const ProjectInit = () =>
   import('@/views/projectManage/projectInit/ProjectInit.vue')
-// const templateManage = () => {
-//   import('@/views/templateManage/templateManage.vue')
-// }
 import templateManage from '@/views/templateManage/templateManage.vue'
 import componentManage from '@/views/componentManage/componentManage.vue'
 import scriptManage from '@/views/scriptManage/scriptManage.vue'
+import ToDoComponent from '@/components/toDoComponent/ToDoComponent.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -33,11 +31,10 @@ const vueRouter = new Router({
           name: 'home',
           component: Home,
           meta: {
-            title: '首页',
-            noCache: true,
-          },
-        },
-      ],
+            title: '首页'
+          }
+        }
+      ]
     },
     {
       path: '/project',
@@ -45,7 +42,7 @@ const vueRouter = new Router({
       redirect: '/project/projectManage',
       component: MainLayout,
       meta: {
-        title: '项目管理',
+        title: '项目管理'
       },
       children: [
         {
@@ -53,20 +50,18 @@ const vueRouter = new Router({
           component: ProjectManage,
           name: 'projectManage',
           meta: {
-            title: '项目列表',
-            noCache: true,
-          },
+            title: '项目列表'
+          }
         },
         {
           path: 'projectInit',
           component: ProjectInit,
           name: 'projectInit',
           meta: {
-            title: '项目初始化',
-            noCache: true,
-          },
-        },
-      ],
+            title: '项目初始化'
+          }
+        }
+      ]
     },
     {
       path: '/template',
@@ -74,7 +69,7 @@ const vueRouter = new Router({
       redirect: '/template/templateManage',
       component: MainLayout,
       meta: {
-        title: '模板管理',
+        title: '模板管理'
       },
       children: [
         {
@@ -82,11 +77,10 @@ const vueRouter = new Router({
           component: templateManage,
           name: 'templateManage',
           meta: {
-            title: '模板列表',
-            noCache: true,
-          },
-        },
-      ],
+            title: '模板列表'
+          }
+        }
+      ]
     },
     {
       path: '/comp',
@@ -94,7 +88,7 @@ const vueRouter = new Router({
       redirect: '/comp/componentManage',
       component: MainLayout,
       meta: {
-        title: '组件管理',
+        title: '组件管理'
       },
       children: [
         {
@@ -102,11 +96,10 @@ const vueRouter = new Router({
           component: componentManage,
           name: 'componentManage',
           meta: {
-            title: '组件列表',
-            noCache: true,
-          },
-        },
-      ],
+            title: '组件列表'
+          }
+        }
+      ]
     },
     {
       path: '/script',
@@ -114,7 +107,7 @@ const vueRouter = new Router({
       redirect: '/script/scriptManage',
       component: MainLayout,
       meta: {
-        title: '脚本管理',
+        title: '脚本管理'
       },
       children: [
         {
@@ -122,30 +115,111 @@ const vueRouter = new Router({
           component: scriptManage,
           name: 'scriptManage',
           meta: {
-            title: '脚本列表',
-            noCache: true,
-          },
-        },
-      ],
+            title: '脚本列表'
+          }
+        }
+      ]
     },
-    // {
-    //   path: '/terminal',
-    //   name: 'terminal',
-    //   redirect: '/terminal/terminalManage',
-    //   component: MainLayout,
-    //   children: [
-    //     {
-    //       path: 'terminalManage',
-    //       component: ProjectInit,
-    //       name: 'projectInit',
-    //     },
-    //   ],
-    // },
-  ],
+    {
+      path: '/tools',
+      name: 'tools',
+      redirect: '/tools/toolsManage',
+      component: MainLayout,
+      meta: {
+        title: '工具管理'
+      },
+      children: [
+        {
+          path: 'toolsManage',
+          component: ToDoComponent,
+          name: 'toolsManage',
+          meta: {
+            title: '工具列表'
+          }
+        }
+      ]
+    },
+    {
+      path: '/drag',
+      name: 'drag',
+      redirect: '/drag/dragManage',
+      component: MainLayout,
+      meta: {
+        title: '拖拽生成'
+      },
+      children: [
+        {
+          path: 'dragManage',
+          component: ToDoComponent,
+          name: 'dragManage',
+          meta: {
+            title: '拖拽'
+          }
+        }
+      ]
+    },
+    {
+      path: '/test',
+      name: 'test',
+      redirect: '/test/automatedTesting',
+      component: MainLayout,
+      meta: {
+        title: '测试'
+      },
+      children: [
+        {
+          path: 'automatedTesting',
+          component: ToDoComponent,
+          name: 'automatedTesting',
+          meta: {
+            title: '自动化测试'
+          }
+        }
+      ]
+    },
+    {
+      path: '/devOps',
+      name: 'devOps',
+      redirect: '/devOps/Monitor',
+      component: MainLayout,
+      meta: {
+        title: '运维监控'
+      },
+      children: [
+        {
+          path: 'Monitor',
+          component: ToDoComponent,
+          name: 'Monitor',
+          meta: {
+            title: '可视化埋点'
+          }
+        }
+      ]
+    },
+    {
+      path: '/system',
+      name: 'system',
+      redirect: '/system/systemManage',
+      component: MainLayout,
+      meta: {
+        title: '系统'
+      },
+      children: [
+        {
+          path: 'systemManage',
+          component: ToDoComponent,
+          name: 'systemManage',
+          meta: {
+            title: '系统设置'
+          }
+        }
+      ]
+    }
+  ]
 })
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch((error) => error)
+  return routerPush.call(this, location).catch(error => error)
 }
 // vueRouter.beforeEach(function (to, from, next) {
 //   // const nextRoute = ['控制台', '仪表盘']

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 20:50:26
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 17:45:10
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 16:31:08
  -->
 <template>
   <el-carousel
@@ -14,7 +14,7 @@
     arrow="nerver"
   >
     <el-carousel-item v-for="item in carouselList" :key="item">
-      <p class="desc">开源不易，求赞助</p>
+      <p class="desc">开源不易，求赞助，联系方式：18651892475</p>
       <div class="actor">
         <i class="user-bg"></i>
         <div class="user">
@@ -32,12 +32,14 @@ export default {
   props: {
     carouselList: {
       type: Array,
-      default: [],
-    },
+      default: function() {
+        return []
+      }
+    }
   },
   data() {
     return {}
-  },
+  }
 }
 </script>
 
