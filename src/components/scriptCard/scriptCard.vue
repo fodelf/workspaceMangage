@@ -3,22 +3,29 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-10 21:26:24
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 16:15:10
+ * @LastEditors: pym
+ * @LastEditTime: 2020-04-12 22:34:18
  -->
 <template>
   <div class="scriptCard">
     <p class="cardTit">{{ itemObj.scriptName }}</p>
-    <el-input
-      type="textarea"
-      v-model="itemObj.scriptContent"
-      :rows="7"
-    ></el-input>
-    <el-row>
-      <el-button type="primary">修改</el-button>
-      <el-button type="danger">删除</el-button>
-      <el-button type="primary" @click="action">立即执行</el-button>
-    </el-row>
+    <el-input type="textarea"
+              v-model="itemObj.scriptContent"
+              :rows="7"
+              resize='none'></el-input>
+    <div class='btn_row'>
+      <div class='col_box'>
+        <el-button type="primary"
+                   size='small'>修改</el-button>
+        <el-button type="danger"
+                   size='small'>删除</el-button>
+      </div>
+      <div class='col_box'>
+        <el-button type="primary"
+                   size='small'
+                   @click="action">立即执行</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,16 +36,16 @@ export default {
   props: {
     itemObj: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     }
   },
-  data() {
+  data () {
     return {}
   },
   methods: {
-    action() {
+    action () {
       actionScript({
         scriptContent: this.itemObj.scriptContent
       })
@@ -63,17 +70,36 @@ export default {
 .scriptCard {
   width: 100%;
   height: 100%;
+  // padding-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
   background: #353c48;
+  box-shadow: 0 0 4px #353c48;
   .cardTit {
     height: 40px;
     line-height: 40px;
     width: 100%;
     background: #303641;
+    padding: 0 15px;
+    box-sizing: border-box;
+    color: #ced4da;
+    font-size: 14px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   /deep/.el-textarea__inner {
-    background: #353c48;
+    background: #272c36;
     outline: none;
     border: none;
+    color: #ced4da;
+    border-radius: 0;
+  }
+  .btn_row {
+    width: 100%;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

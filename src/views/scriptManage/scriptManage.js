@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 15:50:47
+ * @LastEditors: pym
+ * @LastEditTime: 2020-04-12 22:48:13
  */
 import scriptCard from '@/components/scriptCard/scriptCard'
 import AddScript from './childrenComponent/addScript/addScript.vue'
@@ -31,6 +31,7 @@ export default {
         pageSize: this.tablePag.pageSize
       }).then(res => {
         this.scriptCardList = res
+        // this.scriptCardList = []
       })
     },
     addPro() {
