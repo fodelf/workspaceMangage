@@ -4,9 +4,10 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:38:56
+ * @LastEditTime: 2020-04-12 16:11:01
  */
 const url = require('url')
+const sh = require('shelljs')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
@@ -235,6 +236,51 @@ async function insertTodoList(req, res) {
     res.send(resultErr)
   }
 }
+/**
+ * @api {get} /api/script/queryScriptList 获取首页列表
+ * @apiGroup home
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ * @apiSuccess {Number} componentCount 组件数量数量汇总.
+ * @apiSuccess {Number} scriptCount 脚本数量数量汇总.
+ */
+async function queryScriptList(req, res) {
+  try {
+    let data = await workServer.queryScriptList(url.parse(req.url, true).query)
+    let resultEntity = data
+    res.send({ ...result, resultEntity })
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function insertScript(req, res) {
+  try {
+    await workServer.insertScript(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function actionScript(req, res) {
+  try {
+    sh.exec(req.body.scriptContent)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -249,5 +295,8 @@ module.exports = {
   insertComponent,
   queryUser,
   queryTodoList,
-  insertTodoList
+  insertTodoList,
+  queryScriptList,
+  insertScript,
+  actionScript
 }

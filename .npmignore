@@ -23,6 +23,5 @@ package-lock.json
 work.db
 /static
 /doc
-/app/dist
-/app/public
+/src
 cheese.log

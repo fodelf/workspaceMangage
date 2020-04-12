@@ -31,7 +31,8 @@ Easy work for you
 ```
 npm install workstage -g
 
-ew ui
+ew
+
 ```
 
 ### Features

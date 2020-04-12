@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="terminal" ref="terminal"></div>
+    <div id="terminal"
+         ref="terminal"></div>
 
     <div>sss ss</div>
   </div>
@@ -27,36 +28,36 @@ export default {
       type: String,
       default: () => {
         return ''
-      },
+      }
     },
     actionData: {
       type: Object,
       default: () => {
         return {}
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
       order: '',
       urlParam: {
         fullTag: '',
         namespace: '',
-        podName: '',
+        podName: ''
       },
       shellWs: '', // ws实例
       term: '', // 保存terminal实例
       showOrder: '', // 保存服务端返回的命令
-      inputList: [], // 保存用户输入的命令，用以上下健切换
+      inputList: [] // 保存用户输入的命令，用以上下健切换
     }
   },
 
-  created() {
+  created () {
     // this.checkURLparam();
     // this.wsShell();
   },
 
-  mounted() {
+  mounted () {
     let _this = this
     // const terminal = new Terminal();
     let term = new Terminal({
@@ -70,8 +71,8 @@ export default {
       theme: {
         foreground: 'yellow', //字体
         background: '#060101', //背景色
-        cursor: 'help', //设置光标
-      },
+        cursor: 'help' //设置光标
+      }
     })
     // 换行并输入起始符“$”
     term.prompt = () => {
@@ -85,7 +86,7 @@ export default {
     term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
     term.prompt()
 
-    function runFakeTerminal(_this) {
+    function runFakeTerminal (_this) {
       if (term._initialized) {
         return
       }
@@ -134,7 +135,7 @@ export default {
           let reg = /[a-zA-Z]/
           let order = {
             Data: _this.order,
-            Op: 'stdin',
+            Op: 'stdin'
           }
 
           if (!reg.test(_this.order)) {
@@ -215,7 +216,7 @@ export default {
     runFakeTerminal(_this)
     _this.socket = window['io']('http://localhost:8081')
 
-    _this.socket.on('mes', (data) => {
+    _this.socket.on('mes', data => {
       // console.log("11111111111")
       term.writeln(data)
     })
@@ -224,7 +225,7 @@ export default {
 
   methods: {
     // 初始化action
-    initAction() {
+    initAction () {
       switch (this.$props.type) {
         case 'project':
           this.handleProject()
@@ -234,13 +235,13 @@ export default {
           break
       }
     },
-    handleProject() {
+    handleProject () {
       // debugger;
       this.socket.emit('project', this.$route.query)
       console.log(this.$route.query)
     },
     // 检查url参数,必要参数不存在,返回到首页
-    checkURLparam() {
+    checkURLparam () {
       let urlObj = this.base.urlValue()
 
       let fullTag = urlObj.full_tag ? urlObj.full_tag : '' //所在父节点
@@ -262,7 +263,7 @@ export default {
           type: 'error',
           callback: () => {
             this.$router.replace('/web')
-          },
+          }
         })
       } else {
         this.urlParam.fullTag = fullTag //所在父节点
@@ -279,7 +280,7 @@ export default {
      * @tagString  当前节点
      * 返回:无
      * **/
-    wsShell() {
+    wsShell () {
       // const _this = this;
       // let tag_string = this.urlParam.fullTag;
       // let namespace = this.urlParam.namespace;
@@ -317,7 +318,7 @@ export default {
       // });
     },
 
-    onSend(data) {
+    onSend (data) {
       this.socket.emit('in', data)
       // data = this.base.isObject(data) ? JSON.stringify(data) : data;
       // data = this.base.isArray(data) ? data.toString() : data;
@@ -326,9 +327,9 @@ export default {
     },
 
     //删除左右两端的空格
-    trim(str) {
+    trim (str) {
       return str.replace(/(^\s*)|(\s*$)/g, '')
-    },
-  },
+    }
+  }
 }
 </script>

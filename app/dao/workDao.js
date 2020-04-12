@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:53:36
+ * @LastEditTime: 2020-04-12 15:56:52
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -76,6 +76,17 @@ async function queryCommonList(data, tableName) {
   }%' LIMIT ${n1},${n2}`
   return await sqliteDB.queryData(querySql)
 }
+// 获取列表公共方法
+async function queryScriptList(data) {
+  data.pageNum = data.pageNum ? data.pageNum : 1
+  data.pageSize = data.pageSize ? data.pageSize : 10
+  let n1 = (data.pageNum - 1) * parseInt(data.pageSize)
+  let n2 = data.pageSize
+  var querySql = `SELECT * ,COUNT(1) OVER() AS total from script where deleteFlag = 0 and scriptName  LIKE '%${
+    data.scriptName ? data.scriptName : ''
+  }%' LIMIT ${n1},${n2}`
+  return await sqliteDB.queryData(querySql)
+}
 // 新增组件
 async function insertComponent(data) {
   var insertData = [
@@ -122,6 +133,20 @@ async function insertTodoList(data) {
     'insert into todo(taskDec,deleteFlag,creatTime) values(?, ?, ?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
+// 新增脚本
+async function insertScript(data) {
+  var insertData = [
+    [
+      data.scriptName,
+      data.scriptContent,
+      sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss'),
+      0
+    ]
+  ]
+  var insertSql =
+    'insert into script(scriptName,scriptContent,creatTime,deleteFlag) values(?, ?, ?,?)'
+  return await sqliteDB.insertData(insertSql, insertData)
+}
 module.exports = {
   queryIndexCount,
   queryProjectType,
@@ -133,5 +158,7 @@ module.exports = {
   queryUser,
   insertUser,
   queryAll,
-  insertTodoList
+  insertTodoList,
+  queryScriptList,
+  insertScript
 }

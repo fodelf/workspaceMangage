@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:42:31
+ * @LastEditTime: 2020-04-12 15:35:15
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
@@ -85,6 +85,14 @@ async function insertComponent(data) {
 async function insertTodoList(data) {
   return await workDao.insertTodoList(data)
 }
+// 获取脚本列表
+async function queryScriptList(data) {
+  return await workDao.queryScriptList(data)
+}
+// 新增组件
+async function insertScript(data) {
+  return await workDao.insertScript(data)
+}
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -98,5 +106,7 @@ module.exports = {
   queryComponentSum,
   queryComponentList,
   insertComponent,
-  insertTodoList
+  insertTodoList,
+  queryScriptList,
+  insertScript
 }

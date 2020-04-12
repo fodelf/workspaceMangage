@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:14:09
+ * @LastEditTime: 2020-04-12 15:34:45
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -27,11 +27,11 @@ var createUtilTableSql =
   'create table if not exists util(utilId INTEGER PRIMARY KEY AUTOINCREMENT, utilName TEXT, gitUlr TEXT, dec TEXT,decImg TEXT,type TEXT,creatTime BLOB,deleteFlag INTEGER,userId TEXT);'
 // 脚本表
 var createScriptTableSql =
-  'create table if not exists script(scriptId INTEGER PRIMARY KEY AUTOINCREMENT, scriptName TEXT, gitUlr TEXT, dec TEXT,creatTime BLOB,deleteFlag INTEGER,userId TEXT);'
+  'create table if not exists script(scriptId INTEGER PRIMARY KEY AUTOINCREMENT, scriptName TEXT, scriptContent BLOB , creatTime BLOB, deleteFlag INTEGER);'
 //项目字典表
 var createPdecTableSql =
   'create table if not exists ptype(id INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT, value TEXT);'
-//项目字典表
+//待办表
 var createToDoListSql =
   'create table if not exists todo(doId INTEGER PRIMARY KEY AUTOINCREMENT,taskDec TEXT,deleteFlag INTEGER,creatTime BLOB);'
 

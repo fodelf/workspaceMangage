@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 18:28:30
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 14:11:00
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -17,12 +17,12 @@ export default {
       menuObj: {
         title: '项目总计',
         total: 0,
-        menuList: [],
+        menuList: []
       },
       tablePag: {
         pageNo: 1,
         pageSize: 15,
-        totalRecord: 0,
+        totalRecord: 0
       },
       dataList: [],
       headerList: [
@@ -31,17 +31,17 @@ export default {
         { name: '项目类型', code: 'type' },
         { name: '项目关键字', code: 'keyword' },
         { name: '创建时间', code: 'createTime' },
-        { name: '本地路径', code: 'pathUrl' },
+        { name: '本地路径', code: 'pathUrl' }
       ],
       keyword: '',
       itemObj: {},
-      proFormObj: {},
+      proFormObj: {}
     }
   },
   components: {
     menuList,
     tableBox,
-    proDialog,
+    proDialog
   },
   methods: {
     addPro() {
@@ -74,9 +74,9 @@ export default {
         type: item.type,
         pageNum: this.tablePag.pageNo,
         pageSize: this.tablePag.pageSize,
-        keyword: this.keyword,
+        keyword: this.keyword
       }
-      getProjectList(params).then((res) => {
+      getProjectList(params).then(res => {
         this.dataList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
@@ -95,7 +95,7 @@ export default {
      * @return {type}: 默认类型
      */
     queryProList() {
-      getProjectSum({}).then((res) => {
+      getProjectSum({}).then(res => {
         // console.log(res)
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
@@ -103,10 +103,10 @@ export default {
           this.selectMenu(this.menuObj.menuList[0])
         }
       })
-    },
+    }
   },
   mounted() {},
   created() {
     this.queryProList()
-  },
+  }
 }

@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 /*
  * @Description: 项目入口
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-07 19:23:41
+ * @LastEditTime: 2020-04-12 10:32:14
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -58,7 +59,7 @@ app.post('/api/isFileExist', common.isFileExist)
 app.post('/api/upload', mutipartMiddeware, common.upload)
 portfinder.getPort(
   {
-    port: 8080, // minimum port
+    port: 8081, // minimum port
     stopPort: 9000 // maximum port
   },
   function(err, port) {
@@ -66,8 +67,8 @@ portfinder.getPort(
       console.log(err)
     }
     config.port = port
-    var server = http.createServer(app).listen(8888, '0.0.0.0', () => {
-      console.log(`app start at http://${config.ip}:${8888}`)
+    var server = http.createServer(app).listen(9528, '0.0.0.0', () => {
+      console.log(`app start at http://${config.ip}:${9528}/easyWork`)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

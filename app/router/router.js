@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:38:16
+ * @LastEditTime: 2020-04-12 16:08:35
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -36,4 +36,10 @@ module.exports = router => {
   router.post('/api/component/insertComponent', controller.insertComponent)
   // 获取用户
   router.get('/api/queryUser', controller.queryUser)
+  // 获取用户
+  router.get('/api/script/queryScriptList', controller.queryScriptList)
+  // 新增脚本
+  router.post('/api/script/insertScript', controller.insertScript)
+  // 执行脚本
+  router.post('/api/script/actionScript', controller.actionScript)
 }
