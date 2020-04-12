@@ -4,22 +4,23 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:52:23
+ * @LastEditTime: 2020-04-12 13:57:57
  -->
 <template>
-  <div class="sideBar" :class="isCollapse ? 'min-side' : ''">
+  <div class="sideBar"
+       :class="isCollapse ? 'min-side' : ''">
     <p class="bigTit">
-      <i class="titBg"></i
-      ><span :class="isCollapse ? 'move_right' : ''">Easy<em>Work</em></span>
+      <i class="titBg"></i><span :class="isCollapse ? 'move_right' : ''">Easy<em>Work</em></span>
     </p>
-    <el-menu :default-active="activeModule" class="nav" :collapse="isCollapse">
-      <el-menu-item
-        v-for="(menuItem, index) in menuTree"
-        :key="index"
-        :index="menuItem.name"
-        @click="handleJumpToPath(menuItem)"
-      >
-        <i class="iconfont" :class="menuItem.icon"></i>
+    <el-menu :default-active="activeModule"
+             class="nav"
+             :collapse="isCollapse">
+      <el-menu-item v-for="(menuItem, index) in menuTree"
+                    :key="index"
+                    :index="menuItem.name"
+                    @click="handleJumpToPath(menuItem)">
+        <i class="iconfont"
+           :class="menuItem.icon"></i>
         <span slot="title">{{ menuItem.label }}</span>
       </el-menu-item>
     </el-menu>
@@ -29,7 +30,7 @@
 <script>
 export default {
   name: 'sideBar',
-  data() {
+  data () {
     return {
       isCollapse: false,
       menuTree: [
@@ -45,7 +46,7 @@ export default {
           icon: 'icon-mobanguanli',
           label: '组件管理',
         },
-        { name: 'terminal', icon: 'icon-jiaoben', label: '脚本管理' },
+        { name: 'scriptManage', icon: 'icon-jiaoben', label: '脚本管理' },
         { name: 'toolManage', icon: 'icon-gongju', label: '工具管理' },
         { name: 'dragManage', icon: 'icon-oper-auto', label: '拖拽生成' },
         {
@@ -60,7 +61,7 @@ export default {
     }
   },
   methods: {
-    handleJumpToPath(item) {
+    handleJumpToPath (item) {
       console.log(item)
       this.$router.push({
         name: item.name,
@@ -92,7 +93,7 @@ export default {
 
     .titBg {
       display: inline-block;
-      background: url('../../assets/img/work.svg') no-repeat center;
+      background: url("../../assets/img/work.svg") no-repeat center;
       background-size: 100% 100%;
       width: 35px;
       height: 35px;

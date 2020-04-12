@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:50:42
+ * @LastEditTime: 2020-04-10 20:59:49
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -18,6 +18,7 @@ const ProjectInit = () =>
 // }
 import templateManage from '@/views/templateManage/templateManage.vue'
 import componentManage from '@/views/componentManage/componentManage.vue'
+import scriptManage from '@/views/scriptManage/scriptManage.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -102,6 +103,26 @@ const vueRouter = new Router({
           name: 'componentManage',
           meta: {
             title: '组件列表',
+            noCache: true,
+          },
+        },
+      ],
+    },
+    {
+      path: '/script',
+      name: 'script',
+      redirect: '/script/scriptManage',
+      component: MainLayout,
+      meta: {
+        title: '脚本管理',
+      },
+      children: [
+        {
+          path: 'scriptManage',
+          component: scriptManage,
+          name: 'scriptManage',
+          meta: {
+            title: '脚本列表',
             noCache: true,
           },
         },
