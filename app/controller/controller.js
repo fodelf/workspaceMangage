@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 16:11:01
+ * @LastEditTime: 2020-04-12 22:01:48
  */
 const url = require('url')
 const sh = require('shelljs')
@@ -247,7 +247,10 @@ async function insertTodoList(req, res) {
 async function queryScriptList(req, res) {
   try {
     let data = await workServer.queryScriptList(url.parse(req.url, true).query)
-    let resultEntity = data
+    let resultEntity = {
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
+    }
     res.send({ ...result, resultEntity })
   } catch (error) {
     res.send(resultErr)
