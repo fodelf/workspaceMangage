@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 17:53:31
+ * @LastEditTime: 2020-04-07 19:23:41
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -48,7 +48,7 @@ process.on('uncaughtException', function(err) {
   console.log('Stack:', err.stack)
 })
 app.use(express.static(path.join(__dirname, 'static')))
-app.use('/easyWork', express.static(path.join(__dirname, 'dist')))
+app.use('/easyWork', express.static(path.join(__dirname, 'public')))
 routerAction(app)
 // 根据id获取项目明细
 app.get('/api/queryProjectById', workServer.queryProjectById)
@@ -66,8 +66,8 @@ portfinder.getPort(
       console.log(err)
     }
     config.port = port
-    var server = http.createServer(app).listen(8081, '0.0.0.0', () => {
-      console.log(`app start at http://${config.ip}:${8081}`)
+    var server = http.createServer(app).listen(8888, '0.0.0.0', () => {
+      console.log(`app start at http://${config.ip}:${8888}`)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

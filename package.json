@@ -1,6 +1,6 @@
 {
   "name": "workstage",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./app/app.js",
   "bin": {
     "ew ui": "./app/app.js"
@@ -20,6 +20,7 @@
     "download-git-repo": "^3.0.2",
     "echarts": "^4.7.0",
     "element-ui": "^2.13.0",
+    "express": "^4.17.1",
     "exprss": "0.0.1-security",
     "git-down-repo": "^2.4.3",
     "less": "^3.11.1",

@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-04 09:49:32
- * @LastEditors: pym
- * @LastEditTime: 2020-04-05 00:20:21
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-07 19:16:33
  -->
 <template>
   <div class="tabBread">
@@ -40,7 +40,7 @@ export default {
   methods: {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
+      // const first = matched[0]
       this.levelList = matched
       this.currentTab = this.levelList[this.levelList.length - 1].meta.title
     }

@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 17:55:19
+ * @LastEditTime: 2020-04-07 19:24:13
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -13,13 +13,13 @@ function resolve(dir) {
 }
 module.exports = {
   publicPath: ispro ? '' : '/',
-  outputDir: 'app/dist',
+  outputDir: 'app/public',
   assetsDir: 'static',
   lintOnSave: false,
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.0.100:8081'
+        target: 'http://localhost:8081'
       }
     }
   },

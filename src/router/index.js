@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: pym
- * @LastEditTime: 2020-04-10 20:59:49
+ * @LastEditTime: 2020-04-12 14:05:46
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -33,7 +33,7 @@ const vueRouter = new Router({
           name: 'home',
           component: Home,
           meta: {
-            title: 'Home',
+            title: '首页',
             noCache: true,
           },
         },

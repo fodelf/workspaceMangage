@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 17:51:32
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-07 19:15:16
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -24,7 +24,7 @@ export default {
           num: 123,
           percent: '50%',
           proColor: '#fb9678',
-          key: 'projectCount',
+          key: 'projectCount'
         },
         {
           icon: 'icon-mobanguanli1',
@@ -32,7 +32,7 @@ export default {
           num: 456,
           percent: '60%',
           proColor: '#01c0c8',
-          key: 'templateCount',
+          key: 'templateCount'
         },
         {
           icon: 'icon-mobanguanli',
@@ -40,7 +40,7 @@ export default {
           num: 789,
           percent: '70%',
           proColor: '#ab8ce4',
-          key: 'componentCount',
+          key: 'componentCount'
         },
         {
           icon: 'icon-gongju',
@@ -48,8 +48,8 @@ export default {
           num: 234,
           percent: '80%',
           proColor: '#00c292',
-          key: 'utilCount',
-        },
+          key: 'utilCount'
+        }
       ],
       carouselList: [1, 2, 3, 4],
       todoList: [
@@ -57,32 +57,32 @@ export default {
           checked: false,
           desc:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been',
-          date: 'yesterday',
+          date: 'yesterday'
         },
         {
           checked: false,
           desc:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been',
-          date: 'yesterday',
+          date: 'yesterday'
         },
         {
           checked: false,
           desc:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been',
-          date: 'yesterday',
+          date: 'yesterday'
         },
         {
           checked: false,
           desc:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been',
-          date: 'yesterday',
+          date: 'yesterday'
         },
         {
           checked: false,
           desc:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been',
-          date: 'yesterday',
-        },
+          date: 'yesterday'
+        }
       ],
       personalObj: {
         msgTit: '个人动态',
@@ -91,14 +91,14 @@ export default {
             url: '',
             name: 'pty',
             desc: 'Lorem Ipsum is simply dummy text',
-            date: '09:50',
+            date: '09:50'
           },
           { url: '', name: 'wwz', desc: 'ddddd', date: '09:50' },
           { url: '', name: 'sam', desc: 'ddddd', date: '09:50' },
           { url: '', name: 'wuliian', desc: 'ddddd', date: '09:50' },
           { url: '', name: 'beteli', desc: 'ddddd', date: '09:50' },
-          { url: '', name: 'gyl', desc: 'ddddd', date: '09:50' },
-        ],
+          { url: '', name: 'gyl', desc: 'ddddd', date: '09:50' }
+        ]
       },
       teamObj: {
         msgTit: '团队动态',
@@ -107,40 +107,40 @@ export default {
             url: '',
             name: 'tty',
             desc: 'sung a song! See you at',
-            date: '09:50',
+            date: '09:50'
           },
           {
             url: '',
             name: 'wwz',
             desc: 'sung a song! See you at',
-            date: '09:50',
+            date: '09:50'
           },
           {
             url: '',
             name: 'sam',
             desc: 'sung a song! See you at',
-            date: '09:50',
+            date: '09:50'
           },
           {
             url: '',
             name: 'wuliian',
             desc: 'sung a song! See you at',
-            date: '09:50',
+            date: '09:50'
           },
           {
             url: '',
             name: 'beteli',
             desc: 'sung a song! See you at',
-            date: '09:50',
+            date: '09:50'
           },
           {
             url: '',
             name: 'gyl',
             desc: 'sung a song! See you at',
-            date: '09:50',
-          },
-        ],
-      },
+            date: '09:50'
+          }
+        ]
+      }
     }
   },
   components: {
@@ -149,7 +149,7 @@ export default {
     todoList,
     actionModule,
     linesChart,
-    weather,
+    weather
   },
   methods: {
     /**
@@ -159,16 +159,16 @@ export default {
      * @return {type}: 默认类型
      */
     queryIndexCount() {
-      getIndexCount().then((res) => {
+      getIndexCount().then(res => {
         console.log(res)
-        this.cardList.map((item) => {
+        this.cardList.map(item => {
           return (item.num = res[item.key] || 0)
         })
       })
-    },
+    }
   },
   mounted() {},
   created() {
     this.queryIndexCount()
-  },
+  }
 }
