@@ -5,7 +5,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 10:32:14
+ * @LastEditTime: 2020-04-12 23:16:04
  */
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -67,8 +67,8 @@ portfinder.getPort(
       console.log(err)
     }
     config.port = port
-    var server = http.createServer(app).listen(9528, '0.0.0.0', () => {
-      console.log(`app start at http://${config.ip}:${9528}/easyWork`)
+    var server = http.createServer(app).listen(port, '0.0.0.0', () => {
+      console.log(`app start at http://${config.ip}:${port}/easyWork`)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

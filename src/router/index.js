@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 21:03:03
+ * @LastEditTime: 2020-04-12 23:10:56
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -15,7 +15,7 @@ const ProjectInit = () =>
   import('@/views/projectManage/projectInit/ProjectInit.vue')
 import templateManage from '@/views/templateManage/templateManage.vue'
 import componentManage from '@/views/componentManage/componentManage.vue'
-import scriptManage from '@/views/scriptManage/scriptManage.vue'
+import scriptManage from '@/views/scriptManage/ScriptManage.vue'
 import ToDoComponent from '@/components/toDoComponent/ToDoComponent.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)

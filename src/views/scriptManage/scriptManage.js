@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: pym
- * @LastEditTime: 2020-04-12 22:48:13
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 23:14:39
  */
 import scriptCard from '@/components/scriptCard/scriptCard'
 import AddScript from './childrenComponent/addScript/addScript.vue'
@@ -30,7 +30,8 @@ export default {
         pageNum: this.tablePag.pageNo,
         pageSize: this.tablePag.pageSize
       }).then(res => {
-        this.scriptCardList = res
+        this.scriptCardList = res.list
+        this.tablePag.totalRecord = res.total
         // this.scriptCardList = []
       })
     },

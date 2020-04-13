@@ -3,27 +3,27 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-10 21:26:24
- * @LastEditors: pym
- * @LastEditTime: 2020-04-12 22:34:18
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-12 23:12:55
  -->
 <template>
   <div class="scriptCard">
     <p class="cardTit">{{ itemObj.scriptName }}</p>
-    <el-input type="textarea"
-              v-model="itemObj.scriptContent"
-              :rows="7"
-              resize='none'></el-input>
-    <div class='btn_row'>
-      <div class='col_box'>
-        <el-button type="primary"
-                   size='small'>修改</el-button>
-        <el-button type="danger"
-                   size='small'>删除</el-button>
+    <el-input
+      type="textarea"
+      v-model="itemObj.scriptContent"
+      :rows="7"
+      resize="none"
+    ></el-input>
+    <div class="btn_row">
+      <div class="col_box">
+        <el-button type="primary" size="small">修改</el-button>
+        <el-button type="danger" size="small">删除</el-button>
       </div>
-      <div class='col_box'>
-        <el-button type="primary"
-                   size='small'
-                   @click="action">立即执行</el-button>
+      <div class="col_box">
+        <el-button type="primary" size="small" @click="action"
+          >立即执行</el-button
+        >
       </div>
     </div>
   </div>
@@ -36,16 +36,19 @@ export default {
   props: {
     itemObj: {
       type: Object,
-      default: function () {
-        return {}
+      default: function() {
+        return {
+          scriptContent: '',
+          scriptName: ''
+        }
       }
     }
   },
-  data () {
+  data() {
     return {}
   },
   methods: {
-    action () {
+    action() {
       actionScript({
         scriptContent: this.itemObj.scriptContent
       })
