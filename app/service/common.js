@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-31 21:56:54
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:24:18
+ * @LastEditTime: 2020-04-14 10:58:47
  */
 const fs = require('fs')
 const path = require('path')
@@ -74,11 +74,17 @@ async function queryUserAgain() {
 async function queryAll(tableName) {
   return await workDao.queryAll(tableName)
 }
+// 删除数据公共方法
+async function deleteByID(id, tableID, tableName) {
+  console.log('sss')
+  return await workDao.deleteByID(id, tableID, tableName)
+}
 module.exports = {
   querySum,
   isFileExist,
   upload,
   queryCommonList,
   queryUser,
-  queryAll
+  queryAll,
+  deleteByID
 }

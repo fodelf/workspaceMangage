@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-12 14:40:07
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 16:11:57
+ * @LastEditTime: 2020-04-14 10:48:32
  */
 import request from '@/utils/request'
 
@@ -25,6 +25,13 @@ export function queryScriptList(params) {
 export function actionScript(params) {
   return request({
     url: '/api/script/actionScript',
+    method: 'POST',
+    params: params
+  })
+}
+export function deleteScript(params) {
+  return request({
+    url: '/api/script/deleteScript',
     method: 'POST',
     params: params
   })

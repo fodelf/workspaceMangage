@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:44:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:01:55
+ * @LastEditTime: 2020-04-14 11:00:17
  */
 var fs = require('fs')
 var sqlite3 = require('sqlite3').verbose()
@@ -68,6 +68,19 @@ DB.SqliteDB.prototype.queryData = async function(sql) {
       } else {
         console.log(JSON.stringify(rows))
         resolve(rows)
+      }
+    })
+  })
+}
+DB.SqliteDB.prototype.deleteData = function(sql) {
+  console.log(sql)
+  return new Promise(function(resolve, reject) {
+    DB.db.run(sql, function(err) {
+      if (null != err) {
+        DB.printErrorInfo(err)
+        reject(new Error(err.message))
+      } else {
+        resolve()
       }
     })
   })

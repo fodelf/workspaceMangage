@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
- * @LastEditors: pym
- * @LastEditTime: 2020-04-14 09:46:41
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-14 10:47:31
  */
 const url = require('url')
 const sh = require('shelljs')
@@ -286,20 +286,8 @@ async function actionScript(req, res) {
       case 'Darwin':
       case 'Linux':
         sh.exec(req.body.scriptContent)
-        // res.send(result)
         break
       case 'Windows_NT':
-        // sh.exec(req.body.scriptContent)
-        // console.log(req.body.scriptContent)
-        // sh.exec(req.body.scriptContent, { encoding: 'base64' }, function(
-        //   code,
-        //   stdout,
-        //   stderr
-        // ) {
-        //   console.log(code)
-        //   console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
-        //   console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
-        // })
         console.log(req.body.scriptContent)
         var array = req.body.scriptContent
           .replace(/^\n*/, '')
@@ -357,6 +345,20 @@ async function actionScript(req, res) {
     res.send(resultErr)
   }
 }
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function deleteScript(req, res) {
+  try {
+    await commonServer.deleteByID(req.body.scriptId, 'scriptId', 'script')
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -374,5 +376,6 @@ module.exports = {
   insertTodoList,
   queryScriptList,
   insertScript,
-  actionScript
+  actionScript,
+  deleteScript
 }
