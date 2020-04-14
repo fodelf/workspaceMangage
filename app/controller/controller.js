@@ -4,21 +4,15 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 13:42:42
+ * @LastEditTime: 2020-04-14 13:46:33
  */
 const url = require('url')
 const sh = require('shelljs')
 const os = require('os')
-const path = require('path')
-const uuid = require('uuid')
-const { spawn } = require('child_process');
+const iconv = require('iconv-lite')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
-const fs = require('fs')
-// var cmd=require('node-cmd')
-var syncFile = null
-var iconv = require('iconv-lite')
 const result = {
   resultCode: 200,
   resultEntity: {},
@@ -285,7 +279,85 @@ async function insertScript(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function actionScript(req, res) {
- 
+  res.send(result)
+  try {
+    let type = os.type()
+    switch (type) {
+      case 'Darwin':
+      case 'Linux':
+        sh.exec(req.body.scriptContent)
+        break
+      case 'Windows_NT':
+        console.log(req.body.scriptContent)
+        var array = req.body.scriptContent
+          .replace(/^\n*/, '')
+          .replace(/\n{2,}/g, '\n')
+          .replace(/\n*$/, '')
+          .split('\n')
+        var flag = array.some(item => {
+          return item.startsWith('cd')
+        })
+        console.log(array)
+        if (flag) {
+          array.forEach(item => {
+            if (item.startsWith('cd')) {
+              let child = item.substring(2)
+              console.log(child)
+              sh.cd(child, { encoding: 'base64' }, function(
+                code,
+                stdout,
+                stderr
+              ) {
+                console.log(code)
+                console.log(
+                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                )
+              })
+            } else {
+              sh.exec(item, { encoding: 'base64' }, function(
+                code,
+                stdout,
+                stderr
+              ) {
+                console.log(code)
+                console.log(
+                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                )
+              })
+            }
+          })
+        } else {
+          sh.exec(req.body.scriptContent)
+        }
+        break
+      default:
+        var resultMes = '不支持此系统'
+        res.send({ ...resultErr, resultMes })
+        break
+    }
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function deleteScript(req, res) {
+  try {
+    await commonServer.deleteByID(req.body.scriptId, 'scriptId', 'script')
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
 }
 module.exports = {
   getIndexCount,
@@ -304,5 +376,6 @@ module.exports = {
   insertTodoList,
   queryScriptList,
   insertScript,
-  actionScript
+  actionScript,
+  deleteScript
 }

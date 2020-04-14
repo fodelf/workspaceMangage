@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-10 21:26:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 23:12:55
+ * @LastEditTime: 2020-04-14 10:55:35
  -->
 <template>
   <div class="scriptCard">
@@ -18,7 +18,12 @@
     <div class="btn_row">
       <div class="col_box">
         <el-button type="primary" size="small">修改</el-button>
-        <el-button type="danger" size="small">删除</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          @click="deleteAtion(itemObj.scriptId)"
+          >删除</el-button
+        >
       </div>
       <div class="col_box">
         <el-button type="primary" size="small" @click="action"
@@ -30,7 +35,7 @@
 </template>
 
 <script>
-import { actionScript } from '@/api/scriptApi.js'
+import { actionScript, deleteScript } from '@/api/scriptApi.js'
 export default {
   name: 'scriptCard',
   props: {
@@ -64,6 +69,15 @@ export default {
             message: '脚本报错了！'
           })
         })
+    },
+    deleteAtion(scriptId) {
+      this.$confirm('确认删除此脚本？')
+        .then(() => {
+          deleteScript({ scriptId: scriptId }).then(() => {
+            this.$emit('getList')
+          })
+        })
+        .catch(() => {})
     }
   }
 }
