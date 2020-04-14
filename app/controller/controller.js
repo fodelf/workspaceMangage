@@ -4,14 +4,21 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-13 19:35:32
+ * @LastEditTime: 2020-04-14 13:42:42
  */
 const url = require('url')
 const sh = require('shelljs')
+const os = require('os')
+const path = require('path')
+const uuid = require('uuid')
+const { spawn } = require('child_process');
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
-const os = require('os')
+const fs = require('fs')
+// var cmd=require('node-cmd')
+var syncFile = null
+var iconv = require('iconv-lite')
 const result = {
   resultCode: 200,
   resultEntity: {},
@@ -278,43 +285,7 @@ async function insertScript(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function actionScript(req, res) {
-  try {
-    let type = os.type()
-    switch (type) {
-      case 'Darwin':
-      case 'Linux':
-        sh.exec(req.body.scriptContent)
-        res.send(result)
-        break
-      case 'Windows_NT':
-        var array = req.body.scriptContent.split('/n')
-        var flag = array.every(item => {
-          return item.startsWith('cd')
-        })
-        console.log(array)
-        if (flag) {
-          array.forEach(item => {
-            if (item.startsWith('cd')) {
-              let child = item.substring(2)
-              console.log(child)
-              sh.cd(child)
-            } else {
-              sh.exec(item)
-            }
-          })
-        } else {
-          sh.exec(req.body.scriptContent)
-          res.send(result)
-        }
-        break
-      default:
-        var resultMes = '不支持此系统'
-        res.send({ ...resultErr, resultMes })
-        break
-    }
-  } catch (error) {
-    res.send(resultErr)
-  }
+ 
 }
 module.exports = {
   getIndexCount,
