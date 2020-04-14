@@ -3,11 +3,12 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-13 19:35:32
+ * @LastEditors: pym
+ * @LastEditTime: 2020-04-14 09:46:41
  */
 const url = require('url')
 const sh = require('shelljs')
+var iconv = require('iconv-lite')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
@@ -278,17 +279,34 @@ async function insertScript(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function actionScript(req, res) {
+  res.send(result)
   try {
     let type = os.type()
     switch (type) {
       case 'Darwin':
       case 'Linux':
         sh.exec(req.body.scriptContent)
-        res.send(result)
+        // res.send(result)
         break
       case 'Windows_NT':
-        var array = req.body.scriptContent.split('/n')
-        var flag = array.every(item => {
+        // sh.exec(req.body.scriptContent)
+        // console.log(req.body.scriptContent)
+        // sh.exec(req.body.scriptContent, { encoding: 'base64' }, function(
+        //   code,
+        //   stdout,
+        //   stderr
+        // ) {
+        //   console.log(code)
+        //   console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+        //   console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+        // })
+        console.log(req.body.scriptContent)
+        var array = req.body.scriptContent
+          .replace(/^\n*/, '')
+          .replace(/\n{2,}/g, '\n')
+          .replace(/\n*$/, '')
+          .split('\n')
+        var flag = array.some(item => {
           return item.startsWith('cd')
         })
         console.log(array)
@@ -297,14 +315,37 @@ async function actionScript(req, res) {
             if (item.startsWith('cd')) {
               let child = item.substring(2)
               console.log(child)
-              sh.cd(child)
+              sh.cd(child, { encoding: 'base64' }, function(
+                code,
+                stdout,
+                stderr
+              ) {
+                console.log(code)
+                console.log(
+                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                )
+              })
             } else {
-              sh.exec(item)
+              sh.exec(item, { encoding: 'base64' }, function(
+                code,
+                stdout,
+                stderr
+              ) {
+                console.log(code)
+                console.log(
+                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                )
+              })
             }
           })
         } else {
           sh.exec(req.body.scriptContent)
-          res.send(result)
         }
         break
       default:
