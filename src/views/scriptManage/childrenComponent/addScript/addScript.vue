@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-12 14:15:17
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 20:49:34
+ * @LastEditTime: 2020-04-15 14:54:46
  -->
 <template>
   <el-dialog
@@ -77,10 +77,16 @@ export default {
       this.title = this.$props.type == 'modify' ? '修改脚本' : '新增脚本'
       if (this.$props.type == 'modify') {
         this.proForm = this.$props.itemObj
+      } else {
+        this.proForm = {
+          scriptName: '',
+          scriptContent: ''
+        }
       }
       this.proVisible = true
     },
     close() {
+      this.$refs.proForm.resetFields()
       this.proVisible = false
     },
     /**
