@@ -4,13 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-12 14:15:17
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 15:46:17
+ * @LastEditTime: 2020-04-14 20:49:34
  -->
 <template>
   <el-dialog
     :visible="proVisible"
     width="60%"
-    title="新增项目"
+    :title="title"
     :before-close="close"
     v-if="proVisible"
   >
@@ -50,13 +50,14 @@
 </template>
 
 <script>
-import { insertScript } from '@/api/scriptApi.js'
+import { insertScript, updateScript } from '@/api/scriptApi.js'
 export default {
   name: 'addScript',
-  props: ['itemObj'],
+  props: ['itemObj', 'type'],
   data() {
     return {
       proVisible: false,
+      title: '',
       proForm: {
         scriptName: '',
         scriptContent: ''
@@ -73,6 +74,10 @@ export default {
   },
   methods: {
     show() {
+      this.title = this.$props.type == 'modify' ? '修改脚本' : '新增脚本'
+      if (this.$props.type == 'modify') {
+        this.proForm = this.$props.itemObj
+      }
       this.proVisible = true
     },
     close() {
@@ -87,14 +92,25 @@ export default {
     confirm() {
       this.$refs.proForm.validate(valid => {
         if (valid) {
-          insertScript(this.proForm).then(() => {
-            this.$message({
-              type: 'success',
-              message: '新增成功！'
+          if (this.$props.type == 'add') {
+            insertScript(this.proForm).then(() => {
+              this.$message({
+                type: 'success',
+                message: '新增成功！'
+              })
+              this.proVisible = false
+              this.$emit('getList')
             })
-            this.proVisible = false
-            this.$emit('getList')
-          })
+          } else {
+            updateScript(this.proForm).then(() => {
+              this.$message({
+                type: 'success',
+                message: '修改成功！'
+              })
+              this.proVisible = false
+              this.$emit('getList')
+            })
+          }
         } else {
           return
         }

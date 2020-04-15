@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-10 21:26:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:55:35
+ * @LastEditTime: 2020-04-14 19:54:39
  -->
 <template>
   <div class="scriptCard">
@@ -17,7 +17,9 @@
     ></el-input>
     <div class="btn_row">
       <div class="col_box">
-        <el-button type="primary" size="small">修改</el-button>
+        <el-button type="primary" size="small" @click="modify(itemObj)"
+          >修改</el-button
+        >
         <el-button
           type="danger"
           size="small"
@@ -78,6 +80,9 @@ export default {
           })
         })
         .catch(() => {})
+    },
+    modify(itemObj) {
+      this.$emit('modify', itemObj)
     }
   }
 }

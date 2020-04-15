@@ -5,9 +5,10 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-13 19:14:44
+ * @LastEditTime: 2020-04-14 19:34:59
  */
 const express = require('express')
+const open = require('open')
 const bodyParser = require('body-parser')
 const { initTable } = require('./sql/initTable')
 const config = require('./config/config')
@@ -67,8 +68,10 @@ portfinder.getPort(
       console.log(err)
     }
     config.port = port
-    var server = http.createServer(app).listen(9528, '0.0.0.0', () => {
-      console.log(`app start at http://${config.ip}:${9528}/easyWork`)
+    var url = `http://${config.ip}:${port}/easyWork`
+    var server = http.createServer(app).listen(port, '0.0.0.0', () => {
+      console.log(`app start at ${url}`)
+      //open(url)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

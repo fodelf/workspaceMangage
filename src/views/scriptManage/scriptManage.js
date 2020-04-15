@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 23:14:39
+ * @LastEditTime: 2020-04-15 07:40:16
  */
 import scriptCard from '@/components/scriptCard/scriptCard'
 import AddScript from './childrenComponent/addScript/addScript.vue'
@@ -16,10 +16,12 @@ export default {
       scriptCardList: [],
       tablePag: {
         pageNo: 1,
-        pageSize: 4,
+        pageSize: 6,
         totalRecord: 0
       },
-      scriptName: ''
+      scriptName: '',
+      type: 'add',
+      itemObj: null
     }
   },
   components: { scriptCard, AddScript },
@@ -35,7 +37,13 @@ export default {
         // this.scriptCardList = []
       })
     },
+    modify(itemObj) {
+      this.type = 'modify'
+      this.itemObj = { ...itemObj }
+      this.$refs.proDialog.show()
+    },
     addPro() {
+      this.type = 'add'
       this.$refs.proDialog.show()
     },
     handleCurrentChange(pageNo) {

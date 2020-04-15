@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:47:31
+ * @LastEditTime: 2020-04-14 20:39:22
  */
 const url = require('url')
 const sh = require('shelljs')
@@ -359,6 +359,21 @@ async function deleteScript(req, res) {
     res.send(resultErr)
   }
 }
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function updateScript(req, res) {
+  try {
+    await workServer.updateScript(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -377,5 +392,6 @@ module.exports = {
   queryScriptList,
   insertScript,
   actionScript,
-  deleteScript
+  deleteScript,
+  updateScript
 }
