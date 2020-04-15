@@ -4,16 +4,22 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-31 21:56:54
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:58:47
+ * @LastEditTime: 2020-04-15 20:15:37
  */
 const fs = require('fs')
 const path = require('path')
 const workDao = require('../dao/workDao.js')
+const config = require('../config/config')
 const UUID = require('uuid')
 const result = {
   resultCode: 200,
   resultEntity: {},
   resultMes: 'success'
+}
+const resultErr = {
+  resultCode: 500,
+  resultEntity: {},
+  resultMes: '服务异常'
 }
 // 查询汇总
 async function querySum(tableName) {
@@ -33,16 +39,15 @@ async function isFileExist(req, res) {
 }
 // 上传文件
 async function upload(req, res) {
-  console.log(req.files['file']['originalFilename'])
-  console.log(req.files['file'])
   let name = UUID.v1() + path.extname(req.files['file']['originalFilename'])
-  let filePath = path.join(process.cwd(), 'static', 'source', 'img', name)
+  let filePath = path.join(path.resolve(__dirname,'..'), 'static', 'img', name)
   fs.readFile(req.files['file'].path, function(err, data) {
     fs.writeFile(filePath, data, function(err) {
       if (err) {
         console.log(err)
+        res.send(resultErr)
       } else {
-        let resultEntity = 'http://192.168.0.100:8081/source/img/' + name
+        let resultEntity = `${config.url}/img/`+ name
         res.send({ ...result, resultEntity })
       }
     })

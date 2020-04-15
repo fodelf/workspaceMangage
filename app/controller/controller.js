@@ -4,12 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 13:46:33
+ * @LastEditTime: 2020-04-15 20:28:34
  */
 const url = require('url')
-const sh = require('shelljs')
+const shell = require('shelljs')
 const os = require('os')
+const path = require('path')
 const iconv = require('iconv-lite')
+const config = require('../config/config')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
@@ -106,20 +108,36 @@ async function getProjectType(req, res) {
  */
 async function initNewProject(req, res) {
   try {
-    await workServer.initNewProject(req.body)
+    let decImg = path.basename(req.body.decImg)
+    await workServer.initNewProject({...req.body,decImg})
     res.send(result)
   } catch (error) {
     res.send(resultErr)
   }
 }
 /**
- * @api {post} /api/getProjectList 新增项目
+ * @api {post} /api/getProjectList 获取项目列表
  * @apiGroup project
  * @apiSuccess {Number} projectCount 项目数量汇总.
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function getProjectList(req, res) {
-  _getList(req, res, 'project')
+  try {
+    let data = await commonServer.queryCommonList(
+      url.parse(req.url, true).query
+    )
+    data.map((item)=>{
+      let decImg = `${config.url}/img/` + item.decImg
+      return {...item,decImg}
+    })
+    let resultEntity = {
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
+    }
+    res.send({ ...result, resultEntity })
+  } catch (error) {
+    res.send(resultErr)
+  }
 }
 /**
  * @api {post} /api/getProjectSum 获取项目汇总
@@ -285,7 +303,7 @@ async function actionScript(req, res) {
     switch (type) {
       case 'Darwin':
       case 'Linux':
-        sh.exec(req.body.scriptContent)
+        shell.exec(req.body.scriptContent)
         break
       case 'Windows_NT':
         console.log(req.body.scriptContent)
@@ -297,44 +315,30 @@ async function actionScript(req, res) {
         var flag = array.some(item => {
           return item.startsWith('cd')
         })
-        console.log(array)
         if (flag) {
-          array.forEach(async item => {
-            if (item.startsWith('cd')) {
+          for (var i = 0; i < array.length; i++) {
+            console.log(array[i])
+            let item = array[i]
+            if (item.startsWith('cd')){
               let child = item.substring(2)
-              console.log(child)
-              await shellAction(child, 'cd')
-              // sh.cd(child, { encoding: 'base64' }, function(
-              //   code,
-              //   stdout,
-              //   stderr
-              // ) {
-              //   console.log(
-              //     iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
-              //   )
-              //   console.log(
-              //     iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
-              //   )
-              // })
-            } else {
-              await shellAction(item, 'sh')
-              // sh.exec(item, { encoding: 'base64' }, function(
-              //   code,
-              //   stdout,
-              //   stderr
-              // ) {
-              //   console.log(code)
-              //   console.log(
-              //     iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
-              //   )
-              //   console.log(
-              //     iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
-              //   )
-              // })
+              try {
+                shell.cd(child, { encoding: 'base64' }, function(code, stdout, stderr) {
+                  console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+                  console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+                })
+              }catch (error) {
+                console.log(error)
+              }
+            }else{
+              try {
+                await shellAction(item)
+              }catch (error) {
+                console.log(error)
+              }
             }
-          })
+          }
         } else {
-          sh.exec(req.body.scriptContent)
+          shellAction(req.body.scriptContent)
         }
         break
       default:
@@ -346,37 +350,20 @@ async function actionScript(req, res) {
     res.send(resultErr)
   }
 }
-function shellAction(sh, type) {
+function shellAction(sh) {
   return new Promise(function(resolve, reject) {
-    switch (type) {
-      case 'cd':
-        sh.cd(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
-          if (stdout) {
-            resolve()
-          } else if (stderr) {
-            reject()
-          } else {
-            resolve()
-          }
-          console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
-          console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
-        })
-        break
-      default:
-        sh.exec(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
-          if (stdout) {
-            resolve()
-          } else if (stderr) {
-            reject()
-          } else {
-            resolve()
-          }
-          console.log(code)
-          console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
-          console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
-        })
-        break
-    }
+    shell.exec(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
+      if (stdout) {
+        resolve()
+      } else if (stderr) {
+        reject()
+      } else {
+        resolve()
+      }
+      console.log(code)
+      console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+      console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+    })
   })
 }
 /**

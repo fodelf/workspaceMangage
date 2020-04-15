@@ -5,7 +5,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 15:27:29
+ * @LastEditTime: 2020-04-15 20:02:53
  */
 const express = require('express')
 const open = require('open')
@@ -49,7 +49,7 @@ process.on('uncaughtException', function(err) {
   console.log('Caught exception: ', err)
   console.log('Stack:', err.stack)
 })
-// app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'static')))
 // app.use('/easyWork', express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'public')))
 routerAction(app)
@@ -68,11 +68,11 @@ portfinder.getPort(
     if (err) {
       console.log(err)
     }
-    config.port = port
     var url = `http://${config.ip}:${port}`
+    config.url = url
     var server = http.createServer(app).listen(port, '0.0.0.0', () => {
       console.log(`app start at ${url}`)
-      open(url)
+      // open(url)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

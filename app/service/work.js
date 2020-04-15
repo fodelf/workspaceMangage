@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 20:39:42
+ * @LastEditTime: 2020-04-15 20:16:48
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
@@ -30,13 +30,6 @@ async function getProjectType() {
 async function initNewProject(data) {
   return await workDao.initNewProject(data)
 }
-// 初始新增项目
-// async function initNewProject(req, res) {
-//   const callBackFun = function() {
-//     res.send(result)
-//   }
-//   workDao.newProject(req.body, callBackFun)
-// }
 // 获取项目列表
 async function getProjectList(req, res) {
   common.queryCommonList(req, res, 'project')
