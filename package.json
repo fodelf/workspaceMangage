@@ -1,6 +1,6 @@
 {
   "name": "workstage",
-  "version": "0.1.7",
+  "version": "0.2.1",
   "main": "./app/app.js",
   "bin": {
     "ew": "./app/app.js"
@@ -17,9 +17,10 @@
   "dependencies": {
     "connect-multiparty": "^2.2.0",
     "express": "^4.17.1",
+    "iconv-lite": "^0.5.1",
     "log4js": "^6.1.2",
     "multer": "^1.4.2",
-    "iconv-lite": "^0.5.1",
+    "open": "^7.0.3",
     "portfinder": "^1.0.25",
     "shelljs": "^0.8.3",
     "silly-datetime": "^0.1.2",

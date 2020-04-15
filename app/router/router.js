@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:45:13
+ * @LastEditTime: 2020-04-14 19:43:55
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -44,4 +44,6 @@ module.exports = router => {
   router.post('/api/script/actionScript', controller.actionScript)
   // 删除脚本
   router.post('/api/script/deleteScript', controller.deleteScript)
+  // 修改脚本
+  router.post('/api/script/updateScript', controller.updateScript)
 }

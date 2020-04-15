@@ -6,8 +6,8 @@
 <script>
 // import T from './TerminalView'
 export default {
-  name:'xx',
-  components:{
+  name: 'app',
+  components: {
     // T
   }
 }

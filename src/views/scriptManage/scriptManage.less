@@ -4,31 +4,41 @@
   min-height: calc(100% - 56px);
   padding: 25px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   .tableCon {
     width: 100%;
     // height: calc(100% - 80px);
     min-height: calc(100% - 80px);
+    flex: auto;
+
     .current_col {
       margin-bottom: 20px;
     }
   }
+
   .pageBox {
     width: 100%;
     margin-top: 5px;
+
     /deep/.el-pagination {
       float: right;
+
       .btn-prev {
         background: #303641;
       }
+
       .btn-next {
         background: #303641;
       }
+
       .el-input__inner {
         background: #303641;
       }
     }
   }
+
   .rightTit {
     width: 100%;
     margin-bottom: 10px;

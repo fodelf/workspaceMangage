@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:59:43
+ * @LastEditTime: 2020-04-14 20:47:28
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -151,7 +151,12 @@ async function insertScript(data) {
 // 删除记录
 async function deleteByID(id, tableID, tableName) {
   var deleteSql = `update ${tableName} set deleteFlag = 1 where ${tableID} = ${id}`
-  console.log('xxx')
+  return await sqliteDB.deleteData(deleteSql)
+}
+
+// 修改脚本
+async function updateScript(data) {
+  var deleteSql = `update script set scriptContent = '${data.scriptContent}',scriptName = '${data.scriptName}'  where scriptId = ${data.scriptId}`
   return await sqliteDB.deleteData(deleteSql)
 }
 module.exports = {
@@ -168,5 +173,6 @@ module.exports = {
   insertTodoList,
   queryScriptList,
   insertScript,
-  deleteByID
+  deleteByID,
+  updateScript
 }

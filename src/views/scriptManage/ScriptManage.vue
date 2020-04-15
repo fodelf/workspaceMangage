@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-26 21:42:01
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 10:56:04
+ * @LastEditTime: 2020-04-14 20:02:58
  -->
 <template>
   <div class="scriptManage">
@@ -24,7 +24,11 @@
         >
           <!-- <div v-for="(item, index) in scriptCardList"
                :key="index"> -->
-          <scriptCard :itemObj="item" @getList="getList"></scriptCard>
+          <scriptCard
+            :itemObj="item"
+            @modify="modify"
+            @getList="getList"
+          ></scriptCard>
           <!-- </div> -->
         </el-col>
       </el-row>
@@ -41,7 +45,12 @@
       </el-pagination>
     </div>
 
-    <AddScript @getList="getList" ref="proDialog"></AddScript>
+    <AddScript
+      @getList="getList"
+      ref="proDialog"
+      :itemObj="itemObj"
+      :type="type"
+    ></AddScript>
   </div>
 </template>
 

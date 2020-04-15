@@ -299,37 +299,38 @@ async function actionScript(req, res) {
         })
         console.log(array)
         if (flag) {
-          array.forEach(item => {
+          array.forEach(async item => {
             if (item.startsWith('cd')) {
               let child = item.substring(2)
               console.log(child)
-              sh.cd(child, { encoding: 'base64' }, function(
-                code,
-                stdout,
-                stderr
-              ) {
-                console.log(code)
-                console.log(
-                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
-                )
-                console.log(
-                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
-                )
-              })
+              await shellAction(child, 'cd')
+              // sh.cd(child, { encoding: 'base64' }, function(
+              //   code,
+              //   stdout,
+              //   stderr
+              // ) {
+              //   console.log(
+              //     iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+              //   )
+              //   console.log(
+              //     iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+              //   )
+              // })
             } else {
-              sh.exec(item, { encoding: 'base64' }, function(
-                code,
-                stdout,
-                stderr
-              ) {
-                console.log(code)
-                console.log(
-                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
-                )
-                console.log(
-                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
-                )
-              })
+              await shellAction(item, 'sh')
+              // sh.exec(item, { encoding: 'base64' }, function(
+              //   code,
+              //   stdout,
+              //   stderr
+              // ) {
+              //   console.log(code)
+              //   console.log(
+              //     iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+              //   )
+              //   console.log(
+              //     iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+              //   )
+              // })
             }
           })
         } else {
@@ -345,6 +346,39 @@ async function actionScript(req, res) {
     res.send(resultErr)
   }
 }
+function shellAction(sh, type) {
+  return new Promise(function(resolve, reject) {
+    switch (type) {
+      case 'cd':
+        sh.cd(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
+          if (stdout) {
+            resolve()
+          } else if (stderr) {
+            reject()
+          } else {
+            resolve()
+          }
+          console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+          console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+        })
+        break
+      default:
+        sh.exec(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
+          if (stdout) {
+            resolve()
+          } else if (stderr) {
+            reject()
+          } else {
+            resolve()
+          }
+          console.log(code)
+          console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+          console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+        })
+        break
+    }
+  })
+}
 /**
  * @api {post} /api/initNewProject 新增项目
  * @apiGroup project
@@ -359,6 +393,21 @@ async function deleteScript(req, res) {
     res.send(resultErr)
   }
 }
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function updateScript(req, res) {
+  try {
+    await workServer.updateScript(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -377,5 +426,6 @@ module.exports = {
   queryScriptList,
   insertScript,
   actionScript,
-  deleteScript
+  deleteScript,
+  updateScript
 }
