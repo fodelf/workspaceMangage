@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 14:11:00
+ * @LastEditTime: 2020-04-16 09:02:58
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -103,7 +103,8 @@ export default {
           this.selectMenu(this.menuObj.menuList[0])
         }
       })
-    }
+    },
+    deleteRow() {}
   },
   mounted() {},
   created() {

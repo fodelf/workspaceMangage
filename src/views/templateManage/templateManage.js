@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 18:08:29
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-15 22:48:58
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tempDialog from '@/components/tempDialog/tempDialog.vue'
@@ -14,10 +14,11 @@ export default {
   name: 'templateManage',
   data() {
     return {
+      actionType: 'add',
       menuObj: {
         title: '本地模板总计',
         total: 0,
-        menuList: [],
+        menuList: []
       },
       keyword: '',
       itemObj: {},
@@ -25,26 +26,20 @@ export default {
       tempKind: 'localTemp',
       tabTemp: [
         { label: '本地模板', value: 'localTemp' },
-        { label: '全局模板', value: 'wholeTemp' },
+        { label: '全局模板', value: 'wholeTemp' }
       ],
-      tempCardList: [
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-      ],
+      tempCardList: [],
       tablePag: {
         pageNo: 1,
         pageSize: 9,
-        totalRecord: 0,
-      },
+        totalRecord: 0
+      }
     }
   },
   components: {
     menuList,
     tempDialog,
-    templateCard,
+    templateCard
   },
   methods: {
     addPro() {
@@ -57,7 +52,7 @@ export default {
      * @return {type}: 默认类型
      */
     queryTempList() {
-      getTempSum({}).then((res) => {
+      getTempSum({}).then(res => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
         if (this.menuObj.menuList.length !== 0) {
@@ -68,16 +63,17 @@ export default {
     getTempList(item) {
       console.log(item)
       this.tablePag.pageNo = 1
-      this.selectMenu(item)
+      this.queryTempCard(this.itemObj)
     },
     queryTempCard(item) {
       let params = {
         type: item.type,
         pageNum: this.tablePag.pageNo,
         pageSize: this.tablePag.pageSize,
-        keyword: this.keyword,
+        keyword: this.keyword
       }
-      getTempCard(params).then((res) => {
+      this.itemObj = item
+      getTempCard(params).then(res => {
         this.tempCardList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
@@ -95,10 +91,10 @@ export default {
     getPageNo(val) {
       this.tablePag.pageNo = val
       this.queryTempCard(this.itemObj)
-    },
+    }
   },
   mounted() {},
   created() {
     this.queryTempList()
-  },
+  }
 }

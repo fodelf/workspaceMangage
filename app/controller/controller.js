@@ -4,12 +4,12 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 20:28:34
+ * @LastEditTime: 2020-04-16 07:57:17
  */
 const url = require('url')
 const shell = require('shelljs')
 const os = require('os')
-const path = require('path')
+// const path = require('path')
 const iconv = require('iconv-lite')
 const config = require('../config/config')
 const workServer = require('../service/work.js')
@@ -108,8 +108,7 @@ async function getProjectType(req, res) {
  */
 async function initNewProject(req, res) {
   try {
-    let decImg = path.basename(req.body.decImg)
-    await workServer.initNewProject({...req.body,decImg})
+    await workServer.initNewProject(req.body)
     res.send(result)
   } catch (error) {
     res.send(resultErr)
@@ -122,22 +121,7 @@ async function initNewProject(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function getProjectList(req, res) {
-  try {
-    let data = await commonServer.queryCommonList(
-      url.parse(req.url, true).query
-    )
-    data.map((item)=>{
-      let decImg = `${config.url}/img/` + item.decImg
-      return {...item,decImg}
-    })
-    let resultEntity = {
-      total: data[0] ? data[0]['total'] : 0,
-      list: data
-    }
-    res.send({ ...result, resultEntity })
-  } catch (error) {
-    res.send(resultErr)
-  }
+  _getList(req, res, 'project')
 }
 /**
  * @api {post} /api/getProjectSum 获取项目汇总
@@ -169,7 +153,23 @@ async function newTemplate(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function queryTemplateList(req, res) {
-  _getList(req, res, 'template')
+  try {
+    let data = await commonServer.queryCommonList(
+      url.parse(req.url, true).query,
+      'template'
+    )
+    data.map(item => {
+      let decImg = `${config.url}/img/` + item.decImg
+      return { ...item, decImg }
+    })
+    let resultEntity = {
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
+    }
+    res.send({ ...result, resultEntity })
+  } catch (error) {
+    res.send(resultErr)
+  }
 }
 /**
  * @api {post} /api/queryTemplateSum 获取模板汇总
@@ -319,20 +319,28 @@ async function actionScript(req, res) {
           for (var i = 0; i < array.length; i++) {
             console.log(array[i])
             let item = array[i]
-            if (item.startsWith('cd')){
+            if (item.startsWith('cd')) {
               let child = item.substring(2)
               try {
-                shell.cd(child, { encoding: 'base64' }, function(code, stdout, stderr) {
-                  console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
-                  console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+                shell.cd(child, { encoding: 'base64' }, function(
+                  code,
+                  stdout,
+                  stderr
+                ) {
+                  console.log(
+                    iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                  )
+                  console.log(
+                    iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                  )
                 })
-              }catch (error) {
+              } catch (error) {
                 console.log(error)
               }
-            }else{
+            } else {
               try {
                 await shellAction(item)
-              }catch (error) {
+              } catch (error) {
                 console.log(error)
               }
             }
@@ -386,6 +394,20 @@ async function deleteScript(req, res) {
  * @apiSuccess {Number} projectCount 项目数量汇总.
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
+async function deleteProject(req, res) {
+  try {
+    await commonServer.deleteByID(req.body.projectId, 'projectId', 'project')
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
 async function updateScript(req, res) {
   try {
     await workServer.updateScript(req.body)
@@ -394,7 +416,34 @@ async function updateScript(req, res) {
     res.send(resultErr)
   }
 }
-
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function updateTemp(req, res) {
+  try {
+    await workServer.updateTemp(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function deleteTemp(req, res) {
+  try {
+    await commonServer.deleteByID(req.body.templateId, 'templateId', 'template')
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -414,5 +463,8 @@ module.exports = {
   insertScript,
   actionScript,
   deleteScript,
-  updateScript
+  updateScript,
+  deleteTemp,
+  updateTemp,
+  deleteProject
 }

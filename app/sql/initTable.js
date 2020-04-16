@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 15:34:45
+ * @LastEditTime: 2020-04-15 22:40:40
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -15,7 +15,7 @@ var createUserTableSql =
   'create table if not exists user(uid INTEGER PRIMARY KEY AUTOINCREMENT,userId TEXT,userName TEXT, password TEXT,headerImg TEXT,creatTime BLOB);'
 // 模板表
 var createTemplateTableSql =
-  'create table if not exists template(templateId INTEGER PRIMARY KEY AUTOINCREMENT, keyword TEXT, templateName TEXT, gitUrl TEXT, dec TEXT,decImg TEXT,type TEXT,creatTime BLOB,deleteFlag INTEGER,userId TEXT);'
+  'create table if not exists template(templateId INTEGER PRIMARY KEY AUTOINCREMENT, keyword TEXT, templateName TEXT, gitUrl TEXT, dec TEXT,decImg TEXT,type TEXT,creatTime BLOB,modifyTime BLOB,deleteFlag INTEGER,userId TEXT);'
 // 项目表
 var createProjectTableSql =
   'create table if not exists project(projectId INTEGER PRIMARY KEY AUTOINCREMENT, projectName TEXT, pathUrl TEXT, gitUrl TEXT,dec TEXT, type TEXT,keyword TEXT,templateUrl TEXT,creatTime BLOB,deleteFlag INTEGER,userId TEXT);'

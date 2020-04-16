@@ -5,7 +5,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 20:02:53
+ * @LastEditTime: 2020-04-16 09:32:22
  */
 const express = require('express')
 const open = require('open')
@@ -51,6 +51,7 @@ process.on('uncaughtException', function(err) {
 })
 app.use(express.static(path.join(__dirname, 'static')))
 // app.use('/easyWork', express.static(path.join(__dirname, 'public')))
+// console.log(__dirname)
 app.use(express.static(path.join(__dirname, 'public')))
 routerAction(app)
 // 根据id获取项目明细
@@ -72,7 +73,7 @@ portfinder.getPort(
     config.url = url
     var server = http.createServer(app).listen(port, '0.0.0.0', () => {
       console.log(`app start at ${url}`)
-      // open(url)
+      open(url)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

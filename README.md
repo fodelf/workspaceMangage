@@ -33,6 +33,8 @@ npm install workstage -g
 
 ew
 
+如果更新建议清除浏览器缓存刷新页面
+
 ```
 
 ### Features

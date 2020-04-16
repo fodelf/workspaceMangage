@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-31 21:56:54
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 20:15:37
+ * @LastEditTime: 2020-04-16 07:35:41
  */
 const fs = require('fs')
 const path = require('path')
@@ -40,14 +40,14 @@ async function isFileExist(req, res) {
 // 上传文件
 async function upload(req, res) {
   let name = UUID.v1() + path.extname(req.files['file']['originalFilename'])
-  let filePath = path.join(path.resolve(__dirname,'..'), 'static', 'img', name)
+  let filePath = path.join(path.resolve(__dirname, '..'), 'static', 'img', name)
   fs.readFile(req.files['file'].path, function(err, data) {
     fs.writeFile(filePath, data, function(err) {
       if (err) {
         console.log(err)
         res.send(resultErr)
       } else {
-        let resultEntity = `${config.url}/img/`+ name
+        let resultEntity = `${config.url}/img/` + name
         res.send({ ...result, resultEntity })
       }
     })
@@ -81,7 +81,6 @@ async function queryAll(tableName) {
 }
 // 删除数据公共方法
 async function deleteByID(id, tableID, tableName) {
-  console.log('sss')
   return await workDao.deleteByID(id, tableID, tableName)
 }
 module.exports = {

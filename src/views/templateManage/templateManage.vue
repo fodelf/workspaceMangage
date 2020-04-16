@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:14:42
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 18:08:38
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-15 22:29:15
  -->
 <template>
   <div class="templateManage">
@@ -42,6 +42,7 @@
               :tempCardList="tempCardList"
               :tablePag="tablePag"
               @changePageNo="getPageNo"
+              @getTempList="getTempList"
             ></templateCard>
             <!-- </el-col>
             </el-row> -->
@@ -53,6 +54,7 @@
     <tempDialog
       ref="tempDialog"
       :itemObj="itemObj"
+      :actionType="actionType"
       @getTempList="getTempList"
     ></tempDialog>
   </div>
@@ -61,7 +63,7 @@
 <script>
 import templateManage from './templateManage.js'
 export default {
-  ...templateManage,
+  ...templateManage
 }
 </script>
 

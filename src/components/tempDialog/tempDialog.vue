@@ -3,14 +3,14 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 18:06:23
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-15 23:00:40
  -->
 <template>
   <el-dialog
     :visible="tempVisible"
     width="40%"
-    title="新增模板"
+    :title="title"
     :before-close="close"
     v-if="tempVisible"
   >
@@ -101,38 +101,52 @@
 </template>
 
 <script>
-import { addNewTemp } from '@/api/templateApi.js'
+import { addNewTemp, updateTemp } from '@/api/templateApi.js'
 import { getProjectType } from '@/api/projectManage.js'
 export default {
   name: 'tempDialog',
-  props: ['itemObj'],
+  props: ['itemObj', 'actionType'],
   data() {
     return {
       tempVisible: false,
+      title: '',
       tempForm: {
         templateName: '',
         type: '',
         gitUrl: '',
         keyword: '',
         dec: '',
-        decImg: '',
+        decImg: ''
       },
       tempRules: {
         templateName: [
-          { required: true, message: '请输入模板名称', trigger: 'blur' },
+          { required: true, message: '请输入模板名称', trigger: 'blur' }
         ],
         type: [
-          { required: true, message: '请输入模板类型', trigger: 'change' },
+          { required: true, message: '请输入模板类型', trigger: 'change' }
         ],
         gitUrl: [{ required: true, message: '请输入Git路径', trigger: 'blur' }],
-        keyword: [{ required: true, message: '请输入关键字', trigger: 'blur' }],
+        keyword: [{ required: true, message: '请输入关键字', trigger: 'blur' }]
       },
       typeList: [],
-      file: null,
+      file: null
     }
   },
   methods: {
     show() {
+      this.title = this.$props.actionType == 'modify' ? '修改模板' : '新增模板'
+      if (this.$props.actionType == 'modify') {
+        this.tempForm = this.$props.itemObj
+      } else {
+        this.proForm = {
+          templateName: '',
+          type: '',
+          gitUrl: '',
+          keyword: '',
+          dec: '',
+          decImg: ''
+        }
+      }
       this.tempVisible = true
       this.queryTempTypeList()
     },
@@ -140,11 +154,11 @@ export default {
       this.tempVisible = false
       this.$refs.tempForm.resetFields()
     },
-    getFile(response, file, fileList) {
+    getFile(response) {
       this.tempForm.decImg = response.resultEntity
     },
     queryTempTypeList() {
-      getProjectType({}).then((res) => {
+      getProjectType({}).then(res => {
         this.typeList = res || []
       })
     },
@@ -155,18 +169,33 @@ export default {
      * @return {type}: 默认类型
      */
     confirm() {
-      this.$refs.tempForm.validate((valid) => {
+      this.$refs.tempForm.validate(valid => {
         if (valid) {
-          addNewTemp(this.tempForm).then((res) => {
-            this.$emit('getTempList')
-            this.dialogVisible = false
-          })
+          if (this.$props.actionType == 'add') {
+            addNewTemp(this.tempForm).then(() => {
+              this.$message({
+                type: 'success',
+                message: '新增模板成功'
+              })
+              this.$emit('getTempList')
+              this.close()
+            })
+          } else {
+            updateTemp(this.tempForm).then(() => {
+              this.$message({
+                type: 'success',
+                message: '修改模板成功'
+              })
+              this.$emit('getTempList')
+              this.close()
+            })
+          }
         } else {
           return
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

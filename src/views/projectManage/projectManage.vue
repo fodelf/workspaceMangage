@@ -22,6 +22,7 @@
           :tablePag="tablePag"
           :dataList="dataList"
           :headerList="headerList"
+          @deleteRow="deleteRow"
           @changePageNo="getPageNo"
         ></tableBox>
       </div>
@@ -38,7 +39,7 @@
 <script>
 import projectManage from './projectManage.js'
 export default {
-  ...projectManage,
+  ...projectManage
 }
 </script>
 

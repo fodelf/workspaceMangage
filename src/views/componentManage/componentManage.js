@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:51:48
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-16 07:47:27
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tempDialog from '@/components/tempDialog/tempDialog.vue'
@@ -17,33 +17,27 @@ export default {
       menuObj: {
         title: '本地模板总计',
         total: 0,
-        menuList: [],
+        menuList: []
       },
       keyword: '',
       itemObj: {},
       compKind: 'localComp',
       tabComp: [
         { label: '本地组件', value: 'localComp' },
-        { label: '全局组件', value: 'wholeComp' },
+        { label: '全局组件', value: 'wholeComp' }
       ],
-      compCardList: [
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-        // { cardTitle: '1', cardText: '1', url: '' },
-      ],
+      compCardList: [],
       tablePag: {
         pageNo: 1,
         pageSize: 9,
-        totalRecord: 0,
-      },
+        totalRecord: 0
+      }
     }
   },
   components: {
     menuList,
     tempDialog,
-    templateCard,
+    templateCard
   },
   methods: {
     addComp() {
@@ -56,7 +50,7 @@ export default {
      * @return {type}: 默认类型
      */
     queryCompList() {
-      getTempSum({}).then((res) => {
+      getTempSum({}).then(res => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
         if (this.menuObj.menuList.length !== 0) {
@@ -69,9 +63,9 @@ export default {
         type: item.type,
         pageNum: this.tablePag.pageNo,
         pageSize: this.tablePag.pageSize,
-        keyword: this.keyword,
+        keyword: this.keyword
       }
-      getTempCard(params).then((res) => {
+      getTempCard(params).then(res => {
         this.compCardList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
@@ -89,10 +83,10 @@ export default {
     getPageNo(val) {
       this.tablePag.pageNo = val
       this.queryCompCard(this.itemObj)
-    },
+    }
   },
   mounted() {},
   created() {
     this.queryCompList()
-  },
+  }
 }

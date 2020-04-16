@@ -1,6 +1,6 @@
 {
   "name": "workstage",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "main": "./app/app.js",
   "bin": {
     "ew": "./app/app.js"

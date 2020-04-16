@@ -4,14 +4,18 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 20:47:28
+ * @LastEditTime: 2020-04-16 07:50:48
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
 const { sqliteDB } = require('../sql/initTable')
 // 获取首页汇总
 async function queryIndexCount() {
-  var querySql = `select t1.projectCount,t2.templateCount,t3.componentCount ,t4.scriptCount from (select count(*) projectCount from project) t1, (select count(*) templateCount from template) t2 ,(select count(*) componentCount from component) t3,(select count(*) scriptCount from script) t4`
+  var querySql = `select t1.projectCount,t2.templateCount,t3.componentCount ,t4.scriptCount from 
+  (select count(*) projectCount from project where deleteFlag = 0 ) t1, 
+  (select count(*) templateCount from template where deleteFlag = 0) t2 ,
+  (select count(*) componentCount from component where deleteFlag = 0) t3,
+  (select count(*) scriptCount from script where deleteFlag = 0) t4`
   return await sqliteDB.queryData(querySql)
 }
 // 项目类型字典项
@@ -34,8 +38,8 @@ async function initNewProject(data) {
       0
     ]
   ]
-  var insertTileSql =
-    'insert into project ( projectName,pathUrl,gitUrl,dec,type,keyword,templateUrl,creatTime,deleteFlag ) values (?,?,?,?,?,?,?,?,?)'
+  var insertTileSql = `insert into project ( projectName,pathUrl,gitUrl,dec,type,
+      keyword,templateUrl,creatTime,deleteFlag ) values (?,?,?,?,?,?,?,?,?)`
   return await sqliteDB.insertData(insertTileSql, insertData)
 }
 // 获取项目汇总
@@ -157,8 +161,17 @@ async function deleteByID(id, tableID, tableName) {
 // 修改脚本
 async function updateScript(data) {
   var deleteSql = `update script set scriptContent = '${data.scriptContent}',scriptName = '${data.scriptName}'  where scriptId = ${data.scriptId}`
-  return await sqliteDB.deleteData(deleteSql)
+  return await sqliteDB.updateData(deleteSql)
 }
+//修改模板
+async function updateTemp(data) {
+  var deleteSql = `update template set keyword = '${data.keyword}',templateName = '${data.templateName}',
+  gitUrl = '${data.gitUrl}', dec = '${data.dec}',
+  decImg = '${data.decImg}', type = '${data.type}'
+  where templateId = ${data.templateId}`
+  return await sqliteDB.updateData(deleteSql)
+}
+updateTemp
 module.exports = {
   queryIndexCount,
   queryProjectType,
@@ -174,5 +187,6 @@ module.exports = {
   queryScriptList,
   insertScript,
   deleteByID,
-  updateScript
+  updateScript,
+  updateTemp
 }

@@ -3,21 +3,28 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:25:05
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 18:18:43
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-16 07:33:22
  -->
 <template>
   <div class="cardTemp">
     <el-row :gutter="20">
       <el-col :span="8" v-for="(item, index) in tempCardList" :key="index">
         <div class="templateCard">
-          <img class="cardImg" src="../../assets/img/temp.png" />
+          <img class="cardImg" :src="item.decImg" />
           <div class="cardBody">
             <h4 class="cardTit">{{ item.templateName }}</h4>
             <p class="cardText">{{ item.dec }}</p>
             <el-row>
-              <el-button type="primary" size="small">编辑</el-button>
-              <el-button type="danger" size="small">删除</el-button>
+              <el-button type="primary" size="small" @click="update(item)"
+                >编辑</el-button
+              >
+              <el-button
+                type="danger"
+                size="small"
+                @click="deleteAtion(item.templateId)"
+                >删除</el-button
+              >
             </el-row>
           </div>
         </div>
@@ -34,38 +41,83 @@
       >
       </el-pagination>
     </div>
+    <!--弹窗组件-->
+    <tempDialog
+      ref="tempDialog"
+      :itemObj="itemObj"
+      :actionType="actionType"
+      @getTempList="getTempList"
+    ></tempDialog>
   </div>
 </template>
 
 <script>
+import { deleteTemp } from '@/api/templateApi.js'
+import tempDialog from '@/components/tempDialog/tempDialog.vue'
 export default {
   name: 'templateCard',
   props: {
     tablePag: {
       type: Object,
-      default: {
-        pageNo: 1,
-        pageSize: 15,
-        totalRecord: 0,
-      },
+      default: function() {
+        return {
+          pageNo: 1,
+          pageSize: 15,
+          totalRecord: 0
+        }
+      }
     },
     tempCardList: {
       type: Array,
-      default: [],
-    },
+      default: function() {
+        return []
+      }
+    }
+  },
+  components: {
+    tempDialog
   },
   data() {
-    return {}
+    return {
+      itemObj: null,
+      actionType: 'modify'
+    }
   },
   methods: {
+    deleteAtion(templateId) {
+      this.$confirm('确认删除此模板？')
+        .then(() => {
+          deleteTemp({ templateId: templateId }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '模板已删除'
+            })
+            this.$emit('getTempList')
+          })
+        })
+        .catch(() => {})
+    },
     handleCurrentChange(val) {
       this.$emit('changePageNo', val)
     },
-  },
+    getTempList() {
+      this.$emit('getTempList')
+    },
+    update(item) {
+      this.itemObj = item
+      this.$nextTick(() => {
+        this.$refs.tempDialog.show()
+      })
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
+/deep/ .el-row {
+  flex-wrap: wrap;
+  display: flex;
+}
 .templateCard {
   width: 100%;
   // height: 150px;
@@ -76,6 +128,7 @@ export default {
   }
   .cardImg {
     width: 100%;
+    height: 180px;
   }
   .cardTit {
     font-weight: 500;
@@ -85,6 +138,7 @@ export default {
   .cardText {
     color: #ced4da;
     margin-bottom: 10px;
+    height: 63px;
   }
 }
 .pageBox {

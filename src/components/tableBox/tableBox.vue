@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:41:04
- * @LastEditors: pym
- * @LastEditTime: 2020-04-04 16:41:36
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-16 08:05:58
  -->
 <template>
   <div class="tableBox" ref="tableBox">
@@ -23,9 +23,7 @@
           <el-button type="primary" @click="handleEdit(scope.row)"
             >编辑</el-button
           >
-          <el-button type="danger" @click="handleDel(scope.$index)"
-            >删除</el-button
-          >
+          <el-button type="danger" @click="handleDel(scope)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,15 +47,19 @@ export default {
   props: {
     tablePag: {
       type: Object,
-      default: {
-        pageNo: 1,
-        pageSize: 15,
-        totalRecord: 0
+      default: function() {
+        return {
+          pageNo: 1,
+          pageSize: 15,
+          totalRecord: 0
+        }
       }
     },
     headerList: {
       type: Array,
-      default: []
+      default: function() {
+        return []
+      }
     },
     dataList: {
       props: Array,
