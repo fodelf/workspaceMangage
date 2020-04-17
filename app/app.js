@@ -5,7 +5,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 09:32:22
+ * @LastEditTime: 2020-04-16 19:17:34
  */
 const express = require('express')
 const open = require('open')
@@ -19,6 +19,7 @@ const routerAction = require('./router/router.js')
 const portfinder = require('portfinder')
 const http = require('http')
 const path = require('path')
+const fs = require('fs')
 const mutipart = require('connect-multiparty')
 const mutipartMiddeware = mutipart()
 const log4js = require('log4js')
@@ -27,6 +28,12 @@ log4js.configure({
   categories: { default: { appenders: ['cheese'], level: 'info' } }
 })
 initTable()
+let isFS = fs.existsSync(path.join(__dirname, 'static', 'img'))
+if (!isFS) {
+  console.log('创建了static')
+  fs.mkdirSync(path.join(__dirname, 'static'))
+  fs.mkdirSync(path.join(__dirname, 'static', 'img'))
+}
 const app = express()
 app.use(
   log4js.connectLogger(log4js.getLogger('access'), {
@@ -73,7 +80,7 @@ portfinder.getPort(
     config.url = url
     var server = http.createServer(app).listen(port, '0.0.0.0', () => {
       console.log(`app start at ${url}`)
-      open(url)
+      // open(url)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {

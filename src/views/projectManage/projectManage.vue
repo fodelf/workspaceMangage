@@ -22,6 +22,7 @@
           :tablePag="tablePag"
           :dataList="dataList"
           :headerList="headerList"
+          @editRow="editRow"
           @deleteRow="deleteRow"
           @changePageNo="getPageNo"
         ></tableBox>
@@ -31,6 +32,7 @@
     <proDialog
       ref="proDialog"
       :itemObj="itemObj"
+      :type="type"
       @getList="getProList"
     ></proDialog>
   </div>

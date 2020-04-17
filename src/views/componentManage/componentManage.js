@@ -4,23 +4,25 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:47:27
+ * @LastEditTime: 2020-04-17 09:15:35
  */
 import menuList from '@/components/menuList/menuList.vue'
-import tempDialog from '@/components/tempDialog/tempDialog.vue'
-import templateCard from '@/components/templateCard/templateCard.vue'
-import { getTempSum, getTempCard } from '@/api/templateApi.js'
+import compDialog from './compDialog/compDialog.vue'
+import compCard from './compCard/compCard.vue'
+import { getCompSum, getComponentList } from '@/api/componentApi.js'
 export default {
   name: 'componentManage',
   data() {
     return {
+      actionType: 'add',
       menuObj: {
-        title: '本地模板总计',
+        title: '本地组件总计',
         total: 0,
         menuList: []
       },
       keyword: '',
       itemObj: {},
+      item: {},
       compKind: 'localComp',
       tabComp: [
         { label: '本地组件', value: 'localComp' },
@@ -36,12 +38,12 @@ export default {
   },
   components: {
     menuList,
-    tempDialog,
-    templateCard
+    compDialog,
+    compCard
   },
   methods: {
     addComp() {
-      this.$refs.tempDialog.show()
+      this.$refs.compDialog.show()
     },
     /**
      * @name: queryProList
@@ -50,11 +52,11 @@ export default {
      * @return {type}: 默认类型
      */
     queryCompList() {
-      getTempSum({}).then(res => {
+      getCompSum({}).then(res => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
         if (this.menuObj.menuList.length !== 0) {
-          this.queryTempCard(this.menuObj.menuList[0])
+          this.queryCompCard(this.menuObj.menuList[0])
         }
       })
     },
@@ -65,7 +67,8 @@ export default {
         pageSize: this.tablePag.pageSize,
         keyword: this.keyword
       }
-      getTempCard(params).then(res => {
+      this.item = item
+      getComponentList(params).then(res => {
         this.compCardList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
@@ -73,6 +76,9 @@ export default {
         })
         this.tablePag.totalRecord = res.total || 0
       })
+    },
+    getList() {
+      this.queryCompCard(this.item)
     },
     /**
      * @name: getPageNo
@@ -82,7 +88,14 @@ export default {
      */
     getPageNo(val) {
       this.tablePag.pageNo = val
-      this.queryCompCard(this.itemObj)
+      this.queryCompCard(this.item)
+    },
+    update(itemObj) {
+      this.itemObj = itemObj
+      this.actionType = 'modify'
+      this.$nextTick(() => {
+        this.$refs.compDialog.show()
+      })
     }
   },
   mounted() {},

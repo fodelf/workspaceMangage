@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-06 12:46:09
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 12:47:42
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-04-17 09:14:23
  -->
 <template>
   <div class="componentManage">
@@ -38,11 +38,13 @@
                 :key="index"
               > -->
             <!--卡片组件-->
-            <templateCard
-              :tempCardList="compCardList"
+            <compCard
+              :compCardList="compCardList"
+              @update="update"
+              :getList="getList"
               :tablePag="tablePag"
               @changePageNo="getPageNo"
-            ></templateCard>
+            ></compCard>
             <!-- </el-col>
             </el-row> -->
           </el-tab-pane>
@@ -50,18 +52,19 @@
       </div>
     </div>
     <!--弹窗组件-->
-    <!-- <tempDialog
-      ref="tempDialog"
+    <compDialog
+      ref="compDialog"
       :itemObj="itemObj"
-      @getTempList="queryTempCard"
-    ></tempDialog> -->
+      :actionType="actionType"
+      @getList="getList"
+    ></compDialog>
   </div>
 </template>
 
 <script>
 import componentManage from './componentManage.js'
 export default {
-  ...componentManage,
+  ...componentManage
 }
 </script>
 

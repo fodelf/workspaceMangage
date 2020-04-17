@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 22:21:31
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:58:44
+ * @LastEditTime: 2020-04-16 20:26:34
  */
 import request from '@/utils/request'
 
@@ -46,6 +46,13 @@ export function getTemList(params) {
 export function deleteProject(params) {
   return request({
     url: '/api/project/deleteProject',
+    method: 'POST',
+    params: params
+  })
+}
+export function updateProject(params) {
+  return request({
+    url: '/api/project/updateProject',
     method: 'POST',
     params: params
   })

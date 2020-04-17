@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:50:48
+ * @LastEditTime: 2020-04-17 09:22:34
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -39,12 +39,12 @@ async function initNewProject(data) {
     ]
   ]
   var insertTileSql = `insert into project ( projectName,pathUrl,gitUrl,dec,type,
-      keyword,templateUrl,creatTime,deleteFlag ) values (?,?,?,?,?,?,?,?,?)`
+      keyword,templateUrl,createTime,deleteFlag ) values (?,?,?,?,?,?,?,?,?)`
   return await sqliteDB.insertData(insertTileSql, insertData)
 }
 // 获取项目汇总
 async function querySum(tableName) {
-  var querySql = `select t.value as type ,t.label ,count(p.type) as count from ptype as  t left join ${tableName} as p on t.value=p.type group by t.value,t.label ORDER BY count  DESC;`
+  var querySql = `select t.value as type ,t.label ,count(p.type) as count from ptype as t left join ${tableName} as p on t.value=p.type and p.deleteFlag = 0 group by t.value,t.label ORDER BY count  DESC;`
   // var querySql = `SELECT * from ptype`
   return await sqliteDB.queryData(querySql)
 }
@@ -63,7 +63,7 @@ async function insertTemplate(data) {
     ]
   ]
   var insertSql =
-    'insert into template(templateName,gitUrl,dec,type, keyword,decImg,creatTime,deleteFlag) values(?,?,?,?,?,?,?,?)'
+    'insert into template(templateName,gitUrl,dec,type, keyword,decImg,createTime,deleteFlag) values(?,?,?,?,?,?,?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 // 获取列表公共方法
@@ -96,7 +96,7 @@ async function insertComponent(data) {
   var insertData = [
     [
       data.componentName,
-      data.gitUlr,
+      data.gitUrl,
       data.dec,
       data.decImg,
       data.type,
@@ -107,7 +107,7 @@ async function insertComponent(data) {
     ]
   ]
   var insertSql =
-    'insert into component(componentName,gitUlr,dec,decImg,type, keyword,creatTime,deleteFlag,userId) values(?, ?, ?,?, ?, ?,?,?,?)'
+    'insert into component(componentName,gitUrl,dec,decImg,type, keyword,createTime,deleteFlag,userId) values(?, ?, ?,?, ?, ?,?,?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 //查询用户
@@ -121,7 +121,7 @@ async function insertUser() {
     [uuid.v1(), 'pym', '111111', 'xxx', sd.format(new Date(), 'YYYY-MM-DD')]
   ]
   var insertSql =
-    'insert into user (userId,userName,password,headerImg,creatTime) values(?,?,?,?,?)'
+    'insert into user (userId,userName,password,headerImg,createTime) values(?,?,?,?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 async function queryAll(tableName) {
@@ -134,7 +134,7 @@ async function insertTodoList(data) {
     [data.taskDec, 0, sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss')]
   ]
   var insertSql =
-    'insert into todo(taskDec,deleteFlag,creatTime) values(?, ?, ?)'
+    'insert into todo(taskDec,deleteFlag,createTime) values(?, ?, ?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 // 新增脚本
@@ -148,7 +148,7 @@ async function insertScript(data) {
     ]
   ]
   var insertSql =
-    'insert into script(scriptName,scriptContent,creatTime,deleteFlag) values(?, ?, ?,?)'
+    'insert into script(scriptName,scriptContent,createTime,deleteFlag) values(?, ?, ?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 
@@ -171,7 +171,26 @@ async function updateTemp(data) {
   where templateId = ${data.templateId}`
   return await sqliteDB.updateData(deleteSql)
 }
-updateTemp
+// 修改项目
+async function updateProject(data) {
+  var deleteSql = `update project set projectName = '${
+    data.projectName
+  }',pathUrl = '${data.pathUrl}',
+  gitUrl = '${data.gitUrl}', dec = '${data.dec}',
+  templateUrl = '${data.templateUrl ? data.templateUrl : ''}', type = '${
+    data.type
+  }'
+  where projectId = ${data.projectId}`
+  return await sqliteDB.updateData(deleteSql)
+}
+//修改组件
+async function updateComp(data) {
+  var deleteSql = `update component set keyword = '${data.keyword}',componentName = '${data.componentName}',
+  gitUrl = '${data.gitUrl}', dec = '${data.dec}',
+  decImg = '${data.decImg}', type = '${data.type}'
+  where componentId = ${data.componentId}`
+  return await sqliteDB.updateData(deleteSql)
+}
 module.exports = {
   queryIndexCount,
   queryProjectType,
@@ -188,5 +207,7 @@ module.exports = {
   insertScript,
   deleteByID,
   updateScript,
-  updateTemp
+  updateTemp,
+  updateProject,
+  updateComp
 }

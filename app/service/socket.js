@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-01 13:47:06
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-05 09:20:38
+ * @LastEditTime: 2020-04-16 19:43:02
  */
 const fs = require('fs')
 const url = require('url')
@@ -36,8 +36,6 @@ async function projectHandle(data, client) {
     cwd: projectPath
   })
   ls.stderr.on('data', data => {
-    console.log(1)
-    console.log(data)
     client.emit('mes', data.toString().trim())
   })
   ls.on('close', code => {

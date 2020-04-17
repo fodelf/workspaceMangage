@@ -4,16 +4,21 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 09:02:58
+ * @LastEditTime: 2020-04-16 20:41:16
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
 import proDialog from 'components/proDialog/proDialog.vue'
-import { getProjectSum, getProjectList } from '@/api/projectManage.js'
+import {
+  getProjectSum,
+  getProjectList,
+  deleteProject
+} from '@/api/projectManage.js'
 export default {
   name: 'projectManage',
   data() {
     return {
+      type: 'add',
       menuObj: {
         title: '项目总计',
         total: 0,
@@ -104,7 +109,26 @@ export default {
         }
       })
     },
-    deleteRow() {}
+    deleteRow(data) {
+      this.$confirm('确认删除此项目？')
+        .then(() => {
+          deleteProject({ projectId: data.projectId }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功'
+            })
+            this.queryProList()
+          })
+        })
+        .catch(() => {})
+    },
+    editRow(data) {
+      this.type = 'modify'
+      this.itemObj = data
+      this.$nextTick(() => {
+        this.$refs.proDialog.show()
+      })
+    }
   },
   mounted() {},
   created() {

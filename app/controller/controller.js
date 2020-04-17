@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:57:17
+ * @LastEditTime: 2020-04-17 09:23:31
  */
 const url = require('url')
 const shell = require('shelljs')
@@ -328,6 +328,9 @@ async function actionScript(req, res) {
                   stderr
                 ) {
                   console.log(
+                    iconv.decode(iconv.encode(code, 'base64'), 'gb2312')
+                  )
+                  console.log(
                     iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
                   )
                   console.log(
@@ -444,6 +447,22 @@ async function deleteTemp(req, res) {
     res.send(resultErr)
   }
 }
+async function updateProject(req, res) {
+  try {
+    await workServer.updateProject(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+async function updateComp(req, res) {
+  try {
+    await workServer.updateComp(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -466,5 +485,7 @@ module.exports = {
   updateScript,
   deleteTemp,
   updateTemp,
-  deleteProject
+  deleteProject,
+  updateProject,
+  updateComp
 }

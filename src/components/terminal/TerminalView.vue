@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <div id="terminal"
-         ref="terminal"></div>
-
-    <div>sss ss</div>
+  <div id="terminalContent">
+    <div id="terminal" ref="terminal"></div>
   </div>
 </template>
 <script>
@@ -37,7 +34,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       order: '',
       urlParam: {
@@ -52,12 +49,12 @@ export default {
     }
   },
 
-  created () {
+  created() {
     // this.checkURLparam();
     // this.wsShell();
   },
 
-  mounted () {
+  mounted() {
     let _this = this
     // const terminal = new Terminal();
     let term = new Terminal({
@@ -65,7 +62,7 @@ export default {
       rows: 40, //行数
       convertEol: true, //启用时，光标将设置为下一行的开头
       scrollback: 10, //终端中的回滚量
-      disableStdin: false, //是否应禁用输入。
+      disableStdin: true, //是否应禁用输入。
       cursorStyle: 'underline', //光标样式
       cursorBlink: true, //光标闪烁
       theme: {
@@ -76,17 +73,17 @@ export default {
     })
     // 换行并输入起始符“$”
     term.prompt = () => {
-      term.write('\r\n$ ')
+      // term.write('\r\n$ ')
     }
 
     term.open(this.$refs['terminal'])
-    term.toggleFullScreen() //全屏
+    // term.toggleFullScreen() //全屏
     term.fit()
 
-    term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+    // term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
     term.prompt()
 
-    function runFakeTerminal (_this) {
+    function runFakeTerminal(_this) {
       if (term._initialized) {
         return
       }
@@ -97,12 +94,12 @@ export default {
         term.write('\r\n ')
       }
 
-      term.writeln('Welcome to xterm.js')
-      term.writeln(
-        'This is a local terminal emulation, without a real terminal in the back-end.'
-      )
-      term.writeln('Type some keys and commands to play around.')
-      term.writeln('')
+      // term.writeln('Welcome to xterm.js')
+      // term.writeln(
+      //   'This is a local terminal emulation, without a real terminal in the back-end.'
+      // )
+      // term.writeln('Type some keys and commands to play around.')
+      // term.writeln('')
       term.prompt()
 
       // 监控键盘输入事件
@@ -112,109 +109,110 @@ export default {
       //     *触发了它。
       //     * @返回一个IDisposable停止监听。
       //  * /
-      let last = 0
+      // let last = 0
 
-      term.on('key', function (key, ev) {
-        // 可打印状态，即不是alt键ctrl等功能健时
-        const printable =
-          !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
+      // term.on('key', function(key, ev) {
+      //   // 可打印状态，即不是alt键ctrl等功能健时
+      //   const printable =
+      //     !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
 
-        // 因服务端返回命令包含乱码，但使用write方法输出时并不显示，故将真实显示内容截取出来
-        let index = _this.showOrder.indexOf('sh')
-        let show = _this.showOrder.substr(index, _this.showOrder.length - 1)
+      //   // 因服务端返回命令包含乱码，但使用write方法输出时并不显示，故将真实显示内容截取出来
+      //   let index = _this.showOrder.indexOf('sh')
+      //   let show = _this.showOrder.substr(index, _this.showOrder.length - 1)
 
-        //  当输入回车时
-        if (ev.keyCode === 13) {
-          if (_this.order == 'cls' || _this.order == 'clear') {
-            _this.order = ''
-            return false
-          }
-          //先将数据发送
-          term.prompt()
-          // 判断如果不是英文给出提醒
-          let reg = /[a-zA-Z]/
-          let order = {
-            Data: _this.order,
-            Op: 'stdin'
-          }
+      //   //  当输入回车时
+      //   if (ev.keyCode === 13) {
+      //     if (_this.order == 'cls' || _this.order == 'clear') {
+      //       _this.order = ''
+      //       return false
+      //     }
+      //     //先将数据发送
+      //     term.prompt()
+      //     // 判断如果不是英文给出提醒
+      //     let reg = /[a-zA-Z]/
+      //     let order = {
+      //       Data: _this.order,
+      //       Op: 'stdin'
+      //     }
 
-          if (!reg.test(_this.order)) {
-            term.writeln('请输入有效指令~')
-          } else {
-            // 发送数据
-            _this.inputList.push(_this.order)
-            last = _this.inputList.length - 1
-            _this.onSend(order)
-            _this.order = ''
-            // 清空输入内容变量
-          }
-        } else if (ev.keyCode === 8) {
-          // 当输入退
+      //     if (!reg.test(_this.order)) {
+      //       term.writeln('请输入有效指令~')
+      //     } else {
+      //       // 发送数据
+      //       _this.inputList.push(_this.order)
+      //       last = _this.inputList.length - 1
+      //       _this.onSend(order)
+      //       _this.order = ''
+      //       // 清空输入内容变量
+      //     }
+      //   } else if (ev.keyCode === 8) {
+      //     // 当输入退
 
-          // Do not delete the prompt
-          // 当前行字符长度如果等于后端返回字符就不进行删除
-          if (term._core.buffer.x > _this.showOrder.length) {
-            term.write('\b \b') // 输出退格
-          }
+      //     // Do not delete the prompt
+      //     // 当前行字符长度如果等于后端返回字符就不进行删除
+      //     if (term._core.buffer.x > _this.showOrder.length) {
+      //       term.write('\b \b') // 输出退格
+      //     }
 
-          // 将输入内容变量删除
+      //     // 将输入内容变量删除
 
-          if (_this.trim(_this.order) == _this.trim(_this.showOrder)) {
-            return false
-          } else {
-            _this.order = _this.order.substr(0, _this.order.length - 1)
-          }
-        } else if (ev.keyCode == 38 || ev.keyCode == 40) {
-          let len = _this.inputList.length
-          let code = ev.keyCode
+      //     if (_this.trim(_this.order) == _this.trim(_this.showOrder)) {
+      //       return false
+      //     } else {
+      //       _this.order = _this.order.substr(0, _this.order.length - 1)
+      //     }
+      //   } else if (ev.keyCode == 38 || ev.keyCode == 40) {
+      //     let len = _this.inputList.length
+      //     let code = ev.keyCode
 
-          if (code === 38 && last <= len && last >= 0) {
-            // 直接取出字符串数组最后一个元素
-            let inputVal = _this.inputList[last]
-            term.write(inputVal)
-            if (last > 0) {
-              last--
-            }
-          }
-          if (code === 40 && last < len) {
-            // last现在为当前元素
-            if (last == len - 1) {
-              return
-            }
-            if (last < len - 1) {
-              last++
-            }
+      //     if (code === 38 && last <= len && last >= 0) {
+      //       // 直接取出字符串数组最后一个元素
+      //       let inputVal = _this.inputList[last]
+      //       term.write(inputVal)
+      //       if (last > 0) {
+      //         last--
+      //       }
+      //     }
+      //     if (code === 40 && last < len) {
+      //       // last现在为当前元素
+      //       if (last == len - 1) {
+      //         return
+      //       }
+      //       if (last < len - 1) {
+      //         last++
+      //       }
 
-            let inputVal = _this.inputList[last]
-            term.write(inputVal)
-          }
-        } else if (ev.keyCode === 9) {
-          // 如果按tab键前输入了之前后端返回字符串的第一个字符，就显示此命令
-          if (_this.order !== '' && show.indexOf(_this.order) == 0) {
-            term.write(_this.showOrder)
-          }
-        } else if (printable) {
-          // 当为可打印内容时
-          if (/[a-zA-Z]/.test(key)) {
-            key = key.toLowerCase()
-          }
-          // 存入输入内容变量
-          _this.order = _this.order + key
-          // 将变量写入终端内
-          term.write(key)
-        }
-      })
+      //       let inputVal = _this.inputList[last]
+      //       term.write(inputVal)
+      //     }
+      //   } else if (ev.keyCode === 9) {
+      //     // 如果按tab键前输入了之前后端返回字符串的第一个字符，就显示此命令
+      //     if (_this.order !== '' && show.indexOf(_this.order) == 0) {
+      //       term.write(_this.showOrder)
+      //     }
+      //   } else if (printable) {
+      //     // 当为可打印内容时
+      //     if (/[a-zA-Z]/.test(key)) {
+      //       key = key.toLowerCase()
+      //     }
+      //     // 存入输入内容变量
+      //     _this.order = _this.order + key
+      //     // 将变量写入终端内
+      //     term.write(key)
+      //   }
+      // })
 
       _this.term = term
 
       // 粘贴事件
-      term.on('paste', function (data) {
-        _this.order = data
-        term.write(data)
-      })
+      // term.on('paste', function(data) {
+      //   _this.order = data
+      //   term.write(data)
+      // })
     }
     runFakeTerminal(_this)
-    _this.socket = window['io']('http://localhost:8081')
+    var url = `${window.location.href}://${window.location.host}:${window.location.port}`
+    _this.socket = window['io'](url)
 
     _this.socket.on('mes', data => {
       // console.log("11111111111")
@@ -225,7 +223,7 @@ export default {
 
   methods: {
     // 初始化action
-    initAction () {
+    initAction() {
       switch (this.$props.type) {
         case 'project':
           this.handleProject()
@@ -235,13 +233,13 @@ export default {
           break
       }
     },
-    handleProject () {
+    handleProject() {
       // debugger;
       this.socket.emit('project', this.$route.query)
-      console.log(this.$route.query)
+      // console.log(this.$route.query)
     },
     // 检查url参数,必要参数不存在,返回到首页
-    checkURLparam () {
+    checkURLparam() {
       let urlObj = this.base.urlValue()
 
       let fullTag = urlObj.full_tag ? urlObj.full_tag : '' //所在父节点
@@ -280,7 +278,7 @@ export default {
      * @tagString  当前节点
      * 返回:无
      * **/
-    wsShell () {
+    wsShell() {
       // const _this = this;
       // let tag_string = this.urlParam.fullTag;
       // let namespace = this.urlParam.namespace;
@@ -318,7 +316,7 @@ export default {
       // });
     },
 
-    onSend (data) {
+    onSend(data) {
       this.socket.emit('in', data)
       // data = this.base.isObject(data) ? JSON.stringify(data) : data;
       // data = this.base.isArray(data) ? data.toString() : data;
@@ -327,9 +325,21 @@ export default {
     },
 
     //删除左右两端的空格
-    trim (str) {
+    trim(str) {
       return str.replace(/(^\s*)|(\s*$)/g, '')
     }
   }
 }
 </script>
+<style lang="less" scoped>
+#terminalContent {
+  width: 100%;
+  height: calc(100% - 56px);
+  padding: 20px 25px;
+  box-sizing: border-box;
+  #terminal {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

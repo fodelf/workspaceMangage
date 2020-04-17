@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:57:46
+ * @LastEditTime: 2020-04-17 09:25:08
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -34,6 +34,8 @@ module.exports = router => {
   router.get('/api/component/queryComponentSum', controller.queryComponentSum)
   // 新增组件
   router.post('/api/component/insertComponent', controller.insertComponent)
+  // 修改组件
+  router.post('/api/component/updateComponent', controller.updateComp)
   // 获取用户
   router.get('/api/queryUser', controller.queryUser)
   // 获取用户
@@ -52,4 +54,6 @@ module.exports = router => {
   router.post('/api/template/updateTemp', controller.updateTemp)
   // 删除项目
   router.post('/api/project/deleteProject', controller.deleteProject)
+  // 删除项目
+  router.post('/api/project/updateProject', controller.updateProject)
 }
