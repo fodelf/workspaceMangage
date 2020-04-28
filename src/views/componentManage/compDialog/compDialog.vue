@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:12:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:25:41
  -->
 <template>
   <el-dialog
@@ -178,7 +178,7 @@ export default {
                 type: 'success',
                 message: '新增组件成功'
               })
-              this.$emit('getList')
+              this.$emit('getList',this.tempForm.type)
               this.close()
             })
           } else {
@@ -187,7 +187,7 @@ export default {
                 type: 'success',
                 message: '修改组件成功'
               })
-              this.$emit('getList')
+              this.$emit('getList',this.tempForm.type)
               this.close()
             })
           }

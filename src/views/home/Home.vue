@@ -1,3 +1,11 @@
+<!--
+ * @Author: 吴文周
+ * @Date: 2020-04-12 16:16:34
+ * @LastEditTime: 2020-04-28 07:18:24
+ * @LastEditors: Please set LastEditors
+ * @Description: 首页模块
+ * @FilePath: /workespacemanger/src/views/home/Home.vue
+ -->
 <template>
   <div class="home">
     <div class="cardGroup">
@@ -10,7 +18,7 @@
       <div class="chartBox">
         <div class="realChart">
           <!--折线图组件-->
-          <linesChart></linesChart>
+          <linesChart :chartData ='chartData'></linesChart>
         </div>
       </div>
       <div class="rightRow">
@@ -32,7 +40,7 @@
       <div class="todoList cardBox">
         <div class="realTodo realCard">
           <!--TODOLIST组件-->
-          <todoList :todoList="todoList"></todoList>
+          <todoList :todoList="todoList" @getTodolist = 'getTodoList'></todoList>
         </div>
       </div>
       <div class="personal cardBox">

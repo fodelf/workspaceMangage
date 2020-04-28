@@ -3,13 +3,12 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-31 21:56:54
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:35:41
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-22 20:11:49
  */
 const fs = require('fs')
 const path = require('path')
 const workDao = require('../dao/workDao.js')
-const config = require('../config/config')
 const UUID = require('uuid')
 const result = {
   resultCode: 200,
@@ -47,7 +46,7 @@ async function upload(req, res) {
         console.log(err)
         res.send(resultErr)
       } else {
-        let resultEntity = `${config.url}/img/` + name
+        let resultEntity = `${global.url}/img/` + name
         res.send({ ...result, resultEntity })
       }
     })
@@ -83,6 +82,10 @@ async function queryAll(tableName) {
 async function deleteByID(id, tableID, tableName) {
   return await workDao.deleteByID(id, tableID, tableName)
 }
+// 删除数据公共方法
+async function queryIndexTrend(tableName) {
+  return await workDao.queryIndexTrend(tableName)
+}
 module.exports = {
   querySum,
   isFileExist,
@@ -90,5 +93,6 @@ module.exports = {
   queryCommonList,
   queryUser,
   queryAll,
-  deleteByID
+  deleteByID,
+  queryIndexTrend
 }

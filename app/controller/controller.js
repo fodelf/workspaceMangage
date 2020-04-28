@@ -3,15 +3,15 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:23:31
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-27 13:01:55
  */
 const url = require('url')
+const sd = require('silly-datetime')
 const shell = require('shelljs')
 const os = require('os')
-// const path = require('path')
+const path = require('path')
 const iconv = require('iconv-lite')
-const config = require('../config/config')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
 const { formatTime } = require('../utils/formatTime.js')
@@ -140,6 +140,7 @@ async function getProjectSum(req, res) {
  */
 async function newTemplate(req, res) {
   try {
+    req.body.decImg = path.basename(req.body.decImg);
     await workServer.newTemplate(req.body)
     res.send(result)
   } catch (error) {
@@ -159,8 +160,9 @@ async function queryTemplateList(req, res) {
       'template'
     )
     data.map(item => {
-      let decImg = `${config.url}/img/` + item.decImg
-      return { ...item, decImg }
+      let decImg = `${global.url}/img/` + item.decImg
+      item.decImg = decImg
+      return item
     })
     let resultEntity = {
       total: data[0] ? data[0]['total'] : 0,
@@ -237,6 +239,7 @@ async function queryTodoList(req, res) {
   let list = await commonServer.queryAll('todo')
   list.map(item => {
     item['time'] = formatTime(item.createTime)
+    item['checked'] = item.deleteFlag == 1
     return item
   })
   let resultEntity = list
@@ -463,6 +466,45 @@ async function updateComp(req, res) {
     res.send(resultErr)
   }
 }
+async function deleteComponent(req, res) {
+  try {
+    await commonServer.deleteByID(req.body.templateId, 'componentId', 'component')
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+function getPList(obj){
+  var list = []
+  for(let k = 7; k != 0; k -- ){
+    let key = 'day' + k
+    list.push(obj[key])
+  }
+  return list
+}
+async function queryIndexTrend(req, res) {
+  try {
+    let component = await commonServer.queryIndexTrend('component')
+    let project =  await commonServer.queryIndexTrend('project')
+    let template =  await commonServer.queryIndexTrend('template')
+    let script =  await commonServer.queryIndexTrend('script')
+    let date = []
+    for(var i = -6 ; i <= 0;i ++ ) {
+      let dd = new Date();
+      dd.setDate(dd.getDate()+ i)
+      date.push(sd.format(dd, 'YYYY/MM/DD'))
+    }
+    let list = [{name:'项目',list:getPList(project[0])},{name:'模板',list:getPList(template[0])},{name:'组件',list:getPList(component[0])},{name:'脚本',list:getPList(script[0])}]
+    let resultEntity = {
+      date: date,
+      list:list
+    }
+    res.send({ ...result, resultEntity })
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+
 module.exports = {
   getIndexCount,
   getProjectType,
@@ -487,5 +529,7 @@ module.exports = {
   updateTemp,
   deleteProject,
   updateProject,
-  updateComp
+  updateComp,
+  deleteComponent,
+  queryIndexTrend
 }

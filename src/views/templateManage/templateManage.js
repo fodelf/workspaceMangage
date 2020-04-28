@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 22:48:58
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:14:18
  */
 import menuList from '@/components/menuList/menuList.vue'
 import tempDialog from '@/components/tempDialog/tempDialog.vue'
@@ -18,6 +18,7 @@ export default {
       menuObj: {
         title: '本地模板总计',
         total: 0,
+        active:'',
         menuList: []
       },
       keyword: '',
@@ -51,19 +52,22 @@ export default {
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
-    queryTempList() {
+    queryTempList(flag) {
       getTempSum({}).then(res => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
-        if (this.menuObj.menuList.length !== 0) {
+        this.menuObj.active = this.itemObj.type ? this.itemObj.type : this.menuObj.menuList[0].type
+        if (this.menuObj.menuList.length !== 0 && flag) {
           this.queryTempCard(this.menuObj.menuList[0])
         }
       })
     },
-    getTempList(item) {
-      console.log(item)
+    getTempList(type) {
+      // console.log(item)
+      this.itemObj.type = type
       this.tablePag.pageNo = 1
       this.queryTempCard(this.itemObj)
+      this.queryTempList()
     },
     queryTempCard(item) {
       let params = {
@@ -95,6 +99,6 @@ export default {
   },
   mounted() {},
   created() {
-    this.queryTempList()
+    this.queryTempList(true)
   }
 }

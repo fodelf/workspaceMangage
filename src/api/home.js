@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 19:52:07
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 16:43:38
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 07:22:39
  */
 import request from '@/utils/request'
 
@@ -22,9 +22,17 @@ export function getTodoList() {
   })
 }
 
-export function insertTask() {
+export function insertTask(params) {
   return request({
     url: '/api/home/insertTodoList',
     method: 'POST',
+    params:params
+  })
+}
+
+export function queryIndexTrend() {
+  return request({
+    url: '/api/home/queryIndexTrend',
+    method: 'GET',
   })
 }

@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:15:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:27:08
  */
 import menuList from '@/components/menuList/menuList.vue'
 import compDialog from './compDialog/compDialog.vue'
@@ -18,7 +18,8 @@ export default {
       menuObj: {
         title: '本地组件总计',
         total: 0,
-        menuList: []
+        menuList: [],
+        active:''
       },
       keyword: '',
       itemObj: {},
@@ -51,11 +52,12 @@ export default {
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
-    queryCompList() {
+    queryCompList(flag) {
       getCompSum({}).then(res => {
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
-        if (this.menuObj.menuList.length !== 0) {
+        this.menuObj.active = this.itemObj.type ? this.itemObj.type : this.menuObj.menuList[0].type
+        if (this.menuObj.menuList.length !== 0 && flag) {
           this.queryCompCard(this.menuObj.menuList[0])
         }
       })
@@ -77,7 +79,8 @@ export default {
         this.tablePag.totalRecord = res.total || 0
       })
     },
-    getList() {
+    getList(type) {
+      this.item.type = type
       this.queryCompCard(this.item)
     },
     /**
@@ -100,6 +103,6 @@ export default {
   },
   mounted() {},
   created() {
-    this.queryCompList()
+    this.queryCompList(true)
   }
 }

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:22:34
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 07:57:04
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -16,6 +16,20 @@ async function queryIndexCount() {
   (select count(*) templateCount from template where deleteFlag = 0) t2 ,
   (select count(*) componentCount from component where deleteFlag = 0) t3,
   (select count(*) scriptCount from script where deleteFlag = 0) t4`
+  return await sqliteDB.queryData(querySql)
+}
+// 获取统计趋势
+async function queryIndexTrend(tableName) {
+  var querySql = `
+  select t7.number day7, t6.number day6,t5.number day5,t4.number day4,t3.number day3,t2.number day2,t1.number day1 from 
+  (select count(*) number from ${tableName} where  date('now', '-6 day','start of day') <= date(${tableName}.createTime) and date('now', '-5 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t7,
+  (select count(*) number from ${tableName} where  date('now', '-5 day','start of day') <= date(${tableName}.createTime) and date('now', '-4 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t6,
+  (select count(*) number from ${tableName} where  date('now', '-4 day','start of day') <= date(${tableName}.createTime) and date('now', '-3 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t5,
+  (select count(*) number from ${tableName} where  date('now', '-3 day','start of day') <= date(${tableName}.createTime) and date('now', '-2 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t4,
+  (select count(*) number from ${tableName} where  date('now', '-2 day','start of day') <= date(${tableName}.createTime) and date('now', '-1 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t3,
+  (select count(*) number from ${tableName} where  date('now', '-1 day','start of day') <= date(${tableName}.createTime) and date('now', '0 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t2,
+  (select count(*) number from ${tableName} where  date('now', '0 day','start of day') <= date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t1
+  `
   return await sqliteDB.queryData(querySql)
 }
 // 项目类型字典项
@@ -121,11 +135,12 @@ async function insertUser() {
     [uuid.v1(), 'pym', '111111', 'xxx', sd.format(new Date(), 'YYYY-MM-DD')]
   ]
   var insertSql =
-    'insert into user (userId,userName,password,headerImg,createTime) values(?,?,?,?,?)'
+    'insert into user (uuid,userName,password,headerImg,createTime) values(?,?,?,?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 async function queryAll(tableName) {
-  var querySql = `SELECT * from ${tableName} DESC`
+  // var querySql = `SELECT * from ${tableName} ORDER BY ${tableName +'Id'} DESC`
+  var querySql = `SELECT * from ${tableName} ORDER BY ${tableName +'Id'} DESC`
   return await sqliteDB.queryData(querySql)
 }
 // 新增待办
@@ -193,6 +208,7 @@ async function updateComp(data) {
 }
 module.exports = {
   queryIndexCount,
+  queryIndexTrend,
   queryProjectType,
   initNewProject,
   querySum,

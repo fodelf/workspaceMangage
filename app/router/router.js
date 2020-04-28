@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:25:08
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-22 23:10:12
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -14,6 +14,8 @@ module.exports = router => {
   router.get('/api/home/queryTodoList', controller.queryTodoList)
   // 新增待办列表
   router.post('/api/home/insertTodoList', controller.insertTodoList)
+  // 获取待办列表
+  router.get('/api/home/queryIndexTrend', controller.queryIndexTrend)
   // 获取项目类型
   router.get('/api/getProjectType', controller.getProjectType)
   // 新建项目
@@ -36,6 +38,8 @@ module.exports = router => {
   router.post('/api/component/insertComponent', controller.insertComponent)
   // 修改组件
   router.post('/api/component/updateComponent', controller.updateComp)
+  // 修改组件
+  router.post('/api/component/deleteComponent', controller.deleteComponent)
   // 获取用户
   router.get('/api/queryUser', controller.queryUser)
   // 获取用户

@@ -4,8 +4,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 19:17:34
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-22 23:27:14
  */
 const express = require('express')
 const open = require('open')
@@ -76,10 +76,10 @@ portfinder.getPort(
     if (err) {
       console.log(err)
     }
-    var url = `http://${config.ip}:${port}`
-    config.url = url
-    var server = http.createServer(app).listen(port, '0.0.0.0', () => {
-      console.log(`app start at ${url}`)
+    var appUrl = `http://${global.ip}:${8082}`
+    global.url = appUrl
+    var server = http.createServer(app).listen(8082, '0.0.0.0', () => {
+      console.log(`app start at ${appUrl}`)
       // open(url)
     })
     const io = require('socket.io')(server)

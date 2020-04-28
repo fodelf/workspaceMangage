@@ -3,13 +3,18 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 22:16:59
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 15:35:10
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:30:40
  -->
 <template>
   <div class="toDoList">
     <p class="toDoTit">
       <span>TO&nbsp;DO&nbsp;LIST</span>
+      <!-- <el-button
+        type="danger"
+        icon="el-icon-minus"
+        @click = "deleteTask"
+      ></el-button> -->
       <el-button
         type="primary"
         icon="el-icon-plus"
@@ -23,22 +28,21 @@
             <div class="singleTask clearfix">
               <el-checkbox
                 v-model="item.checked"
-                true-label="1"
-                false-label="0"
+                @change="change(index)"
               ></el-checkbox>
               <span
                 class="taskDesc"
                 :style="{
-                  'text-decoration': item.checked === '1' ? 'line-through' : '',
+                  'text-decoration': item.checked ? 'line-through' : '',
                 }"
-                >{{ item.desc }}</span
+                >{{ item.taskDec }}</span
               >
               <span
                 class="taskDate"
                 :style="{
-                  'text-decoration': item.checked === '1' ? 'line-through' : '',
+                  'text-decoration': item.checked? 'line-through' : '',
                 }"
-                >{{ item.date }}</span
+                >{{ item.time.label }}</span
               >
             </div>
           </li>
@@ -52,13 +56,14 @@
         </el-form-item>
       </el-form>
       <el-row type="flex" class="row-bg" justify="end">
-        <el-button type="primary">确认</el-button>
+        <el-button type="primary" @click='confirm'>确认</el-button>
         <el-button type="info" @click="close">取消</el-button>
       </el-row>
     </el-dialog>
   </div>
 </template>
 <script>
+import { insertTask } from '@/api/home.js'
 export default {
   name: 'todolist',
   props: {
@@ -76,12 +81,29 @@ export default {
     }
   },
   methods: {
+    change(){
+      
+    },
+    deleteTask(){
+
+    },
     addTask() {
       this.dialogVisible = true
     },
     close() {
       this.dialogVisible = false
+      this.taskDesc = ''
     },
+    confirm(){
+      insertTask({taskDec:this.taskDesc}).then(()=>{
+         this.$message({
+           type:'success',
+           message:'新增待办事项成功'
+         })
+         this.$emit('getTodolist')
+         this.close()
+      })
+    }
   },
 }
 </script>
@@ -143,6 +165,7 @@ export default {
           // display: inline-block;
           width: 70%;
           font-size: 14px;
+          word-break: break-all;
         }
         .taskDate {
           float: right;

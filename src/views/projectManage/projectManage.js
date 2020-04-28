@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 20:41:16
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:23:30
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -22,7 +22,8 @@ export default {
       menuObj: {
         title: '项目总计',
         total: 0,
-        menuList: []
+        menuList: [],
+        active:''
       },
       tablePag: {
         pageNo: 1,
@@ -99,12 +100,13 @@ export default {
      * @param {type}: 默认参数
      * @return {type}: 默认类型
      */
-    queryProList() {
+    queryProList(flag) {
       getProjectSum({}).then(res => {
         // console.log(res)
         this.menuObj.total = res.total || 0
         this.menuObj.menuList = res.list || []
-        if (this.menuObj.menuList.length !== 0) {
+        this.menuObj.active = this.itemObj.type ? this.itemObj.type : this.menuObj.menuList[0].type
+        if (this.menuObj.menuList.length !== 0 && flag) {
           this.selectMenu(this.menuObj.menuList[0])
         }
       })
@@ -132,6 +134,6 @@ export default {
   },
   mounted() {},
   created() {
-    this.queryProList()
+    this.queryProList(true)
   }
 }

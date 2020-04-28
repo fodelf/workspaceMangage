@@ -3,13 +3,12 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 09:25:46
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 20:13:44
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-22 23:08:40
  */
 const { getIPAddress } = require('../utils/ipAddress')
-const ip = getIPAddress()
-const url = ''
-module.exports = {
-  ip,
-  url
+global.ip = getIPAddress()
+global.url = ''
+module.exports ={
+    ip:global.ip
 }

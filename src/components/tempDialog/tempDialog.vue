@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 23:00:40
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 07:55:27
  -->
 <template>
   <el-dialog
@@ -177,7 +177,7 @@ export default {
                 type: 'success',
                 message: '新增模板成功'
               })
-              this.$emit('getTempList')
+              this.$emit('getTempList',this.tempForm.type)
               this.close()
             })
           } else {

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:17:29
- * @LastEditors: pym
- * @LastEditTime: 2020-04-05 15:45:32
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 09:18:57
  -->
 <template>
   <div class="menuList">
@@ -17,7 +17,7 @@
         v-for="(item, index) in menuObj.menuList"
         :key="index"
         class="menuItem itemNum clearfix"
-        :class="currentIndex == index ? 'active' : ''"
+        :class="currentIndex == item.type ? 'active' : ''"
         @click="handleClickMenu(item, index)"
       >
         <span>{{ item.label }}</span>
@@ -43,19 +43,28 @@ export default {
           title: '',
           total: 0,
           menuList: [],
+          active:''
         }
       },
     },
   },
   data() {
     return {
-      currentIndex: 0,
+      currentIndex: null,
+    }
+  },
+  watch:{
+     menuObj: {
+      handler(newobj) {
+         this.currentIndex = newobj.active
+      },
+      deep: true,
     }
   },
   methods: {
     addMenu() {},
-    handleClickMenu(item, index) {
-      this.currentIndex = index
+    handleClickMenu(item) {
+      this.currentIndex = item.type
       console.log(item)
       this.$emit('clickMenu', item)
     },

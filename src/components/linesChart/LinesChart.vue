@@ -3,19 +3,21 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:59:55
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-12 16:40:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-27 09:19:54
  -->
 <template>
-  <div id="chart"></div>
+  <div ref="chart" id ='chart'></div>
 </template>
 
 <script>
 import echarts from 'echarts'
 export default {
   name: 'linesChart',
+  props:['chartData'],
   data() {
     return {
+      myChart:null,
       option: {
         title: {
           text: '日常操作记录',
@@ -24,7 +26,7 @@ export default {
             fontWeight: 500
           }
         },
-        color: ['#01c0c8', '#fb9678', '#ab8ce4'],
+        color: ['rgb(251, 150, 120)', 'rgb(1, 192, 200)', 'rgb(171, 140, 228)','rgb(0, 194, 146)'],
         tooltip: {
           trigger: 'axis'
         },
@@ -42,14 +44,14 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '7%',
           bottom: '3%',
           containLabel: true
         },
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          data: [],
           axisLabel: {
             color: '#888'
           },
@@ -73,42 +75,45 @@ export default {
             }
           }
         },
-        series: [
-          {
-            name: '项目',
-            type: 'line',
-            stack: '总量',
-            smooth: true,
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: '模板',
-            type: 'line',
-            smooth: true,
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: '组件',
-            type: 'line',
-            stack: '总量',
-            smooth: true,
-            data: [150, 232, 201, 154, 190, 330, 410]
-          }
-        ]
+        series: []
       }
     }
   },
   methods: {
     initChart() {
-      let myChart = echarts.init(document.getElementById('chart'))
-      myChart.setOption(this.option)
+      this.myChart = echarts.init(document.getElementById('chart'))
+      // myChart.setOption(this.option)
     }
   },
   mounted() {
     this.initChart()
   },
-  created() {}
+  created() {
+  },
+  destroyed(){
+  },
+  beforeCreate(){
+  },
+  watch:{
+    // 组件封装稍后
+    chartData:function(newValue) {
+      if(JSON.stringify(newValue) != '{}'){
+        this.option.xAxis.data = newValue.date
+        newValue.list.forEach((item)=>{
+          let obj = {
+            name: item.name,
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            data: item.list
+          }
+          this.option.series.push(obj)
+        })
+        this.myChart.setOption(this.option)
+      }
+    }
+  }
+
 }
 </script>
 

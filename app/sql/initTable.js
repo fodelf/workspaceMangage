@@ -3,12 +3,13 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-17 09:17:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-28 07:46:42
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
-var file = 'work.db'
+const path = require('path')
+var file = path.join(__dirname,'work.db')
 var sqliteDB = new DB.SqliteDB(file)
 // 用户表
 var createUserTableSql =
@@ -30,10 +31,13 @@ var createScriptTableSql =
   'create table if not exists script(scriptId INTEGER PRIMARY KEY AUTOINCREMENT, scriptName TEXT, scriptContent BLOB , createTime BLOB, deleteFlag INTEGER);'
 //项目字典表
 var createPdecTableSql =
-  'create table if not exists ptype(id INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT, value TEXT);'
+  'create table if not exists ptype(ptypeId INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT, value TEXT);'
 //待办表
 var createToDoListSql =
-  'create table if not exists todo(doId INTEGER PRIMARY KEY AUTOINCREMENT,taskDec TEXT,deleteFlag INTEGER,createTime BLOB);'
+  'create table if not exists todo(todoId INTEGER PRIMARY KEY AUTOINCREMENT,taskDec TEXT,deleteFlag INTEGER,createTime BLOB);'
+//动态列表
+var createActiveSql =
+  'create table if not exists active(activeId INTEGER PRIMARY KEY AUTOINCREMENT,active TEXT,userId TEXT,createTime BLOB);'  
 
 function initPtype() {
   var data = initData.projectType
@@ -56,6 +60,8 @@ async function initTable() {
   await sqliteDB.createTable(createScriptTableSql)
 
   await sqliteDB.createTable(createToDoListSql)
+
+  await sqliteDB.createTable(createActiveSql)
   var querySql = `SELECT * from ptype`
   let data = await sqliteDB.queryData(querySql)
   if (data.length == 0) {
