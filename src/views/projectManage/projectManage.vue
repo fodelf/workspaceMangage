@@ -22,9 +22,11 @@
           :tablePag="tablePag"
           :dataList="dataList"
           :headerList="headerList"
+          :actionType ="'project'"
           @editRow="editRow"
           @deleteRow="deleteRow"
           @changePageNo="getPageNo"
+          @newBranch ='newBranch'
         ></tableBox>
       </div>
     </div>

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 09:23:30
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-06 19:32:05
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -126,6 +126,13 @@ export default {
     },
     editRow(data) {
       this.type = 'modify'
+      this.itemObj = data
+      this.$nextTick(() => {
+        this.$refs.proDialog.show()
+      })
+    },
+    // 新建分支
+    newBranch(data){
       this.itemObj = data
       this.$nextTick(() => {
         this.$refs.proDialog.show()
