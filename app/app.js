@@ -4,8 +4,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-22 23:27:14
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:03:38
  */
 const express = require('express')
 const open = require('open')
@@ -24,7 +24,7 @@ const mutipart = require('connect-multiparty')
 const mutipartMiddeware = mutipart()
 const log4js = require('log4js')
 log4js.configure({
-  appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
+  appenders: { cheese: { type: 'file', filename: path.join(__dirname,'log','cheese.log' )} },
   categories: { default: { appenders: ['cheese'], level: 'info' } }
 })
 initTable()
@@ -76,9 +76,10 @@ portfinder.getPort(
     if (err) {
       console.log(err)
     }
-    var appUrl = `http://${global.ip}:${8082}`
+    port = 8082
+    var appUrl = `http://${global.ip}:${port}`
     global.url = appUrl
-    var server = http.createServer(app).listen(8082, '0.0.0.0', () => {
+    var server = http.createServer(app).listen(port, '0.0.0.0', () => {
       console.log(`app start at ${appUrl}`)
       // open(url)
     })

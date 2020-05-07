@@ -24,6 +24,7 @@ work.db
 /static
 /doc
 /src
-/app/stati
+/app/static
+/app/log
 /app/sql/work.db
 cheese.log
