@@ -3,16 +3,16 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 07:57:04
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:25:26
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
 const { sqliteDB } = require('../sql/initTable')
 // 获取首页汇总
 async function queryIndexCount() {
-  var querySql = `select t1.projectCount,t2.templateCount,t3.componentCount ,t4.scriptCount from 
-  (select count(*) projectCount from project where deleteFlag = 0 ) t1, 
+  var querySql = `select t1.projectCount,t2.templateCount,t3.componentCount ,t4.scriptCount from
+  (select count(*) projectCount from project where deleteFlag = 0 ) t1,
   (select count(*) templateCount from template where deleteFlag = 0) t2 ,
   (select count(*) componentCount from component where deleteFlag = 0) t3,
   (select count(*) scriptCount from script where deleteFlag = 0) t4`
@@ -21,7 +21,7 @@ async function queryIndexCount() {
 // 获取统计趋势
 async function queryIndexTrend(tableName) {
   var querySql = `
-  select t7.number day7, t6.number day6,t5.number day5,t4.number day4,t3.number day3,t2.number day2,t1.number day1 from 
+  select t7.number day7, t6.number day6,t5.number day5,t4.number day4,t3.number day3,t2.number day2,t1.number day1 from
   (select count(*) number from ${tableName} where  date('now', '-6 day','start of day') <= date(${tableName}.createTime) and date('now', '-5 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t7,
   (select count(*) number from ${tableName} where  date('now', '-5 day','start of day') <= date(${tableName}.createTime) and date('now', '-4 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t6,
   (select count(*) number from ${tableName} where  date('now', '-4 day','start of day') <= date(${tableName}.createTime) and date('now', '-3 day','start of day') > date(${tableName}.createTime) and ${tableName}.deleteFlag = 0) t5,
@@ -206,6 +206,13 @@ async function updateComp(data) {
   where componentId = ${data.componentId}`
   return await sqliteDB.updateData(deleteSql)
 }
+
+//修改代办列表
+async function changeTodoList(data) {
+  var deleteSql = `update todo set deleteFlag = '${data.checked?1:0}'
+  where todoId = ${data.todoId}`
+  return await sqliteDB.updateData(deleteSql)
+}
 module.exports = {
   queryIndexCount,
   queryIndexTrend,
@@ -225,5 +232,6 @@ module.exports = {
   updateScript,
   updateTemp,
   updateProject,
-  updateComp
+  updateComp,
+  changeTodoList
 }

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 07:18:12
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:15:50
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -12,7 +12,7 @@ import todoList from '@/components/todolist/Todolist.vue'
 import actionModule from '@/components/actionModule/actionModule.vue'
 import linesChart from '@/components/linesChart/LinesChart'
 import weather from '@/components/weather/weather.vue'
-import { getIndexCount, getTodoList, insertTask ,queryIndexTrend} from '@/api/home.js'
+import { getIndexCount, getTodoList, insertTask ,queryIndexTrend,changeTodoList} from '@/api/home.js'
 export default {
   name: 'home',
   data() {
@@ -144,6 +144,11 @@ export default {
     getTodoList(){
       getTodoList({}).then((res)=>{
         this.todoList = res
+      })
+    },
+    changeTodoList(item){
+      changeTodoList(item).then(()=>{
+        // this.todoList = res
       })
     }
   },

@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-27 13:01:55
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:17:45
  */
 const url = require('url')
 const sd = require('silly-datetime')
@@ -442,6 +442,21 @@ async function updateTemp(req, res) {
  * @apiSuccess {Number} projectCount 项目数量汇总.
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
+async function changeTodoList(req, res) {
+  try {
+    await workServer.changeTodoList(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+
+/**
+ * @api {post} /api/initNewProject 新增项目
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
 async function deleteTemp(req, res) {
   try {
     await commonServer.deleteByID(req.body.templateId, 'templateId', 'template')
@@ -531,5 +546,6 @@ module.exports = {
   updateProject,
   updateComp,
   deleteComponent,
-  queryIndexTrend
+  queryIndexTrend,
+  changeTodoList
 }

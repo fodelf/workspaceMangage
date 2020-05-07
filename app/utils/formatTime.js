@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-06 14:28:52
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-06 14:52:26
+ * @LastEditTime: 2020-05-07 19:10:07
  */
 function formatTime(time) {
   var result = ''
@@ -36,7 +36,7 @@ function formatTime(time) {
     }
   } else if (dayC > 1 && dayC < 2) {
     result = {
-      label: '' + parseInt(dayC) + '昨天',
+      label: '昨天',
       value: 'yesterday'
     }
   } else {
