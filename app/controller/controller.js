@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-27 13:01:55
+ * @LastEditTime: 2020-04-28 12:45:51
  */
 const url = require('url')
 const sd = require('silly-datetime')
@@ -300,6 +300,7 @@ async function insertScript(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function actionScript(req, res) {
+  console.log(req.body.scriptContent)
   res.send(result)
   try {
     let type = os.type()
@@ -309,7 +310,6 @@ async function actionScript(req, res) {
         shell.exec(req.body.scriptContent)
         break
       case 'Windows_NT':
-        console.log(req.body.scriptContent)
         var array = req.body.scriptContent
           .replace(/^\n*/, '')
           .replace(/\n{2,}/g, '\n')
