@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:41:04
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 19:56:46
+ * @LastEditTime: 2020-05-06 20:10:29
  -->
 <template>
   <div class="tableBox" ref="tableBox">
@@ -18,11 +18,14 @@
           {{ scope.row[item.code] ? scope.row[item.code] : '--' }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button type="primary" @click="handleEdit(scope.row)"
             >编辑</el-button
           >
+          <!-- <el-button v-if="actionType == 'project'" type="primary" @click="handleAction(scope.row)"
+            >新建分支</el-button
+          > -->
           <el-button type="danger" @click="handleDelete(scope.row)"
             >删除</el-button
           >
@@ -47,6 +50,12 @@
 export default {
   name: 'tableBox',
   props: {
+    actionType: {
+      type: String,
+      default: function() {
+        return ''
+      }
+    },
     tablePag: {
       type: Object,
       default: function() {
@@ -82,6 +91,9 @@ export default {
     },
     handleDelete(index) {
       this.$emit('deleteRow', index)
+    },
+    handleAction(row) {
+      this.$emit('newBranch', row)
     },
     setTableHeight() {
       this.$nextTick(() => {

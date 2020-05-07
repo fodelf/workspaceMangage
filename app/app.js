@@ -1,16 +1,19 @@
 #!/usr/bin/env node
+
 /*
  * @Description: 项目入口
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 12:45:01
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:34:11
  */
 const express = require('express')
 const open = require('open')
 const bodyParser = require('body-parser')
-const { initTable } = require('./sql/initTable')
+const {
+  initTable
+} = require('./sql/initTable')
 const config = require('./config/config')
 const workServer = require('./service/work.js')
 const common = require('./service/common.js')
@@ -24,8 +27,18 @@ const mutipart = require('connect-multiparty')
 const mutipartMiddeware = mutipart()
 const log4js = require('log4js')
 log4js.configure({
-  appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
-  categories: { default: { appenders: ['cheese'], level: 'info' } }
+  appenders: {
+    cheese: {
+      type: 'file',
+      filename: path.join(__dirname, 'log', 'cheese.log')
+    }
+  },
+  categories: {
+    default: {
+      appenders: ['cheese'],
+      level: 'info'
+    }
+  }
 })
 initTable()
 let isFS = fs.existsSync(path.join(__dirname, 'static', 'img'))
@@ -41,10 +54,15 @@ app.use(
   })
 )
 // app.use(express.static(path.join(__dirname, 'dist')))
-app.use(bodyParser.json({ limit: '50mb' }))
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
+app.use(bodyParser.json({
+  limit: '50mb'
+}))
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true
+}))
 // 解决跨域
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'X-Requested-With')
   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
@@ -52,7 +70,7 @@ app.all('*', function(req, res, next) {
   // res.header('Content-Type', 'application/json;charset=utf-8')
   next()
 })
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', function (err) {
   console.log('Caught exception: ', err)
   console.log('Stack:', err.stack)
 })
@@ -67,15 +85,15 @@ app.get('/api/queryProjectById', workServer.queryProjectById)
 app.post('/api/isFileExist', common.isFileExist)
 // 上传文件
 app.post('/api/upload', mutipartMiddeware, common.upload)
-portfinder.getPort(
-  {
+portfinder.getPort({
     port: 8081, // minimum port
     stopPort: 9000 // maximum port
   },
-  function(err, port) {
+  function (err, port) {
     if (err) {
       console.log(err)
     }
+    port = 8082
     var appUrl = `http://${global.ip}:${port}`
     global.url = appUrl
     var server = http.createServer(app).listen(port, '0.0.0.0', () => {

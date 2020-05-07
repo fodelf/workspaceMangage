@@ -3,13 +3,14 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 22:16:59
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 09:30:40
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-07 19:16:09
  -->
 <template>
   <div class="toDoList">
     <p class="toDoTit">
-      <span>TO&nbsp;DO&nbsp;LIST</span>
+      <!-- <span>TO&nbsp;DO&nbsp;LIST</span> -->
+      <span>代办事项</span>
       <!-- <el-button
         type="danger"
         icon="el-icon-minus"
@@ -28,7 +29,7 @@
             <div class="singleTask clearfix">
               <el-checkbox
                 v-model="item.checked"
-                @change="change(index)"
+                @change="change(item)"
               ></el-checkbox>
               <span
                 class="taskDesc"
@@ -81,8 +82,8 @@ export default {
     }
   },
   methods: {
-    change(){
-      
+    change(item){
+      this.$emit('changeTodoList',item)
     },
     deleteTask(){
 

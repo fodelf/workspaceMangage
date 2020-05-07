@@ -1,8 +1,8 @@
 <!--
  * @Author: 吴文周
  * @Date: 2020-04-12 16:16:34
- * @LastEditTime: 2020-04-28 07:18:24
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-07 19:14:12
+ * @LastEditors: 吴文周
  * @Description: 首页模块
  * @FilePath: /workespacemanger/src/views/home/Home.vue
  -->
@@ -40,7 +40,7 @@
       <div class="todoList cardBox">
         <div class="realTodo realCard">
           <!--TODOLIST组件-->
-          <todoList :todoList="todoList" @getTodolist = 'getTodoList'></todoList>
+          <todoList :todoList="todoList" @getTodolist = 'getTodoList' @changeTodoList ='changeTodoList'></todoList>
         </div>
       </div>
       <div class="personal cardBox">
