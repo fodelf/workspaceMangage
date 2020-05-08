@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 20:33:27
+ * @LastEditTime: 2020-05-08 22:17:59
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -220,7 +220,7 @@ async function changeTodoList(data) {
 }
 // 项目类型字典项
 async function getPersonActive() {
-  var querySql = `SELECT * from active`
+  var querySql = `SELECT * from active ORDER BY activeId  DESC`
   return await sqliteDB.queryData(querySql)
 }
 // 新增个人动态
