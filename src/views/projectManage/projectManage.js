@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-06 19:32:05
+ * @LastEditTime: 2020-05-08 10:34:48
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     addPro() {
+      this.type = 'add'
       this.$refs.proDialog.show()
     },
     /**

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 21:13:51
+ * @LastEditTime: 2020-05-08 10:35:37
  -->
 <template>
   <el-dialog
@@ -199,11 +199,15 @@ export default {
                 type: 'success',
                 message: '新增成功！'
               })
-              this.proVisible = false
-              this.$router.push({
-                path: '/project/projectInit',
-                query: this.proForm
-              })
+              if(this.proForm.addMethod ==='createNew'){
+                this.$router.push({
+                  path: '/project/projectInit',
+                  query: this.proForm
+                })
+              }else{
+                this.$emit('getList')
+              }
+              this.close()
             })
           } else {
             updateProject(this.proForm).then(() => {
@@ -211,8 +215,8 @@ export default {
                 type: 'success',
                 message: '修改成功！'
               })
-              this.proVisible = false
               this.$emit('getList')
+              this.close()
             })
           }
         } else {
