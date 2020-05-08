@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 15:28:00
+ * @LastEditTime: 2020-05-08 18:04:56
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -16,6 +16,7 @@ module.exports = {
   outputDir: 'app/public',
   assetsDir: 'static',
   lintOnSave: false,
+  productionSourceMap: false,
   devServer: {
     port:9527,
     proxy: {

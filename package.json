@@ -1,7 +1,8 @@
 {
   "name": "workstage",
-  "version": "0.2.8",
+  "version": "0.3.3",
   "main": "./app/app.js",
+  "description": "Easy work for you",
   "bin": {
     "ew": "./app/app.js"
   },
@@ -59,5 +60,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fodelf/workspaceMangage.git"
-  }
+  },
+  "homepage": "https://github.com/fodelf/workspaceMangage",
+  "keywords": [
+    "vue",
+    "sqlite",
+    "nodejs",
+    "work",
+    "efficiency"
+  ]
 }

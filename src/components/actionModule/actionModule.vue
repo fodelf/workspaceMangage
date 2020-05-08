@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-06 15:12:20
- * @LastEditors: pym
- * @LastEditTime: 2020-04-06 15:48:32
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-08 20:33:01
  -->
 <template>
   <div class="message">
@@ -18,9 +18,9 @@
               <span></span>
             </div>
             <div class="msgContent">
-              <h5 class="user-name">{{ item.name }}</h5>
-              <p class="msg-desc">{{ item.desc }}</p>
-              <span class="msg-date">{{ item.date }}</span>
+              <h5 class="user-name">Admin</h5>
+              <p class="msg-desc">{{ item.active }}</p>
+              <span class="msg-date">{{ item.createTime }}</span>
             </div>
           </li>
         </ul>
@@ -35,9 +35,11 @@ export default {
   props: {
     msgObj: {
       type: Object,
-      default: {
-        msgTit: '',
-        msgList: [],
+      default: function(){
+        return{ 
+          msgTit: '',
+          msgList: [],
+        } 
       },
     },
   },

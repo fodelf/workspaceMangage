@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 12:47:07
+ * @LastEditTime: 2020-05-08 20:29:08
  */
 const url = require('url')
 const fs = require('fs')
@@ -286,6 +286,23 @@ async function insertTodoList(req, res) {
   try {
     await workServer.insertTodoList(req.body)
     res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/getProjectSum 获取项目汇总公共方法
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function getPersonActive(req, res) {
+  try {
+    let resultEntity = await workServer.getPersonActive(req.body)
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -605,5 +622,6 @@ module.exports = {
   updateComp,
   deleteComponent,
   queryIndexTrend,
-  changeTodoList
+  changeTodoList,
+  getPersonActive
 }

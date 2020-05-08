@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:34:11
+ * @LastEditTime: 2020-05-08 20:01:46
  */
 const express = require('express')
 const open = require('open')
@@ -98,7 +98,7 @@ portfinder.getPort({
     global.url = appUrl
     var server = http.createServer(app).listen(port, '0.0.0.0', () => {
       console.log(`app start at ${appUrl}`)
-      open(appUrl)
+      // open(appUrl)
     })
     const io = require('socket.io')(server)
     io.on('connection', client => {
