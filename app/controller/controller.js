@@ -4,9 +4,10 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:34:24
+ * @LastEditTime: 2020-05-08 12:47:07
  */
 const url = require('url')
+const fs = require('fs')
 const sd = require('silly-datetime')
 const shell = require('shelljs')
 const os = require('os')
@@ -122,8 +123,15 @@ async function getProjectType(req, res) {
  */
 async function initNewProject(req, res) {
   try {
-    await workServer.initNewProject(req.body)
-    res.send(result)
+    fs.exists(req.body.filePath, async function(ex) {
+      if (ex) {
+        await workServer.initNewProject(req.body)
+        res.send(result)
+      } else {
+        let resultMes = '文件路径不存在'
+        res.send({ ...resultErr, resultMes })
+      }
+    })
   } catch (error) {
     res.send(resultErr)
   }
