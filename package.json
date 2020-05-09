@@ -25,8 +25,7 @@
     "shelljs": "^0.8.3",
     "silly-datetime": "^0.1.2",
     "socket.io": "^2.3.0",
-    "sqlite3": "^4.1.1",
-    "uuid": "^7.0.2"
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "@akryum/winattr": "^3.0.0",
@@ -51,7 +50,14 @@
     "webpack-dev-server": "^3.1.0",
     "xterm": "^3.13.2",
     "xterm-addon-attach": "^0.5.0",
-    "xterm-addon-fit": "^0.3.0"
+    "xterm-addon-fit": "^0.3.0",
+    "uuid": "^7.0.2",
+    "vant": "^2.8.0",
+    "qrcodejs2": "0.0.2",
+    "sass-loader": "^8.0.2",
+    "jquery": "^3.5.1",
+    "js-cookie": "^2.2.1",
+    "js-md5": "^0.7.3"
   },
   "author": "wuwenzhou",
   "license": "MIT",

@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+/*************************左侧区域样式*************************/
+.leftArea {
+  height: 100%;
+  width: 328px;
+  background: #ffffff;
+
+  /deep/.el-collapse-item__header {
+    border: 0px;
+  }
+
+  /deep/.el-collapse {
+    border: 0px;
+  }
+
+  .wigetContent {
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    .wigetContentLsit {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      transition: all .45s;
+      overflow: hidden;
+      width: 100%;
+
+      .drag-holder {
+        position: relative;
+        box-sizing: border-box;
+        width: 92px;
+        height: 92px;
+        cursor: pointer;
+        padding: 24px 0 20px;
+        -ms-flex-pack: center;
+        justify-content: center;
+        border: 1px solid #f5f7fd;
+        background: #f5f7fd;
+        margin: 0 2px 2px 0;
+        transition: all .45s;
+        color: #777;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .text {
+          font-size: 13px;
+          text-align: center;
+          // line-height: 47px;
+        }
+
+        .EmText {
+          background: url('../../../assets/img/emText.svg') center center no-repeat;
+        }
+
+        .EmHead {
+          background: url('../../../assets/img/emHead.svg') center center no-repeat;
+        }
+
+        .EmImg {
+          background: url('../../../assets/img/emImg.svg') center center no-repeat;
+        }
+
+        .EmSwipe {
+          background: url('../../../assets/img/emSwipe.svg') center center no-repeat;
+        }
+
+        .EmButton {
+          background: url('../../../assets/img/emButton.svg') center center no-repeat;
+        }
+
+        .EmVideo {
+          background: url('../../../assets/img/emVideo.svg') center center no-repeat;
+        }
+
+        .EmImgText {
+          background: url('../../../assets/img/emImgText.svg') center center no-repeat;
+        }
+
+        .EmLine {
+          background: url('../../../assets/img/emLine.svg') center center no-repeat;
+        }
+
+        .EmOnline {
+          background: url('../../../assets/img/emOnline.svg') center center no-repeat;
+        }
+
+        .EmQRcode {
+          background: url('../../../assets/img/emQRcode.svg') center center no-repeat;
+        }
+
+        .EmPhone {
+          background: url('../../../assets/img/emPhone.svg') center center no-repeat;
+        }
+
+        .EmForm {
+          background: url('../../../assets/img/emForm.svg') center center no-repeat;
+        }
+
+        .EmIcon {
+          display: block;
+          width: 30px;
+          height: 30px;
+          background-size: contain;
+        }
+      }
+
+      .drag-holder:hover {
+        box-shadow: 0 0 8px #8a8a8a;
+        background: #fff;
+        z-index: 40;
+      }
+    }
+
+  }
+}
