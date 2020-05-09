@@ -27,4 +27,5 @@ work.db
 /app/static
 /app/log
 /app/sql/work.db
+/public
 cheese.log

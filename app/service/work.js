@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:18:21
+ * @LastEditTime: 2020-05-08 20:08:01
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
@@ -106,6 +106,10 @@ async function updateComp(data) {
 async function changeTodoList(data) {
   return await workDao.changeTodoList(data)
 }
+// 获取个人动态列表
+async function getPersonActive(data) {
+  return await workDao.getPersonActive(data)
+} 
 
 module.exports = {
   getIndexCount,
@@ -127,5 +131,6 @@ module.exports = {
   updateTemp,
   updateProject,
   updateComp,
-  changeTodoList
+  changeTodoList,
+  getPersonActive
 }

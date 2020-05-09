@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:15:50
+ * @LastEditTime: 2020-05-08 20:30:29
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -12,7 +12,7 @@ import todoList from '@/components/todolist/Todolist.vue'
 import actionModule from '@/components/actionModule/actionModule.vue'
 import linesChart from '@/components/linesChart/LinesChart'
 import weather from '@/components/weather/weather.vue'
-import { getIndexCount, getTodoList, insertTask ,queryIndexTrend,changeTodoList} from '@/api/home.js'
+import { getIndexCount, getTodoList, insertTask ,queryIndexTrend,changeTodoList,getPersonActive} from '@/api/home.js'
 export default {
   name: 'home',
   data() {
@@ -56,60 +56,11 @@ export default {
       todoList: [],
       personalObj: {
         msgTit: '个人动态',
-        msgList: [
-          {
-            url: '',
-            name: 'pty',
-            desc: 'Lorem Ipsum is simply dummy text',
-            date: '09:50'
-          },
-          { url: '', name: 'wwz', desc: 'ddddd', date: '09:50' },
-          { url: '', name: 'sam', desc: 'ddddd', date: '09:50' },
-          { url: '', name: 'wuliian', desc: 'ddddd', date: '09:50' },
-          { url: '', name: 'beteli', desc: 'ddddd', date: '09:50' },
-          { url: '', name: 'gyl', desc: 'ddddd', date: '09:50' }
-        ]
+        msgList: []
       },
       teamObj: {
         msgTit: '团队动态',
-        msgList: [
-          {
-            url: '',
-            name: 'tty',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          },
-          {
-            url: '',
-            name: 'wwz',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          },
-          {
-            url: '',
-            name: 'sam',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          },
-          {
-            url: '',
-            name: 'wuliian',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          },
-          {
-            url: '',
-            name: 'beteli',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          },
-          {
-            url: '',
-            name: 'gyl',
-            desc: 'sung a song! See you at',
-            date: '09:50'
-          }
-        ]
+        msgList: []
       }
     }
   },
@@ -150,6 +101,13 @@ export default {
       changeTodoList(item).then(()=>{
         // this.todoList = res
       })
+    },
+    getPersonActive(){
+      getPersonActive().then((res)=>{
+        debugger
+        // this.todoList = res
+        this.personalObj.msgList = res
+      })
     }
   },
   mounted() {
@@ -165,5 +123,6 @@ export default {
     this.queryIndexCount()
     this.queryChart()
     this.getTodoList()
+    this.getPersonActive()
   }
 }

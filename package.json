@@ -1,7 +1,8 @@
 {
   "name": "workstage",
-  "version": "0.2.5",
+  "version": "0.3.6",
   "main": "./app/app.js",
+  "description": "Easy work for you",
   "bin": {
     "ew": "./app/app.js"
   },
@@ -9,7 +10,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "nodemon ./app/app.js",
+    "start": "NODE_ENV=dev nodemon ./app/app.js",
     "dev": "node ./app/app.js",
     "api": "apidoc -i app/controller/ -o doc/api",
     "apiUI": "node ./doc/app.js"
@@ -22,6 +23,7 @@
     "multer": "^1.4.2",
     "open": "^7.0.3",
     "portfinder": "^1.0.25",
+    "request": "^2.88.2",
     "shelljs": "^0.8.3",
     "silly-datetime": "^0.1.2",
     "socket.io": "^2.3.0",
@@ -64,5 +66,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fodelf/workspaceMangage.git"
-  }
+  },
+  "homepage": "https://github.com/fodelf/workspaceMangage",
+  "keywords": [
+    "vue",
+    "sqlite",
+    "nodejs",
+    "work",
+    "efficiency"
+  ]
 }

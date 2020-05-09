@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:26:14
+ * @LastEditTime: 2020-05-08 20:05:00
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -16,6 +16,8 @@ module.exports = router => {
   router.post('/api/home/insertTodoList', controller.insertTodoList)
   // 获取待办列表
   router.get('/api/home/queryIndexTrend', controller.queryIndexTrend)
+   // 获取个人动态列表
+  router.get('/api/home/getPersonActive', controller.getPersonActive)
   // 获取项目类型
   router.get('/api/getProjectType', controller.getProjectType)
   // 改变代办列表

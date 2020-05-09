@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-07 19:25:26
+ * @LastEditTime: 2020-05-08 22:17:59
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -39,6 +39,7 @@ async function queryProjectType() {
 }
 // 新增项目
 async function initNewProject(data) {
+  insertActive({active:'新增项目'})
   var insertData = [
     [
       data.projectName,
@@ -64,6 +65,7 @@ async function querySum(tableName) {
 }
 // 新增项目模板
 async function insertTemplate(data) {
+  insertActive({active:'新增项目模板'})
   var insertData = [
     [
       data.templateName,
@@ -107,6 +109,7 @@ async function queryScriptList(data) {
 }
 // 新增组件
 async function insertComponent(data) {
+  insertActive({active:'新增组件'})
   var insertData = [
     [
       data.componentName,
@@ -145,6 +148,7 @@ async function queryAll(tableName) {
 }
 // 新增待办
 async function insertTodoList(data) {
+  insertActive({active:'新增待办'})
   var insertData = [
     [data.taskDec, 0, sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss')]
   ]
@@ -154,6 +158,7 @@ async function insertTodoList(data) {
 }
 // 新增脚本
 async function insertScript(data) {
+  insertActive({active:'新增脚本'})
   var insertData = [
     [
       data.scriptName,
@@ -213,6 +218,24 @@ async function changeTodoList(data) {
   where todoId = ${data.todoId}`
   return await sqliteDB.updateData(deleteSql)
 }
+// 项目类型字典项
+async function getPersonActive() {
+  var querySql = `SELECT * from active ORDER BY activeId  DESC`
+  return await sqliteDB.queryData(querySql)
+}
+// 新增个人动态
+async function insertActive(data) {
+  var insertData = [
+    [
+      data.active,
+      sd.format(new Date(), 'YYYY/MM/DD hh:mm:ss')
+    ]
+  ]
+  var insertSql =
+    'insert into active(active,createTime) values(?, ?)'
+  return await sqliteDB.insertData(insertSql, insertData)
+}
+
 module.exports = {
   queryIndexCount,
   queryIndexTrend,
@@ -233,5 +256,6 @@ module.exports = {
   updateTemp,
   updateProject,
   updateComp,
-  changeTodoList
+  changeTodoList,
+  getPersonActive
 }

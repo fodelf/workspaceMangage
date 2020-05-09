@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 10:46:59
+ * @LastEditTime: 2020-05-08 20:29:08
  */
 const url = require('url')
 const fs = require('fs')
@@ -15,7 +15,9 @@ const path = require('path')
 const iconv = require('iconv-lite')
 const workServer = require('../service/work.js')
 const commonServer = require('../service/common.js')
-const { formatTime } = require('../utils/formatTime.js')
+const {
+  formatTime
+} = require('../utils/formatTime.js')
 const result = {
   resultCode: 200,
   resultEntity: {},
@@ -42,7 +44,10 @@ async function _getList(req, res, tableName) {
       total: data[0] ? data[0]['total'] : 0,
       list: data
     }
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -64,7 +69,10 @@ async function _getSum(req, res, tableName) {
       total: totalSum,
       list: data
     }
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -81,7 +89,10 @@ async function getIndexCount(req, res) {
   try {
     let data = await workServer.getIndexCount()
     let resultEntity = data[0]
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -96,7 +107,10 @@ async function getProjectType(req, res) {
   try {
     let data = await workServer.getProjectType()
     let resultEntity = data
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -176,7 +190,10 @@ async function queryTemplateList(req, res) {
       total: data[0] ? data[0]['total'] : 0,
       list: data
     }
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -232,7 +249,10 @@ async function queryUser(req, res) {
   try {
     let data = await commonServer.queryUser()
     let resultEntity = data[0]
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -251,7 +271,10 @@ async function queryTodoList(req, res) {
     return item
   })
   let resultEntity = list
-  res.send({ ...result, resultEntity })
+  res.send({
+    ...result,
+    resultEntity
+  })
 }
 /**
  * @api {post} /api/getProjectSum 获取项目汇总公共方法
@@ -263,6 +286,23 @@ async function insertTodoList(req, res) {
   try {
     await workServer.insertTodoList(req.body)
     res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {post} /api/getProjectSum 获取项目汇总公共方法
+ * @apiGroup project
+ * @apiSuccess {Number} projectCount 项目数量汇总.
+ * @apiSuccess {Number} templateCount 模板数量数量汇总.
+ */
+async function getPersonActive(req, res) {
+  try {
+    let resultEntity = await workServer.getPersonActive(req.body)
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -282,7 +322,10 @@ async function queryScriptList(req, res) {
       total: data[0] ? data[0]['total'] : 0,
       list: data
     }
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -308,6 +351,7 @@ async function insertScript(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function actionScript(req, res) {
+  console.log(req.body.scriptContent)
   res.send(result)
   try {
     let type = os.type()
@@ -317,7 +361,6 @@ async function actionScript(req, res) {
         shell.exec(req.body.scriptContent)
         break
       case 'Windows_NT':
-        console.log(req.body.scriptContent)
         var array = req.body.scriptContent
           .replace(/^\n*/, '')
           .replace(/\n{2,}/g, '\n')
@@ -333,7 +376,9 @@ async function actionScript(req, res) {
             if (item.startsWith('cd')) {
               let child = item.substring(2)
               try {
-                shell.cd(child, { encoding: 'base64' }, function(
+                shell.cd(child, {
+                  encoding: 'base64'
+                }, function (
                   code,
                   stdout,
                   stderr
@@ -365,16 +410,22 @@ async function actionScript(req, res) {
         break
       default:
         var resultMes = '不支持此系统'
-        res.send({ ...resultErr, resultMes })
+        res.send({
+          ...resultErr,
+          resultMes
+        })
         break
     }
   } catch (error) {
     res.send(resultErr)
   }
 }
+
 function shellAction(sh) {
-  return new Promise(function(resolve, reject) {
-    shell.exec(sh, { encoding: 'base64' }, function(code, stdout, stderr) {
+  return new Promise(function (resolve, reject) {
+    shell.exec(sh, {
+      encoding: 'base64'
+    }, function (code, stdout, stderr) {
       if (stdout) {
         resolve()
       } else if (stderr) {
@@ -497,9 +548,10 @@ async function deleteComponent(req, res) {
     res.send(resultErr)
   }
 }
-function getPList(obj){
+
+function getPList(obj) {
   var list = []
-  for(let k = 7; k != 0; k -- ){
+  for (let k = 7; k != 0; k--) {
     let key = 'day' + k
     list.push(obj[key])
   }
@@ -508,21 +560,36 @@ function getPList(obj){
 async function queryIndexTrend(req, res) {
   try {
     let component = await commonServer.queryIndexTrend('component')
-    let project =  await commonServer.queryIndexTrend('project')
-    let template =  await commonServer.queryIndexTrend('template')
-    let script =  await commonServer.queryIndexTrend('script')
+    let project = await commonServer.queryIndexTrend('project')
+    let template = await commonServer.queryIndexTrend('template')
+    let script = await commonServer.queryIndexTrend('script')
     let date = []
-    for(var i = -6 ; i <= 0;i ++ ) {
+    for (var i = -6; i <= 0; i++) {
       let dd = new Date();
-      dd.setDate(dd.getDate()+ i)
+      dd.setDate(dd.getDate() + i)
       date.push(sd.format(dd, 'YYYY/MM/DD'))
     }
-    let list = [{name:'项目',list:getPList(project[0])},{name:'模板',list:getPList(template[0])},{name:'组件',list:getPList(component[0])},{name:'脚本',list:getPList(script[0])}]
+    let list = [{
+      name: '项目',
+      list: getPList(project[0])
+    }, {
+      name: '模板',
+      list: getPList(template[0])
+    }, {
+      name: '组件',
+      list: getPList(component[0])
+    }, {
+      name: '脚本',
+      list: getPList(script[0])
+    }]
     let resultEntity = {
       date: date,
-      list:list
+      list: list
     }
-    res.send({ ...result, resultEntity })
+    res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }
@@ -555,5 +622,6 @@ module.exports = {
   updateComp,
   deleteComponent,
   queryIndexTrend,
-  changeTodoList
+  changeTodoList,
+  getPersonActive
 }
