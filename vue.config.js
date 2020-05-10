@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 17:38:08
+ * @LastEditTime: 2020-05-10 22:19:53
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -23,7 +23,7 @@ module.exports = {
       filename: 'index.html',
       // 当使用 title 选项时，
       // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
-      title: 'EsayWork',
+      title: 'EasyWork',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     },
     edit: {
@@ -35,7 +35,7 @@ module.exports = {
       filename: 'edit.html',
       // 当使用 title 选项时，
       // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
-      title: 'EsayWork',
+      title: 'EasyWork',
       chunks: ['chunk-vendors', 'chunk-common', 'edit']
     },
     preview: {
@@ -47,7 +47,7 @@ module.exports = {
       filename: 'preview.html',
       // 当使用 title 选项时，
       // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
-      title: 'EsayWork',
+      title: 'EasyWork',
       chunks: ['chunk-vendors', 'chunk-common', 'preview']
     }
   },

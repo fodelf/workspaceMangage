@@ -1,42 +1,87 @@
 .production {
   width: 100%;
-  height: 100%;
-  overflow: auto;
-  background: #f8fbff;
-
+  min-height: calc(100% - 56px);
+  padding: 20px 25px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  // width: 100%;
+  // height: 100%;
+  // // overflow: auto;
+  // padding: 20px 25px;
+  // background: #f8fbff;
+  .todo {
+    width: 100%;
+    // height: calc(100% - 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    .iconfont {
+      font-size: 150px;
+      display: block;
+    }
+    span {
+      display: block;
+      font-size: 25px;
+    }
+  }
   .topPro {
-    height: 32px;
-    padding: 40px 50px 12px;
+    display:flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    // height: 32px;
+    // padding: 40px 50px 12px;
 
     .addSiteBtn {
-      float: left;
-      height: 32px;
-      padding: 0 20px;
+      // float: right;
+      // height: 32px;
+      // padding: 0 20px;
     }
   }
 
   .bottomDiv {
-    height: calc(100% - 99px);
-    width: calc(100% - 100px);
-    margin: 0 50px;
+    width: 100%;
+    display:flex;
+    flex-grow: 1;
+    // min-height: calc(100% - 80px);
+    // height: calc(100% - 99px);
+    // width: calc(100% - 100px);
+    // margin: 0 50px;
 
     .addSite {
       width: 100%;
-      height: 100%;
+      // height: 100%;
       display: flex;
+      flex-grow: 1;
       align-items: center;
       justify-content: center;
-      background: #fff;
+      background: #353c48;
 
       .addContent {
         width: 210px;
         text-align: center;
-
-        .noSiteBg {
-          width: 210px;
-          height: 140px;
-          background: url(../../../assets/img/null_site.png) no-repeat center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        .iconfont {
+          font-size: 150px;
+          display: block;
         }
+        span {
+          display: block;
+          font-size: 25px;
+          margin-bottom:10px;
+        }
+        // .noSiteBg {
+        //   width: 210px;
+        //   height: 140px;
+        //   background: url(../../../assets/img/null_site.png) no-repeat center;
+        // }
 
         p {
           height: 20px;

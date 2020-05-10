@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-08-21 15:40:46
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 15:21:26
+ * @LastEditTime: 2020-05-10 22:23:48
  */
 import { queryTemplateList, createApp } from '@/api/index/control.js'
 export default {
@@ -14,6 +14,7 @@ export default {
       time: '默认排序',
       site: '全部站点',
       dialogVisible: false,
+      form:{},
       templateList: [
         // {
         //   templateName: '111',

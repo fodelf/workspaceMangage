@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-11 18:59:40
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 15:23:19
+ * @LastEditTime: 2020-05-10 23:09:01
  -->
 <template>
   <div class="production">
@@ -17,7 +17,7 @@
                  class='addSiteBtn'
                  icon="el-icon-plus"
                  @click="open">新增站点</el-button>
-      <el-form ref="form"
+      <!-- <el-form ref="form"
                :model="form">
         <el-form-item>
           <el-select v-model="time">
@@ -46,16 +46,17 @@
                     placeholder="请输入页面标题关键字"><em slot="suffix">|</em><i slot="suffix"
                class="el-icon-search"></i></el-input>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </div>
     <div class="bottomDiv">
       <div class='addSite'
            v-if="templateList.length == 0">
         <div class='addContent'>
-          <div class='noSiteBg'></div>
-          <p>当前暂无站点哦~</p>
+          <i class='iconfont icon-meiyoudingdan'></i>
+          <span>当前暂无站点哦</span>
+          <!-- <div class='noSiteBg'></div>
+          <p>当前暂无站点哦~</p> -->
           <el-button type="primary"
-                     class='addSiteBtn'
                      icon="el-icon-plus"
                      @click="open">新增第一个站点</el-button>
         </div>
@@ -139,7 +140,7 @@
       </div>
     </el-dialog> -->
 
-    <el-dialog title="创建App，这个弹出是告诉你功能"
+    <!-- <el-dialog title="创建App，这个弹出是告诉你功能"
                class="clearfix"
                center
                :visible.sync="dialogApp">
@@ -150,7 +151,7 @@
         <el-button type="primary"
                    @click="create">生成app</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
   </div>
 </template>
