@@ -2,52 +2,56 @@
 
 /*************************头部区域样式*************************/
 .headerArea {
-  background-color: #fff;
+  background-color:#3c4452;
   height: 56px;
   box-shadow: 0 2px 8px 0 rgba(75, 75, 75, 0.1);
   z-index: 10;
-
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
   .cursor-pointer {
     cursor: pointer;
   }
 
   .nav {
-    position: absolute;
-    margin-left: calc(50% - 84px)
+    align-self: center
+    // position: absolute;
+    // margin-left: calc(50% - 84px)
   }
 
   .temName {
-    color: rgba(10, 18, 32, .87);
-    box-shadow: 0 -2px 0 0#1095fe inset;
+    color: #606266;
+    border: none;
+    width: 250px;
+    // box-shadow: 0 -2px 0 0#1095fe inset;
     height: 40px;
+    /deep/.el-input__inner{
+      background:#303641;
+      border: none;
+    }
   }
 
   .logo-bar {
-    z-index: 60;
-    height: 100%;
-    position: relative;
     margin-left: 29px;
-    float: left;
-    -ms-flex-align: center;
-    align-items: center;
-    display: -ms-flexbox;
+    // float: left;
+    // -ms-flex-align: center;
+    // align-items: center;
     display: flex;
-    color: #888;
-
-
+    // color: #888;
+    color:white;
 
     .logo {
       // background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF4AAAASCAYAAADSSGl5AAAAGXRFW…N9vPrhBNzFr2nLxe7YF6620+SeZrrNFYUk/k0ud1FV/wgwALHqbdxYSS+FAAAAAElFTkSuQmCC)
       // no-repeat;
       // color: #666;
-      color: #1095fe;
+      // color:white;
+      color: #fb9678;
       font-size: 20px;
-      display: -ms-flexbox;
       display: flex;
       float: left;
       margin-right: 46px;
-      height: 18px;
-      width: 94px;
+      // height: 18px;
+      // width: 94px;
       cursor: pointer;
     }
 
@@ -63,8 +67,8 @@
   }
 
   .pubulish-bar {
-    margin-left: auto;
-    float: right;
+    // margin-left: auto;
+    // float: right;
     height: 56px;
     line-height: 56px;
 

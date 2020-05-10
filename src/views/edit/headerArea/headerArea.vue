@@ -4,27 +4,30 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 08:30:25
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 09:46:37
+ * @LastEditTime: 2020-05-10 23:44:38
  -->
 <template>
   <div class="headerArea">
     <div class="logo-bar flex-row">
       <span class="logo"
-            @click="goTo">易推广</span>
+            @click="goTo">Drag</span>
       <a class="btn-back el-dropdown-link  cursor-pointer no-select"
          @click="goToIndex">
         <i class="el-icon-arrow-left fz16">
-        </i>我的站点
+        </i>我的工作台
       </a>
       <!-- <span class="set el-tooltip item"
             aria-describedby="el-tooltip-1644"
             tabindex="0"><i class="icon-shezhi fz32 "></i> <span>站点设置</span></span> -->
     </div>
     <div class="nav flex-row">
-      <input type="text"
+      <el-input placeholder="网站标题"
+             v-model="temName"
+             class="temName"/>
+      <!-- <input type="text"
              placeholder="网站标题"
              v-model="temName"
-             class="temName">
+             class="temName"> -->
       <!-- <div class="edit-title flex-row">
         <div class="label ">
 
@@ -59,7 +62,7 @@ export default {
       width: '',
       left: '',
       top: '',
-      temName: '易推广'
+      temName: ''
     }
   },
   methods: {
@@ -70,7 +73,7 @@ export default {
      * @return {type}: 默认类型
      */
     goToIndex () {
-      window.location.href = 'index.html#/control'
+      window.location.href = 'index.html'
     },
     goTo () {
       window.location.href = 'index.html'
