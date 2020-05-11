@@ -4,13 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 17:27:29
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-24 17:56:50
+ * @LastEditTime: 2020-05-11 15:52:45
  */
 import request from '../../utils/request'
 
 export function previewTemp (params) {
   return request({
-    url: '/api/template/get/templateInfo',
+    url: '/api/drag/templateInfo',
     method: 'POST',
     params: params
   })

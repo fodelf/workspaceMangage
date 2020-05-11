@@ -4,13 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 17:27:29
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-24 09:30:47
+ * @LastEditTime: 2020-05-11 14:26:22
  */
 import request from '../../utils/request'
 
 export function preview (params) {
   return request({
-    url: '/api/template/save/userTemplate',
+    url: '/api/drag/insertPage',
     method: 'POST',
     params: params
   })

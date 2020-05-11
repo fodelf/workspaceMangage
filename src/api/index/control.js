@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 17:27:29
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-09-25 19:29:03
+ * @LastEditTime: 2020-05-11 09:26:13
  */
 import request from '@/utils/request'
 
 export function queryTemplateList (params) {
   return request({
-    url: '/api/template/get/templateList',
-    method: 'POST',
+    url: '/api/drag/getPageList',
+    method: 'GET',
     params: params
   })
 }

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 08:30:25
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-10 23:44:38
+ * @LastEditTime: 2020-05-11 14:47:46
  -->
 <template>
   <div class="headerArea">
@@ -62,7 +62,7 @@ export default {
       width: '',
       left: '',
       top: '',
-      temName: ''
+      temName: 'EasyWork'
     }
   },
   methods: {
@@ -73,10 +73,10 @@ export default {
      * @return {type}: 默认类型
      */
     goToIndex () {
-      window.location.href = 'index.html'
+      window.location.href = 'index.html#/drag/dragManage'
     },
     goTo () {
-      window.location.href = 'index.html'
+      window.location.href = 'index.html#/drag/dragManage'
     },
     /**
      * 改变组件高度

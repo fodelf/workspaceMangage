@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-08-21 15:40:46
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-10 22:23:48
+ * @LastEditTime: 2020-05-11 15:30:48
  */
 import { queryTemplateList, createApp } from '@/api/index/control.js'
 export default {
@@ -15,29 +15,9 @@ export default {
       site: '全部站点',
       dialogVisible: false,
       form:{},
-      templateList: [
-        // {
-        //   templateName: '111',
-        //   templateUrl: 'https://www.ilanx0.net/TSD602qc',
-        //   templateId: '222',
-        //   viewCount: 33,
-        //   registerCount: 100
-        // },
-        // {
-        //   templateName: '111',
-        //   templateUrl: 'https://www.ilanx0.net/TSD602qc',
-        //   templateId: '222',
-        //   viewCount: 33,
-        //   registerCount: 100
-        // },
-        // {
-        //   templateName: '111',
-        //   templateUrl: 'https://www.ilanx0.net/TSD602qc',
-        //   templateId: '222',
-        //   viewCount: 33,
-        //   registerCount: 100
-        // }
-      ]
+      templateList: [],
+      bg:require("../../.././assets/img/edit/bg.jpg"),
+      host:window.location.host
     }
   },
   components: {},
@@ -81,7 +61,7 @@ export default {
      */
     init () {
       let param = {
-        userId: localStorage.getItem('userId') * 1,
+        // userId: localStorage.getItem('userId') * 1,
         isPreview: false,
         pageNum: 1,
         pageSize: 10

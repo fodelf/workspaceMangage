@@ -37,8 +37,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/common/css/base.css'
 import '@/assets/iconfont/iconfont.css'
+import Clipboard from 'v-clipboard'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(Clipboard)
 new Vue({
   router,
   store,

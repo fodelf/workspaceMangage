@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 20:30:29
+ * @LastEditTime: 2020-05-11 14:35:36
  */
 import cardNum from '@/components/cardNum/cardNum'
 import carousel from '@/components/carousel/carousel.vue'
@@ -104,7 +104,6 @@ export default {
     },
     getPersonActive(){
       getPersonActive().then((res)=>{
-        debugger
         // this.todoList = res
         this.personalObj.msgList = res
       })

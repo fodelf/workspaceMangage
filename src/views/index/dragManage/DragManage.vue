@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-11 18:59:40
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-10 23:09:01
+ * @LastEditTime: 2020-05-11 15:58:24
  -->
 <template>
   <div class="production">
@@ -63,7 +63,37 @@
       </div>
       <ul class='siteList clearfix'
           v-if="templateList.length != 0">
-        <li v-for="(item,index) in templateList"
+          <el-row :gutter="20">
+              <el-col :span="6" v-for="(item, index) in templateList" :key="index">
+                <div class="templateCard">
+                  <img class="cardImg" :src="item.decImg?item.decImg:bg" />
+                  <div class="cardBody">
+                    <h4 class="cardTit">{{ item.templateName }}</h4>
+                    <p class="cardText">
+                      地址：{{host}}/preview.html?templateId={{item.templateId}}
+                    </p>
+                    <el-row>
+                      <el-button type="primary" size="small"
+                        v-clipboard:copy="host +'/preview.html?templateId=' + item.templateId"
+                        v-clipboard:success="onCopy"
+                        v-clipboard:error="onError"
+                        >复制链接</el-button
+                      >
+                      <!-- <el-button type="primary" size="small" @click="gotoEdit(item)"
+                        >编辑</el-button
+                      > -->
+                      <!-- <el-button
+                        type="danger"
+                        size="small"
+                        @click="deleteTem(item.templateId)"
+                        >删除</el-button
+                      > -->
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+        <!-- <li v-for="(item,index) in templateList"
             :key="index"
             class='site clearfix'>
           <div class='leftSide'>
@@ -79,53 +109,17 @@
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onError"><i class='iconfont icon-fuzhi'></i>复制链接</span>
               <span @click="createAppFn('http://easymarket.chehe88.com/preview.html?templateId=' + item.templateId)"
-                    style="curor:pointer">
-                <i class='el-icon-mobile-phone'></i>生成app</span>
-              <span><i class='iconfont icon-yuming'></i>生成小程序</span>
-              <span><i class='iconfont icon-Group-'></i>二维码</span>
-              <span><i class='iconfont icon-yuming'></i>绑定独立域名</span>
+                    style="curor:pointer"></span>
             </p>
             <p class='operation'>
               <el-button type="primary"
                          @click="gotoEdit(item.templateId)">编辑</el-button>
-              <el-button type="primary"
-                         @click="gotoData(item)"
-                         plain>查看数据</el-button>
-              <el-button type="primary"
-                         @click="gotoData(item)"
-                         plain>推广（未）</el-button>
               <el-button type="danger"
                          @click="deleteTem(item.templateId)"
                          icon="el-icon-delete">删除</el-button>
             </p>
-            <div class='bigBox clearfix'>
-              <div class='blockBox'>
-                <p>
-                  <em>访问量</em>
-                  <span :title="item.viewCount">{{item.viewCount}}</span>
-                </p>
-              </div>
-              <div class='blockBox'>
-                <p>
-                  <em>注册量</em>
-                  <span :title="item.viewCount">{{item.registerCount}}</span>
-                </p>
-              </div>
-              <div class='blockBox'>
-                <p>
-                  <em>总成本</em>
-                  <span :title="item.viewCount">0</span>
-                </p>
-              </div>
-              <div class='blockBox'>
-                <p>
-                  <em>单成本</em>
-                  <span :title="item.viewCount">0</span>
-                </p>
-              </div>
-            </div>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
     <!-- <el-dialog title="新建站点"

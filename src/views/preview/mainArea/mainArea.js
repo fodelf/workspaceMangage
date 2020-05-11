@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 19:58:27
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-09-01 09:46:50
+ * @LastEditTime: 2020-05-11 15:45:33
  */
 // import { uuid } from '@/utils/index.js'
 // //  读取配置文件
@@ -128,10 +128,10 @@ export default {
         })
       })
       .catch(() => {})
-    let source = getUrlParam('source') ? getUrlParam('source') : 'defaut'
-    visit({ templateId: templateId, comeSite: source })
-      .then(() => {})
-      .catch(() => {})
+    // let source = getUrlParam('source') ? getUrlParam('source') : 'defaut'
+    // // visit({ templateId: templateId, comeSite: source })
+    // //   .then(() => {})
+    // //   .catch(() => {})
   }
   // wacth: {
   //   num () {

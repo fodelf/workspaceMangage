@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 22:17:59
+ * @LastEditTime: 2020-05-11 14:57:21
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -91,9 +91,9 @@ async function queryCommonList(data, tableName) {
   let n2 = data.pageSize
   var querySql = `SELECT * ,COUNT(1) OVER() AS total from  ${tableName}  where ${
     type ? "type = '" + type + "' and " : ''
-  }deleteFlag = 0 and keyword  LIKE '%${
-    data.keyword ? data.keyword : ''
-  }%' LIMIT ${n1},${n2}`
+  }deleteFlag = 0 ${
+    data.keyword ? "and keyword  LIKE '%"+ data.keyword +'%':''} LIMIT ${n1},${n2}`
+  // var querySql = `SELECT * ,COUNT(1) OVER() AS total from  ${tableName}`
   return await sqliteDB.queryData(querySql)
 }
 // 获取列表公共方法

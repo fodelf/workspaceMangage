@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 08:28:34
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 09:46:10
+ * @LastEditTime: 2020-05-11 14:05:10
  -->
 <template>
   <div class="mainArea"
@@ -31,7 +31,8 @@
         </div>
       </div>
       <div class="toolbar"
-           style="left: 574px; top: 14px;">
+           style="top: 14px;"
+           v-bind:style="{left:toolbarLeft}" >
         <div class="btn-none icon-F_Redo">
           <p>撤销</p>
         </div>

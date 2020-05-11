@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 22:40:11
+ * @LastEditTime: 2020-05-11 08:56:32
  */
 const express = require('express')
 const open = require('open')
@@ -19,6 +19,7 @@ const workServer = require('./service/work.js')
 const common = require('./service/common.js')
 const socket = require('./service/socket.js')
 const routerAction = require('./router/router.js')
+const dragRouter = require('./router/dragRouter.js')
 const portfinder = require('portfinder')
 const http = require('http')
 const path = require('path')
@@ -79,6 +80,7 @@ app.use(express.static(path.join(__dirname, 'static')))
 // console.log(__dirname)
 app.use(express.static(path.join(__dirname, 'public')))
 routerAction(app)
+dragRouter(app)
 // 根据id获取项目明细
 app.get('/api/queryProjectById', workServer.queryProjectById)
 // 判断路径是否存在

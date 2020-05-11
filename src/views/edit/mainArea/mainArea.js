@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 19:58:27
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-09-01 09:44:49
+ * @LastEditTime: 2020-05-11 14:19:18
  */
 import QRCode from 'qrcodejs2'
 import { uuid, getUrlParam } from '@/utils/index.js'
@@ -48,7 +48,8 @@ export default {
       cacheWiget: {},
       id: '',
       scale3d: 'scale3d(1, 1, 1)',
-      left: '177px',
+      left: '0px',
+      toolbarLeft:'0px',
       top: '14px',
       num: 100,
       selectWidget: null,
@@ -64,7 +65,7 @@ export default {
      * @return {type}:
      */
     changeValue (mes) {
-      console.log('mian')
+      // console.log('mian')
       // let index = this.cache[this.selectId]
       // let selectWidget = this.$refs.widget[index]
       let selectWidget = this.cacheWiget[this.selectId]
@@ -140,13 +141,13 @@ export default {
         this.top = '60px'
       } else if (base === 1) {
         size = 1
-        this.top = '14px'
       } else {
         size = 1 + (100 - this.num) / 100
         size1 = 1 + ((100 - this.num) / 100) * 20
-        this.top = 14 * size1 + 'px'
       }
-      this.left = 177 * size + 'px'
+      this.left = (this.$refs.mainArea.offsetWidth -385*base)/2 + 'px'
+      this.toolbarLeft = (this.$refs.mainArea.offsetWidth)/2 + 385*base/2 + 20 +'px'
+      // this.left = parseFloat(this.left) * size + 'px'
       this.scale3d = 'scale3d(' + base + ',' + base + ', 1)'
     },
     getScrollTop () {
@@ -452,6 +453,14 @@ export default {
     // 判断是否是编辑过
     this.init()
     // this.$emit('append', 'mainArea')
+  },
+  mounted () {
+    this.left = (this.$refs.mainArea.offsetWidth -385)/2 + 'px'
+    this.toolbarLeft = (this.$refs.mainArea.offsetWidth)/2 + 385/2 + 20 +'px'
+    window.addEventListener('resize', ()=>{
+      this.left = (this.$refs.mainArea.offsetWidth -385)/2 + 'px'
+      this.toolbarLeft = (this.$refs.mainArea.offsetWidth)/2 + 385/2 + 20 +'px'
+    })
   }
   // wacth: {
   //   num () {

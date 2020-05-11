@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 07:46:42
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-11 14:31:54
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -37,7 +37,10 @@ var createToDoListSql =
   'create table if not exists todo(todoId INTEGER PRIMARY KEY AUTOINCREMENT,taskDec TEXT,deleteFlag INTEGER,createTime BLOB);'
 //动态列表
 var createActiveSql =
-  'create table if not exists active(activeId INTEGER PRIMARY KEY AUTOINCREMENT,active TEXT,userId TEXT,createTime BLOB);'  
+  'create table if not exists active(activeId INTEGER PRIMARY KEY AUTOINCREMENT,active TEXT,userId TEXT,createTime BLOB);'
+//页面列表
+var createPageSql =
+  'create table if not exists page(pageId INTEGER PRIMARY KEY AUTOINCREMENT,templateId TEXT,templateName TEXT,templateInfo BLOB,userId TEXT,createTime BLOB,modifyTime BLOB, deleteFlag INTEGER,keyword TEXT);'
 
 function initPtype() {
   var data = initData.projectType
@@ -62,6 +65,8 @@ async function initTable() {
   await sqliteDB.createTable(createToDoListSql)
 
   await sqliteDB.createTable(createActiveSql)
+
+  await sqliteDB.createTable(createPageSql)
   var querySql = `SELECT * from ptype`
   let data = await sqliteDB.queryData(querySql)
   if (data.length == 0) {
