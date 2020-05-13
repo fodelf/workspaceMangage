@@ -4,15 +4,15 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 15:22:39
+ * @LastEditTime: 2020-05-13 08:50:55
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainLayout from '@/views/layout/Layout.vue'
 const Home = () => import('@/views/home/Home.vue')
-const ProjectManage = () => import('@/views/projectManage/projectManage.vue')
+const ProjectManage = () => import('@/views/index/projectManage/projectManage.vue')
 const ProjectInit = () =>
-  import('@/views/projectManage/projectInit/ProjectInit.vue')
+  import('@/views/index/projectManage/projectInit/ProjectInit.vue')
 import templateManage from '@/views/index/templateManage/templateManage.vue'
 import componentManage from '@/views/index/componentManage/componentManage.vue'
 import scriptManage from '@/views/index/scriptManage/ScriptManage.vue'

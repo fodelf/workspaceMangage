@@ -16,7 +16,7 @@
         ></el-input>
       </p>
       <!--表格组件-->
-      <div class="tableCon">
+      <!-- <div class="tableCon">
         <tableBox
           ref="table"
           :tablePag="tablePag"
@@ -28,6 +28,17 @@
           @changePageNo="getPageNo"
           @newBranch ='newBranch'
         ></tableBox>
+      </div> -->
+      <div class="tableCon">
+        <compCard
+            :compCardList="dataList"
+            @edit="editRow"
+            @delete='deleteRow'
+            :getList="getList"
+            :tablePag="tablePag"
+            @changePageNo="getPageNo"
+            @action ="action"
+          ></compCard>
       </div>
     </div>
     <!--弹窗组件-->
@@ -35,7 +46,7 @@
       ref="proDialog"
       :itemObj="itemObj"
       :type="type"
-      @getList="getProList"
+      @getList="getList"
     ></proDialog>
   </div>
 </template>

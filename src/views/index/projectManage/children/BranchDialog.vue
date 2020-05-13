@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-06 19:47:24
+ * @LastEditTime: 2020-05-13 15:58:40
  -->
 <template>
   <el-dialog
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { newBranch } from '@/api/projectManage.js'
+import { newBranch } from '@/api/index/projectManage.js'
 export default {
   name: 'BranchDialog',
   props: ['itemObj'],

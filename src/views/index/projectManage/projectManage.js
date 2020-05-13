@@ -4,16 +4,18 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 10:34:48
+ * @LastEditTime: 2020-05-13 19:48:58
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
 import proDialog from 'components/proDialog/proDialog.vue'
+import compCard from './children/compCard.vue'
 import {
   getProjectSum,
   getProjectList,
-  deleteProject
-} from '@/api/projectManage.js'
+  deleteProject,
+  action
+} from '@/api/index/projectManage.js'
 export default {
   name: 'projectManage',
   data() {
@@ -47,7 +49,8 @@ export default {
   components: {
     menuList,
     tableBox,
-    proDialog
+    proDialog,
+    compCard
   },
   methods: {
     addPro() {
@@ -120,7 +123,7 @@ export default {
               type: 'success',
               message: '删除成功'
             })
-            this.queryProList()
+            this.getList(data.type)
           })
         })
         .catch(() => {})
@@ -137,6 +140,18 @@ export default {
       this.itemObj = data
       this.$nextTick(() => {
         this.$refs.proDialog.show()
+      })
+    },
+    getList(type){
+      this.itemObj.type = type;
+      this.queryProList(true)
+    },
+    action(data){
+      action(data).then(() => {
+        this.$message({
+          type: 'success',
+          message: '脚本已经启动'
+        })
       })
     }
   },

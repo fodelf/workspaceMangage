@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 20:05:00
+ * @LastEditTime: 2020-05-13 17:30:51
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -26,6 +26,8 @@ module.exports = router => {
   router.post('/api/initNewProject', controller.initNewProject)
   // 获取项目列表
   router.get('/api/getProjectList', controller.getProjectList)
+  // 执行项目脚本
+  router.post('/api/project/action', controller.projectAction)
   // 获取项目汇总列表
   router.get('/api/getProjectSum', controller.getProjectSum)
   // 新增模板

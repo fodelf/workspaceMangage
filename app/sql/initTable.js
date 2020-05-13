@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-11 14:31:54
+ * @LastEditTime: 2020-05-13 16:13:11
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -19,7 +19,7 @@ var createTemplateTableSql =
   'create table if not exists template(templateId INTEGER PRIMARY KEY AUTOINCREMENT, keyword TEXT, templateName TEXT, gitUrl TEXT, dec TEXT,decImg TEXT,type TEXT,createTime BLOB,modifyTime BLOB,deleteFlag INTEGER,userId TEXT);'
 // 项目表
 var createProjectTableSql =
-  'create table if not exists project(projectId INTEGER PRIMARY KEY AUTOINCREMENT, projectName TEXT, pathUrl TEXT, gitUrl TEXT,dec TEXT, type TEXT,keyword TEXT,templateUrl TEXT,createTime BLOB,deleteFlag INTEGER,userId TEXT);'
+  'create table if not exists project(projectId INTEGER PRIMARY KEY AUTOINCREMENT, projectName TEXT,fileName TEXT,pathUrl TEXT, gitUrl TEXT,dec TEXT, type TEXT,keyword TEXT,decImg TEXT,templateUrl TEXT,createTime BLOB,deleteFlag INTEGER,actions BLOB,userId TEXT);'
 // 组件表
 var createComponentTableSql =
   'create table if not exists component(componentId INTEGER PRIMARY KEY AUTOINCREMENT, componentName TEXT, gitUrl TEXT, dec TEXT,decImg TEXT,type TEXT,keyword TEXT,createTime BLOB,deleteFlag INTEGER,userId TEXT);'
@@ -47,6 +47,12 @@ function initPtype() {
   var insertSql = 'insert into ptype (label,value) values(?, ?)'
   sqliteDB.insertData(insertSql, data)
 }
+function initScript () {
+  var data = initData.script
+  var insertSql =
+    'insert into script(scriptName,scriptContent,createTime,deleteFlag) values(?, ?, ?,?)'
+  sqliteDB.insertData(insertSql, data)
+}
 async function initTable() {
   await sqliteDB.createTable(createUserTableSql)
 
@@ -69,8 +75,13 @@ async function initTable() {
   await sqliteDB.createTable(createPageSql)
   var querySql = `SELECT * from ptype`
   let data = await sqliteDB.queryData(querySql)
+  var querySqlScript = `SELECT * from script`
+  let script = await sqliteDB.queryData(querySqlScript)
   if (data.length == 0) {
     initDec()
+  }
+  if (script.length == 0) {
+    initScript()
   }
 }
 async function initDec() {

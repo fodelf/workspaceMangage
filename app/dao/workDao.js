@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-11 14:57:21
+ * @LastEditTime: 2020-05-13 17:06:20
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -43,18 +43,21 @@ async function initNewProject(data) {
   var insertData = [
     [
       data.projectName,
+      data.fileName,
       data.pathUrl,
       data.gitUrl,
       data.dec,
       data.type,
       data.keyword,
       data.templateUrl,
+      data.decImg,
+      '[{"label":"新建分支","value":1},{"label":"修复bug","value":2}]',
       sd.format(new Date(), 'YYYY-MM-DD'),
       0
     ]
   ]
-  var insertTileSql = `insert into project ( projectName,pathUrl,gitUrl,dec,type,
-      keyword,templateUrl,createTime,deleteFlag ) values (?,?,?,?,?,?,?,?,?)`
+  var insertTileSql = `insert into project ( projectName,fileName,pathUrl,gitUrl,dec,type,
+      keyword,templateUrl,decImg,actions,createTime,deleteFlag) values (?,?,?,?,?,?,?,?,?,?,?,?)`
   return await sqliteDB.insertData(insertTileSql, insertData)
 }
 // 获取项目汇总
@@ -130,6 +133,11 @@ async function insertComponent(data) {
 //查询用户
 async function queryUser() {
   var querySql = `SELECT * from user`
+  return await sqliteDB.queryData(querySql)
+}
+// 根据id查询脚本
+async function queryScriptById(id) {
+  var querySql = `SELECT * from script where scriptId = ${id}`
   return await sqliteDB.queryData(querySql)
 }
 // 新增用户
@@ -257,5 +265,6 @@ module.exports = {
   updateProject,
   updateComp,
   changeTodoList,
-  getPersonActive
+  getPersonActive,
+  queryScriptById
 }

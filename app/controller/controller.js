@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 20:29:08
+ * @LastEditTime: 2020-05-13 19:30:48
  */
 const url = require('url')
 const fs = require('fs')
@@ -123,7 +123,7 @@ async function getProjectType(req, res) {
  */
 async function initNewProject(req, res) {
   try {
-    fs.exists(req.body.filePath, async function(ex) {
+    fs.exists(req.body.pathUrl, async function(ex) {
       if (ex) {
         await workServer.initNewProject(req.body)
         res.send(result)
@@ -143,7 +143,31 @@ async function initNewProject(req, res) {
  * @apiSuccess {Number} templateCount 模板数量数量汇总.
  */
 async function getProjectList(req, res) {
-  _getList(req, res, 'project')
+  // _getList(req, res, 'project')
+  try {
+    let data = await commonServer.queryCommonList(
+      url.parse(req.url, true).query,
+      'project'
+    )
+    console.log(data)
+    data.map(item =>{
+      item.actions = JSON.parse(item.actions)
+      item['action'] = 1
+      item['param']  =''
+      return item
+    })
+    console.log(data)
+    let resultEntity = {
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
+    }
+    res.send({
+      ...result,
+      resultEntity
+    })
+  } catch (error) {
+    res.send(resultErr)
+  }
 }
 /**
  * @api {post} /api/getProjectSum 获取项目汇总
@@ -510,6 +534,80 @@ async function changeTodoList(req, res) {
   }
 }
 
+async function projectAction(req, res) {
+  try {
+    res.send(result)
+    let script = await workServer.queryScriptById(req.body.action)
+    let scriptContent = script[0].scriptContent
+    console.log(req.body.pathUrl)
+    let str = scriptContent.replace(/\{\{filePath\}\}/g, req.body.pathUrl)
+    str = str.replace(/\{\{branchNum\}\}/g, req.body.param)
+    let type = os.type()
+    switch (type) {
+      case 'Darwin':
+      case 'Linux':
+        shell.exec(str)
+        break
+      case 'Windows_NT':
+        var array = str
+          .replace(/^\n*/, '')
+          .replace(/\n{2,}/g, '\n')
+          .replace(/\n*$/, '')
+          .split('\n')
+        var flag = array.some(item => {
+          return item.startsWith('cd')
+        })
+        if (flag) {
+          for (var i = 0; i < array.length; i++) {
+            console.log(array[i])
+            let item = array[i]
+            if (item.startsWith('cd')) {
+              let child = item.substring(2)
+              try {
+                shell.cd(child, {
+                  encoding: 'base64'
+                }, function (
+                  code,
+                  stdout,
+                  stderr
+                ) {
+                  console.log(
+                    iconv.decode(iconv.encode(code, 'base64'), 'gb2312')
+                  )
+                  console.log(
+                    iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                  )
+                  console.log(
+                    iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                  )
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            } else {
+              try {
+                await shellAction(item)
+              } catch (error) {
+                console.log(error)
+              }
+            }
+          }
+        } else {
+          shellAction(str)
+        }
+        break
+      default:
+        var resultMes = '不支持此系统'
+        res.send({
+          ...resultErr,
+          resultMes
+        })
+        break
+    }
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 /**
  * @api {post} /api/initNewProject 新增项目
  * @apiGroup project
@@ -623,5 +721,6 @@ module.exports = {
   deleteComponent,
   queryIndexTrend,
   changeTodoList,
-  getPersonActive
+  getPersonActive,
+  projectAction
 }

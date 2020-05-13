@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-08 10:35:37
+ * @LastEditTime: 2020-05-13 17:17:31
  -->
 <template>
   <el-dialog
@@ -23,8 +23,8 @@
     >
       <el-form-item label="新增方式" v-if="$props.type == 'add'">
         <el-radio-group v-model="proForm.addMethod">
-          <el-radio label="createNew">创建新项目</el-radio>
           <el-radio label="localImport">本地导入</el-radio>
+          <el-radio label="createNew">创建新项目</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item
@@ -56,8 +56,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <el-form-item label="文件名称" prop="fileName">
+            <el-input
+              v-model="proForm.fileName"
+              placeholder="请输入文件名称"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item label="项目类型" prop="type">
-            <el-select v-model="proForm.type">
+            <el-select v-model="proForm.type" style='width:100%;'>
               <el-option
                 v-for="item in typeList"
                 :key="item.value"
@@ -67,13 +77,29 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="12">
+          <el-form-item label="项目路径" prop="pathUrl">
+            <el-input
+              type="text"
+              v-model="proForm.pathUrl"
+              placeholder="请输入项目路径"
+            ></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
-      <el-form-item label="项目路径" prop="pathUrl">
-        <el-input
-          type="text"
-          v-model="proForm.pathUrl"
-          placeholder="请输入项目路径"
-        ></el-input>
+      <el-form-item label="图片说明">
+        <el-upload
+          class="upload-demo"
+          action="/api/upload"
+          accept="image/jpeg,image/gif,image/png,image/jpg"
+          :limit="1"
+          :multiple="false"
+          :on-success="getFile"
+        >
+          <el-button size="small" type="primary" class="el-icon-plus"
+            >点击上传</el-button
+          >
+        </el-upload>
       </el-form-item>
       <el-form-item label="Git路径" prop="gitUrl">
         <el-input
@@ -114,7 +140,7 @@ import {
   getProjectType,
   addProject,
   updateProject
-} from '@/api/projectManage.js'
+} from '@/api/index/projectManage.js'
 import selectTem from '@/components/selectTem/selectTem.vue'
 export default {
   name: 'proDialog',
@@ -126,18 +152,23 @@ export default {
     return {
       proVisible: false,
       proForm: {
-        addMethod: 'createNew',
+        addMethod: 'localImport',
         projectName: '',
         type: '',
         pathUrl: '',
         gitUrl: '',
         keyword: '',
         dec: '',
-        templateUrl: ''
+        templateUrl: '',
+        decImg:'',
+        fileName:''
       },
       proRules: {
         projectName: [
           { required: true, message: '请输入项目名称', trigger: 'blur' }
+        ],
+        fileName: [
+          { required: true, message: '请输入文件名称', trigger: 'blur' }
         ],
         type: [
           { required: true, message: '请输入项目类型', trigger: 'change' }
@@ -152,13 +183,16 @@ export default {
     }
   },
   methods: {
+    getFile(response) {
+      this.proForm.decImg = response.resultEntity
+    },
     show() {
       this.title = this.$props.type == 'modify' ? '修改项目' : '新增项目'
       if (this.$props.type == 'modify') {
         this.proForm = this.$props.itemObj
       } else {
         this.proForm = {
-          addMethod: 'createNew',
+          addMethod: 'localImport',
           projectName: '',
           type: '',
           pathUrl: '',
@@ -205,7 +239,7 @@ export default {
                   query: this.proForm
                 })
               }else{
-                this.$emit('getList')
+                this.$emit('getList',this.proForm.type)
               }
               this.close()
             })

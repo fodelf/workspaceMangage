@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 22:21:31
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 20:26:34
+ * @LastEditTime: 2020-05-13 15:57:29
  */
 import request from '@/utils/request'
 
@@ -57,3 +57,11 @@ export function updateProject(params) {
     params: params
   })
 }
+export function action(params) {
+  return request({
+    url: '/api/project/action',
+    method: 'POST',
+    params: params
+  })
+}
+

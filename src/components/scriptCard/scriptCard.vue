@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-10 21:26:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-14 19:54:39
+ * @LastEditTime: 2020-05-13 19:22:12
  -->
 <template>
   <div class="scriptCard">
@@ -21,6 +21,7 @@
           >修改</el-button
         >
         <el-button
+          v-if ='itemObj.scriptId >2'
           type="danger"
           size="small"
           @click="deleteAtion(itemObj.scriptId)"
@@ -29,6 +30,7 @@
       </div>
       <div class="col_box">
         <el-button type="primary" size="small" @click="action"
+          v-if ='itemObj.scriptId >2'
           >立即执行</el-button
         >
       </div>

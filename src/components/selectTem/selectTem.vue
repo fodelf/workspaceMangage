@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { getTemList, getProjectType } from '@/api/projectManage.js'
+import { getTemList, getProjectType } from '@/api/index/projectManage.js'
 export default {
   name:'selectTem',
   props:['value'],

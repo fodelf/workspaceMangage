@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 16:32:04
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 07:55:27
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-13 15:58:24
  -->
 <template>
   <el-dialog
@@ -102,7 +102,7 @@
 
 <script>
 import { addNewTemp, updateTemp } from '@/api/templateApi.js'
-import { getProjectType } from '@/api/projectManage.js'
+import { getProjectType } from '@/api/index/projectManage.js'
 export default {
   name: 'tempDialog',
   props: ['itemObj', 'actionType'],
