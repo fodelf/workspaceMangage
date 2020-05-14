@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-13 09:21:08
+ * @LastEditTime: 2020-05-14 16:27:00
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -217,10 +217,10 @@ const vueRouter = new Router({
     }
   ]
 })
-const routerPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch(error => error)
-}
+// const routerPush = Router.prototype.push
+// Router.prototype.push = function push(location) {
+//   return routerPush.call(this, location).catch(error => error)
+// }
 // vueRouter.beforeEach(function (to, from, next) {
 //   // const nextRoute = ['控制台', '仪表盘']
 //   // const auth = localStorage.getItem('userId')

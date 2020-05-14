@@ -4,12 +4,12 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:25:05
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 20:07:18
+ * @LastEditTime: 2020-05-14 15:18:15
  -->
 <template>
   <div class="cardTemp">
     <el-row :gutter="20">
-      <el-col :span="8" v-for="(item, index) in compCardList" :key="index">
+      <el-col :span="8" v-for="item in compCardList" :key="item.projectId">
         <div class="templateCard">
           <img class="cardImg" :src="item.decImg?item.decImg:bg" />
           <div class="cardBody">
@@ -28,9 +28,8 @@
               >
             </el-form-item>
             <el-form-item label="Git">
-              <el-row :gutter="10">
-                <el-col :span="10"><el-input v-model="item.param"></el-input></el-col>
-                <el-col :span="14" style='display:flex'>
+              <el-row :gutter="10" type='flex'>
+                <el-col :span="10">
                   <el-select v-model="item.action" placeholder="请选择类型">
                     <el-option :label="child.label" :value="child.value"
                     v-for="(child,childIndex) in item.actions"
@@ -38,12 +37,15 @@
                     <!-- <el-option label="新建分支" value="1"></el-option>
                     <el-option label="修复bug" value="2"></el-option> -->
                   </el-select>
+                </el-col>
+                <el-col :span="14" style='display:flex'>
+                  <el-input v-model="item.param"></el-input>
                   <el-button
-                    type="primary"
-                    size="small"
-                    @click="action(item)"
-                    style="margin-left:10px"
-                    >执行</el-button>
+                  type="primary"
+                  size="small"
+                  @click="action(item)"
+                  style="margin-left:10px"
+                  >执行</el-button>
                 </el-col>
               </el-row>
             </el-form-item>

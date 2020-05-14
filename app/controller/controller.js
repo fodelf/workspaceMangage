@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 19:30:48
+ * @LastEditTime: 2020-05-14 15:15:12
  */
 const url = require('url')
 const fs = require('fs')
@@ -149,7 +149,7 @@ async function getProjectList(req, res) {
       url.parse(req.url, true).query,
       'project'
     )
-    console.log(data)
+    // console.log(data)
     data.map(item =>{
       item.actions = JSON.parse(item.actions)
       item['action'] = 1

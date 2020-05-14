@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-11 08:56:32
+ * @LastEditTime: 2020-05-14 16:41:47
  */
 const express = require('express')
 const open = require('open')
@@ -68,6 +68,9 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'X-Requested-With')
   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
   res.header('X-Powered-By', ' 3.2.1')
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.header('Pragma', 'no-cache');
+  res.header('Expires', '0');
   // res.header('Content-Type', 'application/json;charset=utf-8')
   next()
 })

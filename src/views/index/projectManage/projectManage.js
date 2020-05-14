@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 19:48:58
+ * @LastEditTime: 2020-05-14 17:34:09
  */
 import menuList from 'components/menuList/menuList.vue'
 import tableBox from 'components/tableBox/tableBox.vue'
@@ -86,13 +86,14 @@ export default {
         pageSize: this.tablePag.pageSize,
         keyword: this.keyword
       }
-      getProjectList(params).then(res => {
+      getProjectList(params).then((res) => {
         this.dataList = (res.list || []).map((item, index) => {
           item.index =
             index + (this.tablePag.pageNo - 1) * this.tablePag.pageSize + 1
           return item
         })
         this.tablePag.totalRecord = res.total || 0
+        this.$forceUpdate()
         // this.$nextTick(() => {
         //   this.$refs.table.doLayout()
         // })
@@ -111,7 +112,9 @@ export default {
         this.menuObj.menuList = res.list || []
         this.menuObj.active = this.itemObj.type ? this.itemObj.type : this.menuObj.menuList[0].type
         if (this.menuObj.menuList.length !== 0 && flag) {
-          this.selectMenu(this.menuObj.menuList[0])
+          this.$nextTick(() => {
+            this.selectMenu(this.menuObj.menuList[0])
+          })
         }
       })
     },
@@ -155,8 +158,10 @@ export default {
       })
     }
   },
-  mounted() {},
-  created() {
+  mounted() {
     this.queryProList(true)
+  },
+  created() {
+    
   }
 }

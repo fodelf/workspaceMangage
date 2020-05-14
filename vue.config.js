@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-10 22:19:53
+ * @LastEditTime: 2020-05-14 16:45:14
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -62,6 +62,18 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8082'
       }
+    },
+    before:(app) =>{
+      app.all('*', function (req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+        res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
+        res.header('X-Powered-By', ' 3.2.1')
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        res.header('Pragma', 'no-cache');
+        res.header('Expires', '0')
+        next()
+      })
     }
   },
   chainWebpack: config => {

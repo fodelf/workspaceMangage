@@ -41,7 +41,7 @@ import Clipboard from 'v-clipboard'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Clipboard)
-new Vue({
+window._vue = new Vue({
   router,
   store,
   render: h => h(App)
