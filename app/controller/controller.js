@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-15 10:18:20
+ * @LastEditTime: 2020-05-15 17:03:14
  */
 const url = require('url')
 const fs = require('fs')
@@ -207,8 +207,10 @@ async function queryTemplateList(req, res) {
       'template'
     )
     data.map(item => {
-      let decImg = `${global.url}/img/` + item.decImg
-      item.decImg = decImg
+      if(item.decImg){
+        let decImg = `${global.url}/img/` + item.decImg
+        item.decImg = decImg
+      }
       return item
     })
     let resultEntity = {

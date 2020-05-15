@@ -4,14 +4,14 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:25:05
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 07:33:22
+ * @LastEditTime: 2020-05-15 17:01:38
  -->
 <template>
   <div class="cardTemp">
     <el-row :gutter="20">
       <el-col :span="8" v-for="(item, index) in tempCardList" :key="index">
         <div class="templateCard">
-          <img class="cardImg" :src="item.decImg" />
+          <img class="cardImg" :src="item.decImg?item.decImg:bg" />
           <div class="cardBody">
             <h4 class="cardTit">{{ item.templateName }}</h4>
             <p class="cardText">{{ item.dec }}</p>
@@ -80,7 +80,8 @@ export default {
   data() {
     return {
       itemObj: null,
-      actionType: 'modify'
+      actionType: 'modify',
+      bg:require("../../assets/img/edit/bg.jpg")
     }
   },
   methods: {
