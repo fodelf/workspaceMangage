@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-14 15:15:12
+ * @LastEditTime: 2020-05-15 10:18:20
  */
 const url = require('url')
 const fs = require('fs')
@@ -123,7 +123,9 @@ async function getProjectType(req, res) {
  */
 async function initNewProject(req, res) {
   try {
-    fs.exists(req.body.pathUrl, async function(ex) {
+    var pathUrl = req.body.addMethod == 'localImport' ? path.join(req.body.pathUrl,req.body.fileName):req.body.pathUrl
+    req.body.pathUrl = path.join(req.body.pathUrl,req.body.fileName)
+    fs.exists(pathUrl, async function(ex) {
       if (ex) {
         await workServer.initNewProject(req.body)
         res.send(result)
@@ -156,7 +158,6 @@ async function getProjectList(req, res) {
       item['param']  =''
       return item
     })
-    console.log(data)
     let resultEntity = {
       total: data[0] ? data[0]['total'] : 0,
       list: data

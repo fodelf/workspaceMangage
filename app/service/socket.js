@@ -4,51 +4,92 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-01 13:47:06
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-16 19:43:02
+ * @LastEditTime: 2020-05-15 16:40:57
  */
 const fs = require('fs')
+const shell = require('shelljs')
+const os = require('os')
+const execa = require('execa')
+const iconv = require('iconv-lite')
 const url = require('url')
 const fsExtra = require('fs-extra')
 const path = require('path')
 const request = require('request')
+ const { spawn } = require('child_process')
 async function projectHandle(data, client) {
-  console.log(data)
-  console.log(path.join('/Users/fodelf/git', data.projectName))
-  let projectPath = path.join('/Users/fodelf/git')
-  console.log(data.templateUrl)
-  console.log(projectPath)
-  const { spawn } = require('child_process')
-  await fsExtra.remove(path.join('/Users/fodelf/git', data.projectName))
-  function mkdirsSync(dirname, mode) {
-    console.log(dirname)
-    if (fs.existsSync(dirname)) {
-      return true
-    } else {
-      if (mkdirsSync(path.dirname(dirname), mode)) {
-        fs.mkdirSync(dirname, mode)
-        return true
-      }
-    }
-  }
-  mkdirsSync(projectPath)
+  // console.log(data)
+  // console.log(path.join('/Users/fodelf/git', data.projectName))
+  // let projectPath = path.join('/Users/fodelf/git')
+  // console.log(data.templateUrl)
+  // console.log(projectPath)
+  // console.log(data)
+  client.emit('mes', '开始删除文件,请耐心等待')
+  await fsExtra.remove(path.join(data.pathUrl, data.fileName))
+  client.emit('mes', '删除文件成功')
+  // function mkdirsSync(dirname, mode) {
+  //   console.log(dirname)
+  //   if (fs.existsSync(dirname)) {
+  //     return true
+  //   } else {
+  //     if (mkdirsSync(path.dirname(dirname), mode)) {
+  //       fs.mkdirSync(dirname, mode)
+  //       return true
+  //     }
+  //   }
+  // }
+  // mkdirsSync(projectPath)
   client.emit('mes', '开始下载请稍后')
-  const ls = spawn('git', ['clone', data.templateUrl, data.projectName], {
-    cwd: projectPath
-  })
+  var ls
+  if(data.templateUrl){
+    ls = execa('git', ['clone', data.templateUrl, data.fileName], {
+      cwd: data.pathUrl,
+      stdio: ['inherit', 'pipe', 'pipe']
+    })
+  }else{
+    ls = execa('git', ['clone', data.gitUrl, data.fileName], {
+      cwd: data.pathUrl,
+      stdio: ['inherit', 'pipe', 'pipe']
+    })
+  }
   ls.stderr.on('data', data => {
     client.emit('mes', data.toString().trim())
   })
+  ls.stdout.on('data', data => {
+    client.emit('mes', data.toString().trim())
+    console.log(`stdout: ${data}`)
+  })
   ls.on('close', code => {
+    let projectPath = path.join(data.pathUrl, data.fileName)
+    if(data.templateUrl){
+      client.emit('mes', '添加git源')
+      // var str =`cd ${projectPath}\ngit remote remove origin\ngit add remove origin ${data.gitUrl}`
+      // shellDown(str,client)
+      // git remote set-url origin
+      var remote = execa('git', ['remote','set-url','origin',data.gitUrl], {
+        cwd: projectPath,
+        stdio: ['inherit', 'pipe', 'pipe']
+      })
+      remote.stderr.on('data', data => {
+        client.emit('mes', data.toString().trim())
+      })
+      remote.stdout.on('data', data => {
+        client.emit('mes', data.toString().trim())
+        console.log(`stdout: ${data}`)
+      })
+    }
     if (code == 0) {
       client.emit('mes', '开始初始化包')
-      const childLs = spawn('npm', ['i'], {
-        cwd: path.join(projectPath, data.projectName)
+      const childLs = execa(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['install'], {
+        cwd: projectPath,
+        stdio: ['inherit', 'pipe', 'pipe']
       })
       childLs.stderr.on('data', data => {
-        console.log(2)
-        console.log(data)
         client.emit('mes', data.toString().trim())
         console.log(`stderr: ${data}`)
+      })
+      childLs.stdout.on('data', data => {
+        client.emit('mes', data.toString().trim())
+        console.log(`stdout: ${data}`)
       })
       childLs.on('close', data => {
         if (data == 0) {
@@ -184,7 +225,84 @@ async function xx() {
   //   }
   // })
 }
-// xx()
+async function shellDown(str,client){
+  let type = os.type()
+  switch (type) {
+    case 'Darwin':
+    case 'Linux':
+      shell.exec(str)
+      break
+    case 'Windows_NT':
+      var array = str
+        .replace(/^\n*/, '')
+        .replace(/\n{2,}/g, '\n')
+        .replace(/\n*$/, '')
+        .split('\n')
+      var flag = array.some(item => {
+        return item.startsWith('cd')
+      })
+      if (flag) {
+        for (var i = 0; i < array.length; i++) {
+          console.log(array[i])
+          let item = array[i]
+          if (item.startsWith('cd')) {
+            let child = item.substring(2)
+            try {
+              shell.cd(child, {
+                encoding: 'base64'
+              }, function (
+                code,
+                stdout,
+                stderr
+              ) {
+                console.log(
+                  iconv.decode(iconv.encode(code, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312')
+                )
+                console.log(
+                  iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312')
+                )
+              })
+            } catch (error) {
+              console.log(error)
+            }
+          } else {
+            try {
+              await shellAction(item)
+            } catch (error) {
+              console.log(error)
+            }
+          }
+        }
+      } else {
+        shellAction(str)
+      }
+      break
+    default:
+      // var resultMes = '不支持此系统'
+      break
+  }
+}
+function shellAction(sh) {
+  return new Promise(function (resolve, reject) {
+    shell.exec(sh, {
+      encoding: 'base64'
+    }, function (code, stdout, stderr) {
+      if (stdout) {
+        resolve()
+      } else if (stderr) {
+        reject()
+      } else {
+        resolve()
+      }
+      console.log(code)
+      console.log(iconv.decode(iconv.encode(stdout, 'base64'), 'gb2312'))
+      console.log(iconv.decode(iconv.encode(stderr, 'base64'), 'gb2312'))
+    })
+  })
+}
 module.exports = {
   projectHandle,
   templateHandle

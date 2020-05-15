@@ -211,8 +211,9 @@ export default {
       // })
     }
     runFakeTerminal(_this)
-    var url = `${window.location.href}://${window.location.host}:${window.location.port}`
-    _this.socket = window['io'](url)
+    //var url = `${window.location.href}://${window.location.host}:${window.location.port}`
+    _this.socket = window['io'](`http://${window.location.host}`)
+    // this.socket = window['io'].connect(`ws://${window.location.host}`);
 
     _this.socket.on('mes', data => {
       // console.log("11111111111")
@@ -234,7 +235,6 @@ export default {
       }
     },
     handleProject() {
-      // debugger;
       this.socket.emit('project', this.$route.query)
       // console.log(this.$route.query)
     },

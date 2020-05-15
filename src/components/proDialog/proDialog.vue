@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 17:17:31
+ * @LastEditTime: 2020-05-15 10:43:34
  -->
 <template>
   <el-dialog
@@ -82,7 +82,7 @@
             <el-input
               type="text"
               v-model="proForm.pathUrl"
-              placeholder="请输入项目路径"
+              placeholder="请输入项目所在父目录路径"
             ></el-input>
           </el-form-item>
         </el-col>
@@ -234,14 +234,18 @@ export default {
                 message: '新增成功！'
               })
               if(this.proForm.addMethod ==='createNew'){
-                this.$router.push({
-                  path: '/project/projectInit',
-                  query: this.proForm
-                })
+                this.$confirm('如果本地存在相同文件夹，本地文件将被删除请谨慎操作').then(() => {
+                  this.$router.push({
+                    path: '/project/projectInit',
+                    query: this.proForm
+                  })
+                  this.close()
+              })
+              .catch(() => {})
               }else{
                 this.$emit('getList',this.proForm.type)
+                this.close()
               }
-              this.close()
             })
           } else {
             updateProject(this.proForm).then(() => {

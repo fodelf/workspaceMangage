@@ -4,7 +4,7 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2019-11-19 08:46:03
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-14 16:45:14
+ * @LastEditTime: 2020-05-15 13:35:06
  */
 const path = require('path')
 const ispro = process.env.NODE_ENV !== 'development'
@@ -61,7 +61,11 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:8082'
-      }
+      },
+      '/socket.io': {
+        target: 'http://localhost:8082',
+        ws:true
+      },
     },
     before:(app) =>{
       app.all('*', function (req, res, next) {
