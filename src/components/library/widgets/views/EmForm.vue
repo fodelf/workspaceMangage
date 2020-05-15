@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import viewVue from './view.vue'
+import viewVue from './EmView.vue'
 import { getUrlParam } from '../../../../utils/index.js'
 import { submitForm } from '../../../../api/preview/preview.js'
 import { debounce } from 'lodash'

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-08 12:31:07
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-19 08:41:37
+ * @LastEditTime: 2020-05-15 08:49:45
  -->
 <template>
   <!-- <h5 ref="widget" class="widget" :id="_props.id" v-bind:style=:style="{'height':height ,'width':width,'top':top,'letf':left}">  -->
@@ -16,7 +16,7 @@
   </h5>
 </template>
 <script>
-import viewVue from './view.vue'
+import viewVue from './EmView.vue'
 export default {
   name: 'heading',
   // mixins: [devEyDecorator],

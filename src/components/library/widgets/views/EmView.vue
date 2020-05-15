@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-08 12:26:29
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-10-15 22:43:01
+ * @LastEditTime: 2020-05-15 08:48:03
  -->
 <template>
   <div class="widget"
@@ -14,7 +14,7 @@
 import { debounce } from 'lodash'
 import decorator from '../../../../components/library/eyDecorator/decorator.js'
 export default {
-  name: 'view',
+  name: 'viewBase',
   props: ['id'],
   // 应对多种场景的装饰行为用数组比较合适
   mixins: [decorator],

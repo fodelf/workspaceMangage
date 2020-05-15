@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-06 08:54:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-29 22:02:20
+ * @LastEditTime: 2020-05-15 08:40:33
  -->
 <template>
   <div id='app'
@@ -59,7 +59,8 @@ export default {
       widgetType: '',
       cache: {},
       isShowLeft: true,
-      isShowRight: true
+      isShowRight: true,
+      widgetPorperties:{}
     }
   },
   methods: {
@@ -67,7 +68,6 @@ export default {
       this.$refs.rightArea.changeWidgetType(mes)
     },
     changeValue (mes) {
-      console.log(mes)
       this.$refs.mainArea.changeValue(mes)
     },
     getConfig (templateName) {

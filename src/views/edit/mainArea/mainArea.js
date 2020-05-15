@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 19:58:27
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-11 14:19:18
+ * @LastEditTime: 2020-05-15 09:15:34
  */
 import QRCode from 'qrcodejs2'
 import { uuid, getUrlParam } from '@/utils/index.js'
@@ -53,7 +53,8 @@ export default {
       top: '14px',
       num: 100,
       selectWidget: null,
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      templateId:''
     }
   },
   components: viewModules,
@@ -242,11 +243,12 @@ export default {
         // window.open('preview.html')
         preview(param)
           .then(res => {
+            this.templateId = res.templateId
             this.centerDialogVisible = true
             this.$nextTick(() => {
               document.getElementById('qrcode').innerHTML = ''
               let url =
-                'http://easymarket.chehe88.com/preview.html?templateId=' + res.templateId
+                `${window.location.host}/preview.html?templateId='${res.templateId}`
               this.qrcode = new QRCode('qrcode', {
                 width: 100,
                 height: 100, // 高度  [图片上传失败...(image-9ad77b-1525851843730)]
@@ -255,12 +257,10 @@ export default {
                 // background: '#f0f'
                 // foreground: '#ff0'
               })
+              window.open(`preview.html?templateId=${res.templateId}`)
             })
           })
           .catch(() => {})
-
-        // localStorage.setItem('config', JSON.stringify(config))
-        // window.open('preview.html')
       } else {
         this.$message({
           message: '请拖拽组件',

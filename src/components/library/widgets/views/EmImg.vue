@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import viewVue from './view.vue'
+import viewVue from './EmView.vue'
 export default {
   name: 'Img',
   extends: viewVue,

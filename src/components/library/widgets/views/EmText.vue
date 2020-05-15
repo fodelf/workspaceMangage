@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-08 12:31:07
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 15:01:52
+ * @LastEditTime: 2020-05-15 08:49:15
  -->
 <template>
   <!-- <h5 ref="widget" class="widget" :id="_props.id" v-bind:style=:style="{'height':height ,'width':width,'top':top,'letf':left}">  -->
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import viewVue from './view.vue'
+import viewVue from './EmView.vue'
 export default {
   name: 'EmText',
   extends: viewVue,

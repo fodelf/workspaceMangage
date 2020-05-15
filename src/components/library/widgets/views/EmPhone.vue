@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-08 12:31:07
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 14:58:07
+ * @LastEditTime: 2020-05-15 08:49:22
  -->
 <template>
   <div ref="widget"
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import viewVue from './view.vue'
+import viewVue from './EmView.vue'
 export default {
   name: 'Swipe',
   extends: viewVue,

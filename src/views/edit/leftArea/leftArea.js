@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-07 17:03:22
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-18 18:01:35
+ * @LastEditTime: 2020-05-15 08:41:16
  */
 
 import { uuid } from '@/utils/index.js'
@@ -15,7 +15,8 @@ export default {
     return {
       activeName: 'Base',
       widgets: widgetList.baseWigetList,
-      widgestHeigh: widgetList.widgestHeigh
+      widgestHeigh: widgetList.widgestHeigh,
+      form:{}
     }
   },
   methods: {

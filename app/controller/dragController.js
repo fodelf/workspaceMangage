@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-11 15:57:10
+ * @LastEditTime: 2020-05-15 09:02:44
  */
 const url = require('url')
 const dragServer = require('../service/drag.js')
@@ -68,8 +68,13 @@ async function deleteProject(req, res) {
  */
 async function insertPage(req, res) {
   try {
-    await dragServer.insertPage(req.body)
-    res.send(result)
+     let resultEntity = {
+       templateId:await dragServer.insertPage(req.body)
+     }
+     res.send({
+      ...result,
+      resultEntity
+    })
   } catch (error) {
     res.send(resultErr)
   }

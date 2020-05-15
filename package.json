@@ -1,6 +1,6 @@
 {
   "name": "workstage",
-  "version": "0.3.9",
+  "version": "0.4.1",
   "main": "./app/app.js",
   "description": "Easy work for you",
   "bin": {

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 08:30:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-09 09:46:56
+ * @LastEditTime: 2020-05-15 08:59:11
  -->
 <template>
   <div class="rightArea">
@@ -32,7 +32,7 @@
              :stretch=true>
       <el-tab-pane :key="item.name"
                    v-for="(item,index) in configTabs"
-                   :name="index"
+                   :name="index+''"
                    class="wigetContent">
         <span slot="label"
               class="tab-content">{{item.name}}</span>

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-05-07 08:32:19
  * @LastEditors: 吴文周
- * @LastEditTime: 2019-08-29 22:54:01
+ * @LastEditTime: 2020-05-15 08:57:11
  */
 import { uuid } from '@/utils/index.js'
 //  读取配置文件
@@ -40,6 +40,7 @@ export default {
   name: 'rightArea',
   data () {
     return {
+      form:{},
       activeName: 0,
       configTabs: [],
       tabsValue: '0',
