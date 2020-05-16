@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 16:13:11
+ * @LastEditTime: 2020-05-16 14:27:13
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -28,7 +28,7 @@ var createUtilTableSql =
   'create table if not exists util(utilId INTEGER PRIMARY KEY AUTOINCREMENT, utilName TEXT, gitUrl TEXT, dec TEXT,decImg TEXT,type TEXT,createTime BLOB,deleteFlag INTEGER,userId TEXT);'
 // 脚本表
 var createScriptTableSql =
-  'create table if not exists script(scriptId INTEGER PRIMARY KEY AUTOINCREMENT, scriptName TEXT, scriptContent BLOB , createTime BLOB, deleteFlag INTEGER);'
+  'create table if not exists script(scriptId INTEGER PRIMARY KEY AUTOINCREMENT, scriptName TEXT, scriptContent BLOB , createTime BLOB, deleteFlag INTEGER, scriptType TEXT);'
 //项目字典表
 var createPdecTableSql =
   'create table if not exists ptype(ptypeId INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT, value TEXT);'
@@ -50,7 +50,7 @@ function initPtype() {
 function initScript () {
   var data = initData.script
   var insertSql =
-    'insert into script(scriptName,scriptContent,createTime,deleteFlag) values(?, ?, ?,?)'
+    'insert into script(scriptName,scriptContent,scriptType,createTime,deleteFlag) values(?, ?, ?,?,?)'
   sqliteDB.insertData(insertSql, data)
 }
 async function initTable() {

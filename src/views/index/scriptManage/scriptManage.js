@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-16 21:55:11
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 14:56:37
+ * @LastEditTime: 2020-05-16 14:28:29
  */
 import scriptCard from '@/components/scriptCard/scriptCard'
 import AddScript from './childrenComponent/addScript/addScript.vue'
@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       scriptCardList: [],
+      selfList:[],
       tablePag: {
         pageNo: 1,
         pageSize: 6,
@@ -21,21 +22,30 @@ export default {
       },
       scriptName: '',
       type: 'add',
-      itemObj: null
+      itemObj: null,
+      activeName:'self'
     }
   },
   components: { scriptCard, AddScript },
   methods: {
-    getList() {
+    getList(type) {
+      if(type){
+        this.activeName = type
+      }
       queryScriptList({
         scriptName: this.scriptName,
         pageNum: this.tablePag.pageNo,
-        pageSize: this.tablePag.pageSize
+        pageSize: this.tablePag.pageSize,
+        scriptType: this.activeName
       }).then(res => {
         this.scriptCardList = res.list
         this.tablePag.totalRecord = res.total
         // this.scriptCardList = []
       })
+    },
+    handleClick(){
+      this.tablePag.pageNo = 1;
+      this.getList()
     },
     modify(itemObj) {
       this.type = 'modify'

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 17:06:20
+ * @LastEditTime: 2020-05-16 14:28:55
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -51,7 +51,7 @@ async function initNewProject(data) {
       data.keyword,
       data.templateUrl,
       data.decImg,
-      '[{"label":"新建分支","value":1},{"label":"修复bug","value":2}]',
+      '[{"label":"新建分支","value":1},{"label":"修复bug","value":2},{"label":"检出开发分支","value":3},{"label":"检出bug分支","value":4}]',
       sd.format(new Date(), 'YYYY-MM-DD'),
       0
     ]
@@ -105,7 +105,8 @@ async function queryScriptList(data) {
   data.pageSize = data.pageSize ? data.pageSize : 10
   let n1 = (data.pageNum - 1) * parseInt(data.pageSize)
   let n2 = data.pageSize
-  var querySql = `SELECT * ,COUNT(1) OVER() AS total from script where deleteFlag = 0 and scriptName  LIKE '%${
+  data.scriptType = data.scriptType ? data.scriptType :'self'
+  var querySql = `SELECT * ,COUNT(1) OVER() AS total from script where deleteFlag = 0 and scriptType ='${data.scriptType}' and scriptName  LIKE '%${
     data.scriptName ? data.scriptName : ''
   }%' LIMIT ${n1},${n2}`
   return await sqliteDB.queryData(querySql)
@@ -171,12 +172,13 @@ async function insertScript(data) {
     [
       data.scriptName,
       data.scriptContent,
+      data.scriptType,
       sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss'),
       0
     ]
   ]
   var insertSql =
-    'insert into script(scriptName,scriptContent,createTime,deleteFlag) values(?, ?, ?,?)'
+    'insert into script(scriptName,scriptContent,scriptType,createTime,deleteFlag) values(?,?,?,?,?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
 
@@ -188,7 +190,7 @@ async function deleteByID(id, tableID, tableName) {
 
 // 修改脚本
 async function updateScript(data) {
-  var deleteSql = `update script set scriptContent = '${data.scriptContent}',scriptName = '${data.scriptName}'  where scriptId = ${data.scriptId}`
+  var deleteSql = `update script set scriptContent = '${data.scriptContent}',scriptName = '${data.scriptName}' ,scriptType = '${data.scriptType}' where scriptId = ${data.scriptId}`
   return await sqliteDB.updateData(deleteSql)
 }
 //修改模板

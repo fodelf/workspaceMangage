@@ -16,6 +16,28 @@
     .current_col {
       margin-bottom: 20px;
     }
+    /deep/.el-tabs {
+      .el-tabs__nav-wrap::after {
+        height: 0;
+      }
+      .el-tabs__active-bar {
+        height: 0;
+      }
+      .el-tabs__item {
+        color: #fb9678;
+      }
+      .el-tabs__item.is-top:nth-child(2) {
+        padding-left: 20px;
+      }
+      .el-tabs__item.is-top:last-child {
+        padding-right: 20px;
+      }
+      .is-active {
+        background: #fb9678;
+        color: #fff;
+        border-radius: 5px;
+      }
+    }
   }
 
   .pageBox {

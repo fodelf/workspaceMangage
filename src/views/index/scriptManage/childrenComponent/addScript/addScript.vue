@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-12 14:15:17
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-04-15 14:54:46
+ * @LastEditTime: 2020-05-16 14:10:44
  -->
 <template>
   <el-dialog
@@ -28,6 +28,18 @@
               v-model="proForm.scriptName"
               placeholder="请输入脚本名称"
             ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="脚本类型" prop="scriptType">
+            <el-select
+              v-model="proForm.scriptType"
+            >
+            <el-option value='self' label="自定义脚本"></el-option>
+            <el-option value='system' label="脚本模板"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -60,11 +72,15 @@ export default {
       title: '',
       proForm: {
         scriptName: '',
+        scriptType:'',
         scriptContent: ''
       },
       proRules: {
         scriptName: [
           { required: true, message: '请输入脚本名称', trigger: 'blur' }
+        ],
+        scriptType: [
+          { required: true, message: '请选择脚本类型', trigger: 'blur' }
         ],
         scriptContent: [
           { required: true, message: '请输入脚本内容', trigger: 'blur' }
@@ -80,7 +96,8 @@ export default {
       } else {
         this.proForm = {
           scriptName: '',
-          scriptContent: ''
+          scriptContent: '',
+          scriptType:''
         }
       }
       this.proVisible = true
@@ -105,7 +122,7 @@ export default {
                 message: '新增成功！'
               })
               this.proVisible = false
-              this.$emit('getList')
+              this.$emit('getList',this.proForm.scriptType)
             })
           } else {
             updateScript(this.proForm).then(() => {
@@ -114,7 +131,7 @@ export default {
                 message: '修改成功！'
               })
               this.proVisible = false
-              this.$emit('getList')
+              this.$emit('getList',this.proForm.scriptType)
             })
           }
         } else {
