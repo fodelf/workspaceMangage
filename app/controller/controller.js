@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-15 17:03:14
+ * @LastEditTime: 2020-05-16 11:43:15
  */
 const url = require('url')
 const fs = require('fs')
@@ -225,6 +225,36 @@ async function queryTemplateList(req, res) {
     res.send(resultErr)
   }
 }
+async function queryToolsList(req, res) {
+  try {
+    let data = [
+      {
+        'id':0,
+        'toolName':'EasyWork小助手',
+        'dec':'小助手的谷歌插件,暂时功能拦截资源，拦截请求',
+        'url':'easyWorkHelper.7z'
+      }
+    ]
+    data.map(item => {
+      if(item.url){
+        let url = `${global.url}/` + item.url
+        item.url = url
+      }
+      return item
+    })
+    let resultEntity = {
+      total: data.length,
+      list: data
+    }
+    res.send({
+      ...result,
+      resultEntity
+    })
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+
 /**
  * @api {post} /api/queryTemplateSum 获取模板汇总
  * @apiGroup project
@@ -725,5 +755,6 @@ module.exports = {
   queryIndexTrend,
   changeTodoList,
   getPersonActive,
-  projectAction
+  projectAction,
+  queryToolsList
 }

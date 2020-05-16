@@ -3,8 +3,8 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-30 23:15:02
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-28 09:27:08
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-16 11:40:40
  */
 import menuList from '@/components/menuList/menuList.vue'
 import compDialog from './compDialog/compDialog.vue'
@@ -27,7 +27,8 @@ export default {
       compKind: 'localComp',
       tabComp: [
         { label: '本地组件', value: 'localComp' },
-        { label: '全局组件', value: 'wholeComp' }
+        { label: '全局组件', value: 'wholeComp' },
+        { label: '代码片段', value: 'codeComp' }
       ],
       compCardList: [],
       tablePag: {

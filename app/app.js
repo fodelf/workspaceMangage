@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-14 16:41:47
+ * @LastEditTime: 2020-05-16 09:51:56
  */
 const express = require('express')
 const open = require('open')
@@ -79,6 +79,7 @@ process.on('uncaughtException', function (err) {
   console.log('Stack:', err.stack)
 })
 app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'source')))
 // app.use('/easyWork', express.static(path.join(__dirname, 'public')))
 // console.log(__dirname)
 app.use(express.static(path.join(__dirname, 'public')))

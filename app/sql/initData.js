@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 21:06:27
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 19:48:11
+ * @LastEditTime: 2020-05-16 10:53:39
  */
 const sd = require('silly-datetime')
 const initData = {
@@ -25,6 +25,18 @@ const initData = {
     [
       '修复bug',
       `cd {{filePath}}\ngit checkout master\ngit pull\ngit checkout -b bugfix/zentao#{{branchNum}}\ngit push --set-upstream origin  bugfix/zentao#{{branchNum}}`,
+      sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss'),
+      0
+    ],
+    [
+      '检出开发分支',
+      `cd {{filePath}}\ngit checkout master\ngit pull\ngit checkout -b feature/zentao#{{branchNum}}  origin/feature/zentao#{{branchNum}}`,
+      sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss'),
+      0
+    ],
+    [
+      '检出bug分支',
+      `cd {{filePath}}\ngit checkout master\ngit pull\ngit checkout -b bugfix/zentao#{{branchNum}}  origin/bugfix/zentao#{{branchNum}}`,
       sd.format(new Date(), 'YYYY-MM-DD hh:mm:ss'),
       0
     ]

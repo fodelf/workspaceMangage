@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 08:50:55
+ * @LastEditTime: 2020-05-16 09:43:47
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -18,6 +18,7 @@ import componentManage from '@/views/index/componentManage/componentManage.vue'
 import scriptManage from '@/views/index/scriptManage/ScriptManage.vue'
 import ToDoComponent from '@/components/toDoComponent/ToDoComponent.vue'
 import DragManage from '@/views/index/dragManage/DragManage.vue'
+import ToolsManage from '@/views/index/toolsManage/toolsManage.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -132,7 +133,7 @@ const vueRouter = new Router({
       children: [
         {
           path: 'toolsManage',
-          component: ToDoComponent,
+          component: ToolsManage,
           name: 'toolsManage',
           meta: {
             title: '工具列表'
