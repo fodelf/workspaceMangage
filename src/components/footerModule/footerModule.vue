@@ -3,11 +3,11 @@
  * @Author: pym
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 00:12:43
- * @LastEditors: pym
- * @LastEditTime: 2020-04-05 00:19:15
+ * @LastEditors: 吴文周
+ * @LastEditTime: 2020-05-17 21:39:18
  -->
 <template>
-  <p class="footer">© 2020 EasyWork by wwz&amp;pym</p>
+  <p class="footer">© 2020 EasyWork by wwz&amp;pym&amp;yzf</p>
 </template>
 
 <style lang="less" scoped>
