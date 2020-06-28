@@ -4,8 +4,16 @@
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2020-06-28 19:24:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-06-28 20:55:53
+ * @LastEditTime: 2020-06-28 21:10:03
  */
+import ErrorStackParser from 'error-stack-parser'
+window.addEventListener('unhandledrejection',e=>{
+  throw e.reason
+})
+window.addEventListener('error',args=>{
+  console.log(args)
+  console.log(ErrorStackParser.parse(new Error(args.error.stack)));
+})
 var fs = require('fs'),
   path = require('path'),
   sourceMap = require('source-map')
