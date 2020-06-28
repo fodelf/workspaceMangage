@@ -17,6 +17,9 @@
   },
   "dependencies": {
     "connect-multiparty": "^2.2.0",
+    "ding-robot": "^1.0.0",
+    "dingtalk-robot-sender": "^1.2.0",
+    "error-stack-parser": "^2.0.6",
     "express": "^4.17.1",
     "iconv-lite": "^0.5.1",
     "log4js": "^6.1.2",
@@ -27,6 +30,7 @@
     "shelljs": "^0.8.3",
     "silly-datetime": "^0.1.2",
     "socket.io": "^2.3.0",
+    "source-map": "^0.7.3",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
