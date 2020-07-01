@@ -20,6 +20,7 @@
     "ding-robot": "^1.0.0",
     "dingtalk-robot-sender": "^1.2.0",
     "error-stack-parser": "^2.0.6",
+    "execa": "^4.0.2",
     "express": "^4.17.1",
     "iconv-lite": "^0.5.1",
     "log4js": "^6.1.2",
