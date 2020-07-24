@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:31:21
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 14:28:55
+ * @LastEditTime: 2020-07-23 20:40:05
  */
 const sd = require('silly-datetime')
 const uuid = require('uuid')
@@ -245,8 +245,33 @@ async function insertActive(data) {
     'insert into active(active,createTime) values(?, ?)'
   return await sqliteDB.insertData(insertSql, insertData)
 }
-
+// 新增告警
+async function insertWarning(data) {
+  var insertData = [
+    [
+      data.projectId,
+      sd.format(new Date(), 'YYYY/MM/DD hh:mm:ss'),
+      sd.format(new Date(), 'YYYY/MM/DD hh:mm:ss'),
+      0,
+      data.Webhook,
+      data.secret,
+      data.type,
+      data.collectId,
+      data.dec
+    ]
+  ]
+  var insertSql =
+    'insert into warning(projectId,createTime,modifyTime,deleteFlag,Webhook,secret,type,collectId,dec) values(?, ?, ?, ?, ?, ?, ?, ?,?)'
+  return await sqliteDB.insertData(insertSql, insertData)
+}
+// 获取列表公共方法
+async function queryWarningList() {
+  var querySql = `SELECT * ,COUNT(1) OVER() AS total from warning where deleteFlag = 0`
+  return await sqliteDB.queryData(querySql)
+}
 module.exports = {
+  queryWarningList,
+  insertWarning,
   queryIndexCount,
   queryIndexTrend,
   queryProjectType,

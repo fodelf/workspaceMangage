@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-22 17:59:36
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-15 10:43:34
+ * @LastEditTime: 2020-07-24 09:09:14
  -->
 <template>
   <el-dialog
@@ -12,6 +12,7 @@
     width="40%"
     :title="title"
     :before-close="close"
+    :close-on-click-modal = "false"
     v-if="proVisible"
   >
     <el-form

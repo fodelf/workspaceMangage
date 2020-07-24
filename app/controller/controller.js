@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:43:57
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 11:43:15
+ * @LastEditTime: 2020-07-23 20:43:38
  */
 const url = require('url')
 const fs = require('fs')
@@ -726,7 +726,38 @@ async function queryIndexTrend(req, res) {
   }
 }
 
+/**
+ * @api {post} /api/warning/insertWarning 新增告警
+ */
+async function insertWarning(req, res) {
+  try {
+    await workServer.insertWarning(req.body)
+    res.send(result)
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
+/**
+ * @api {get} /api/warning/insertWarning 新增告警
+ */
+async function queryWarningList(req, res) {
+  try {
+    let data =  await workServer.queryWarningList()
+    let resultEntity = {
+      total: data[0] ? data[0]['total'] : 0,
+      list: data
+    }
+    res.send({
+      ...result,
+      resultEntity
+    })
+  } catch (error) {
+    res.send(resultErr)
+  }
+}
 module.exports = {
+  queryWarningList,
+  insertWarning,
   getIndexCount,
   getProjectType,
   initNewProject,

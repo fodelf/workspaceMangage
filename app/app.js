@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 09:51:56
+ * @LastEditTime: 2020-07-24 19:34:36
  */
 const express = require('express')
 const open = require('open')
@@ -71,7 +71,6 @@ app.all('*', function (req, res, next) {
   res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.header('Pragma', 'no-cache');
   res.header('Expires', '0');
-  // res.header('Content-Type', 'application/json;charset=utf-8')
   next()
 })
 process.on('uncaughtException', function (err) {

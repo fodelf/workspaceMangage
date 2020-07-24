@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-04-05 15:45:35
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 11:35:52
+ * @LastEditTime: 2020-07-23 20:41:01
  */
 const controller = require('../controller/controller.js')
 module.exports = router => {
@@ -68,4 +68,8 @@ module.exports = router => {
   router.post('/api/project/updateProject', controller.updateProject)
   // 获取工具列表
   router.get('/api/tool/queryToolsList', controller.queryToolsList)
+  // 新增告警
+  router.post('/api/warning/insertWarning', controller.insertWarning)
+  // 查询告警
+  router.get('/api/warning/queryWarningList', controller.queryWarningList)
 }

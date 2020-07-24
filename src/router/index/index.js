@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 09:43:47
+ * @LastEditTime: 2020-07-23 10:42:31
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -19,6 +19,7 @@ import scriptManage from '@/views/index/scriptManage/ScriptManage.vue'
 import ToDoComponent from '@/components/toDoComponent/ToDoComponent.vue'
 import DragManage from '@/views/index/dragManage/DragManage.vue'
 import ToolsManage from '@/views/index/toolsManage/toolsManage.vue'
+import DevOpsManager from '@/views/index/devOpsManager/DevOpsManager.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -190,10 +191,10 @@ const vueRouter = new Router({
       children: [
         {
           path: 'Monitor',
-          component: ToDoComponent,
+          component: DevOpsManager,
           name: 'Monitor',
           meta: {
-            title: '可视化埋点'
+            title: '监控报警'
           }
         }
       ]

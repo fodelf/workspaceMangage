@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-14 16:27:00
+ * @LastEditTime: 2020-07-23 10:28:14
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -191,7 +191,7 @@ const vueRouter = new Router({
           component: ToDoComponent,
           name: 'Monitor',
           meta: {
-            title: '可视化埋点'
+            title: '告警报错'
           }
         }
       ]

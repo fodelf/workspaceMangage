@@ -10,12 +10,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "cross-env NODE_ENV=dev nodemon ./app/app.js",
+    "start": "cross-env NODE_ENV=dev nodemon ./app/app.js --max_semi_space_size=256",
     "dev": "cross-env NODE_ENV=dev node ./app/app.js",
     "api": "apidoc -i app/controller/ -o doc/api",
     "apiUI": "node ./doc/app.js"
   },
   "dependencies": {
+    "amqplib": "^0.6.0",
     "connect-multiparty": "^2.2.0",
     "ding-robot": "^1.0.0",
     "dingtalk-robot-sender": "^1.2.0",

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:49:30
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 14:27:13
+ * @LastEditTime: 2020-07-24 09:22:23
  */
 var { DB } = require('./sqlite.js')
 const initData = require('./initData.js')
@@ -41,7 +41,9 @@ var createActiveSql =
 //页面列表
 var createPageSql =
   'create table if not exists page(pageId INTEGER PRIMARY KEY AUTOINCREMENT,templateId TEXT,templateName TEXT,templateInfo BLOB,userId TEXT,createTime BLOB,modifyTime BLOB, deleteFlag INTEGER,keyword TEXT);'
-
+//告警列表
+var createWarningSql =
+  `create table if not exists warning(warningId INTEGER PRIMARY KEY AUTOINCREMENT, projectId TEXT, createTime BLOB,modifyTime BLOB, deleteFlag INTEGER,keyword TEXT,Webhook TEXT,secret TEXT, type TEXT, collectId TEXT,dec TEXT);`
 function initPtype() {
   var data = initData.projectType
   var insertSql = 'insert into ptype (label,value) values(?, ?)'
@@ -73,6 +75,8 @@ async function initTable() {
   await sqliteDB.createTable(createActiveSql)
 
   await sqliteDB.createTable(createPageSql)
+
+  await sqliteDB.createTable(createWarningSql)
   var querySql = `SELECT * from ptype`
   let data = await sqliteDB.queryData(querySql)
   var querySqlScript = `SELECT * from script`

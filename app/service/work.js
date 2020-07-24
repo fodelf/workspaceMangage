@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-19 07:46:24
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-13 16:08:30
+ * @LastEditTime: 2020-07-23 20:39:41
  */
 const workDao = require('../dao/workDao.js')
 const common = require('./common.js')
@@ -114,8 +114,17 @@ async function getPersonActive(data) {
 async function queryScriptById(data) {
   return await workDao.queryScriptById(data)
 }
-
+// 新增告警
+async function insertWarning(data) {
+  return await workDao.insertWarning(data)
+}
+// 查询新增告警
+async function queryWarningList() {
+  return await workDao.queryWarningList()
+}
 module.exports = {
+  queryWarningList,
+  insertWarning,
   getIndexCount,
   getProjectType,
   getProjectList,
