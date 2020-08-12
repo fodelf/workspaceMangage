@@ -6,7 +6,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-17 21:34:42
  * @LastEditors: 吴文周
- * @LastEditTime: 2020-07-24 19:34:36
+ * @LastEditTime: 2020-07-27 10:32:00
  */
 const express = require('express')
 const open = require('open')
@@ -99,7 +99,7 @@ portfinder.getPort({
       console.log(err)
     }
     if(process.env.NODE_ENV == 'dev'){
-      port = 8082
+      port = 9526
     }
     var appUrl = `http://${global.ip}:${port}`
     global.url = appUrl
