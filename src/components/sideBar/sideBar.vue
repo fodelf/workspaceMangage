@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2020-03-21 10:24:56
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-16 11:39:49
+ * @LastEditors: pym
+ * @LastEditTime: 2020-08-11 10:01:26
  -->
 <template>
   <div class="sideBar" :class="isCollapse ? 'min-side' : ''">
@@ -89,9 +89,21 @@ export default {
         },
         {
           name: 'systemManage',
-          path: '/system/systemManage',
+          path: '/system/userManage',
           icon: 'icon-shezhi',
-          label: '系统设置'
+          label: '系统设置',
+          children:[
+            {
+              name: 'userManage',
+              path: '/system/userManage',
+              label: '用户管理'
+            },
+            {
+              name: 'serviceSet',
+              path: '/system/serviceSet',
+              label: '服务设置'
+            }
+          ]
         }
       ]
     }

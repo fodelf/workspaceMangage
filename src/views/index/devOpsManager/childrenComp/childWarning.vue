@@ -3,17 +3,9 @@
  * @Author: 吴文周
  * @Github: http://gitlab.yzf.net/wuwenzhou
  * @Date: 2020-07-23 20:17:52
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-07-24 09:40:36
+ * @LastEditors: pym
+ * @LastEditTime: 2020-08-11 09:46:33
 --> 
-<!--
- * @Description: 描述
- * @Author: pym
- * @Github: https://github.com/fodelf
- * @Date: 2020-03-30 23:25:05
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-05-14 15:18:15
- -->
 <template>
   <div class="cardTemp">
     <el-row :gutter="20">

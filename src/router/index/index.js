@@ -3,8 +3,8 @@
  * @Author: 吴文周
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
- * @LastEditors: 吴文周
- * @LastEditTime: 2020-07-23 10:42:31
+ * @LastEditors: pym
+ * @LastEditTime: 2020-08-11 14:46:27
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -20,6 +20,7 @@ import ToDoComponent from '@/components/toDoComponent/ToDoComponent.vue'
 import DragManage from '@/views/index/dragManage/DragManage.vue'
 import ToolsManage from '@/views/index/toolsManage/toolsManage.vue'
 import DevOpsManager from '@/views/index/devOpsManager/DevOpsManager.vue'
+import userManage from '@/views/index/systemManage/userManage/userManage.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -202,18 +203,26 @@ const vueRouter = new Router({
     {
       path: '/system',
       name: 'system',
-      redirect: '/system/systemManage',
+      redirect: '/system/userManage',
       component: MainLayout,
       meta: {
-        title: '系统'
+        title: '系统设置'
       },
       children: [
         {
-          path: 'systemManage',
-          component: ToDoComponent,
-          name: 'systemManage',
+          path: 'userManage',
+          component: userManage,
+          name: 'userManage',
           meta: {
-            title: '系统设置'
+            title: '用户管理'
+          }
+        },
+        {
+          path: 'serviceSet',
+          component: ToDoComponent,
+          name: 'serviceSet',
+          meta: {
+            title: '服务设置'
           }
         }
       ]

@@ -4,12 +4,13 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-11 18:59:40
  * @LastEditors: pym
- * @LastEditTime: 2020-04-05 10:48:00
+ * @LastEditTime: 2020-08-11 11:32:05
  -->
 <template>
   <div id="contentMain"
        class="clearfix">
-    <sideBar ref="sideBar"></sideBar>
+    <!-- <sideBar ref="sideBar"></sideBar> -->
+    <sideMenu ref="sideBar"></sideMenu>
     <div class="mainContent">
       <!--头部组件-->
       <headerModule @changeCollapse="changeMenu"></headerModule>
@@ -26,14 +27,14 @@
 </template>
 
 <script>
-import sideBar from '@/components/sideBar/sideBar.vue'
+import sideMenu from '@/components/sideMenu/sideMenu.vue'
 import tabBread from 'components/tabBread/tabBread'
 import headerModule from '@/components/headerModule/headerModule.vue'
 import footerModule from '@/components/footerModule/footerModule.vue'
 export default {
   name: 'Main',
   components: {
-    sideBar,
+    sideMenu,
     tabBread,
     headerModule,
     footerModule
@@ -57,6 +58,7 @@ export default {
       })
     },
     changeMenu () {
+      console.log(this.$refs.sideBar.isCollapse)
       this.$refs.sideBar.isCollapse = !this.$refs.sideBar.isCollapse
     }
   }
