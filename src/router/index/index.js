@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-05 18:57:53
  * @LastEditors: pym
- * @LastEditTime: 2020-08-11 14:46:27
+ * @LastEditTime: 2020-08-18 11:19:09
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -21,6 +21,7 @@ import DragManage from '@/views/index/dragManage/DragManage.vue'
 import ToolsManage from '@/views/index/toolsManage/toolsManage.vue'
 import DevOpsManager from '@/views/index/devOpsManager/DevOpsManager.vue'
 import userManage from '@/views/index/systemManage/userManage/userManage.vue'
+import serviceSet from '@/views/index/systemManage/serviceSet/serviceSet.vue'
 // const TerminalView = () => import('components/terminal/TerminalView.vue')
 Vue.use(Router)
 const vueRouter = new Router({
@@ -219,7 +220,7 @@ const vueRouter = new Router({
         },
         {
           path: 'serviceSet',
-          component: ToDoComponent,
+          component: serviceSet,
           name: 'serviceSet',
           meta: {
             title: '服务设置'

@@ -4,7 +4,7 @@
  * @Github: https://github.com/fodelf
  * @Date: 2019-06-11 18:59:40
  * @LastEditors: pym
- * @LastEditTime: 2020-08-11 11:32:05
+ * @LastEditTime: 2020-08-12 15:54:22
  -->
 <template>
   <div id="contentMain"
@@ -58,7 +58,6 @@ export default {
       })
     },
     changeMenu () {
-      console.log(this.$refs.sideBar.isCollapse)
       this.$refs.sideBar.isCollapse = !this.$refs.sideBar.isCollapse
     }
   }
