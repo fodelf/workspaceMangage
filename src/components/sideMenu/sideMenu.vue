@@ -4,7 +4,7 @@
  * @Author: pym
  * @Date: 2020-08-11 10:08:07
  * @LastEditors: pym
- * @LastEditTime: 2020-08-12 09:41:06
+ * @LastEditTime: 2020-08-18 15:02:48
 -->
 <template>
   <div class="sideMenu" :class="isCollapse?'min-sideBar':'sideBar'">
@@ -17,6 +17,7 @@
       <el-menu :default-active="$route.path"
                 router
                 class="nav"
+                background-color="#353c48"
                 :collapse="isCollapse">
         <treeMenuModule v-for="(item,index) in menuTree"
                         :key="index"
