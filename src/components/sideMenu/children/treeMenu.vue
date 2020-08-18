@@ -4,7 +4,7 @@
  * @Author: pym
  * @Date: 2020-08-11 10:08:56
  * @LastEditors: pym
- * @LastEditTime: 2020-08-18 15:00:57
+ * @LastEditTime: 2020-08-18 15:04:45
 -->
 <template>
     <el-menu-item :index="menuItem.path"
@@ -72,7 +72,7 @@ export default {
   height: 40px;
   line-height: 40px;
   color: #8d97ad;
-  border-left: 3px #353c48 solid;
+  border-left: 3px transparent solid;
   .iconfont {
     font-size: 16px;
     margin-right: 8px;
@@ -95,7 +95,7 @@ export default {
     height: 40px;
     line-height: 40px;
     color: #8d97ad;
-    border-left: 3px #353c48 solid;
+    border-left: 3px transparent solid;
     .iconfont {
       font-size: 16px;
       margin-right: 8px;
