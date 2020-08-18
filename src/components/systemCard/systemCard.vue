@@ -4,13 +4,13 @@
  * @Author: pym
  * @Date: 2020-08-18 11:02:53
  * @LastEditors: pym
- * @LastEditTime: 2020-08-18 14:55:30
+ * @LastEditTime: 2020-08-18 16:04:06
 -->
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <span>{{item.title}}</span>
-      <el-button type="primary" class='editBtn' size='mini'>编辑</el-button>
+      <el-button type="primary" class='editBtn' size='mini' @click='edit'>编辑</el-button>
     </div>
     <el-form label-width='100px' label-position="left">
       <el-form-item label='ip'>
@@ -46,7 +46,9 @@ export default {
     }
   },
   methods: {
-    
+    edit() {
+      this.$emit("showDialog",this._props.item)
+    }
   }
 }
 </script>

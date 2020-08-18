@@ -4,13 +4,15 @@
  * @Author: pym
  * @Date: 2020-08-11 14:27:02
  * @LastEditors: pym
- * @LastEditTime: 2020-08-18 14:09:01
+ * @LastEditTime: 2020-08-18 16:03:27
  */
 import systemCard from '@/components/systemCard/systemCard'
+import serviceEdit from '@/components/serviceEdit/serviceEdit'
 export default {
    name:'serviceSet',
    components:{
-    systemCard
+    systemCard,
+    serviceEdit
    },
    data() {
      return {
@@ -47,6 +49,8 @@ export default {
      }
    },
    methods: {
-
+    showEdit() {
+      this.$refs.editService.show()
+    }
    }
  }
